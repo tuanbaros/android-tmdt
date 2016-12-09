@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/cardview_default_radius"
+                app:cardElevation="@dimen/cardview_default_radius">
+
+                <ImageButton
+                    android:id="@+id/image_book"
+                    android:layout_width="wrap_content"
+                    android:layout_height="160dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/image_book"
+                    android:minHeight="150dp" />
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textview_name_book"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cửu âm chân kinh"
+                    android:textColor="@color/colorName"
+                    android:textSize="15dp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/textview_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="100.000 "
+                    android:textColor="@color/colorPrice" />
+
+                <TextView
+                    android:id="@+id/textview_old_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="200.000 "
+                    android:textColor="@color/colorOldPrice"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
