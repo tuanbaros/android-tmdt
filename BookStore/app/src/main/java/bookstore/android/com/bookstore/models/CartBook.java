@@ -11,6 +11,11 @@ public class CartBook {
     private int quantity;
     private String time;
 
+    public CartBook(Book book, int quantity) {
+        this.book = book;
+        this.quantity = quantity;
+    }
+
     public int getId() {
         return id;
     }

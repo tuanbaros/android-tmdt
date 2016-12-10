@@ -1,6 +1,7 @@
 package bookstore.android.com.bookstore.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
@@ -61,11 +62,11 @@ public class MainActivity extends AppCompatActivity
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.show();
         createData();
-        mBestSeller.setDataListBook(bookList,mMainActivity);
-        mKindleEBooks.setDataListBook(bookList,mMainActivity);
-        mBestBookOfMonth.setDataListBook(bookList,mMainActivity);
-        mSales.setDataListBook(bookList,mMainActivity);
-        mNewReleases.setDataListBook(bookList,mMainActivity);
+        mBestSeller.setDataListBook(bookList);
+        mKindleEBooks.setDataListBook(bookList);
+        mBestBookOfMonth.setDataListBook(bookList);
+        mSales.setDataListBook(bookList);
+        mNewReleases.setDataListBook(bookList);
         mCategory.setDataCategory(categoryList);
         mProgressDialog.dismiss();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -97,7 +98,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.ic_cart) {
+            Intent intent = new Intent(this, CartActivity.class);
+            startActivity(intent);
             return true;
         }
 

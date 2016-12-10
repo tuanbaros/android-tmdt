@@ -40,14 +40,14 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(R.layout.list_horizontal_book, this, true);
     }
-    public void setDataListBook(List<Book> bookList, final MainActivity mainActivity){
+    public void setDataListBook(List<Book> bookList){
         mLinearLayoutBook = (LinearLayout)findViewById(R.id.linearlayout_list_book);
         for(int i = 0;i<5;i++){
             BookItem bookItem = new BookItem(this.getContext());
             MyHolder myHolder = new MyHolder(bookItem.mView);
             myHolder.mBookName.setText(bookList.get(i).getTitle());
             myHolder.mBookName.setSelected(true);
-            Log.e("TEST", "setDataListBook: "+myHolder.mBookName.getText() );
+
             myHolder.mBookOldPrice.setText(bookList.get(i).getOldPrice()+"");
             myHolder.mBookPrice.setText(bookList.get(i).getPrice()+"");
             mLinearLayoutBook.addView(bookItem);
@@ -60,7 +60,7 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
         for(int i = 0; i<5;i++){
             CategoryItem categoryItem = new CategoryItem(this.getContext());
             MyHolderCategory myHolderCategory = new MyHolderCategory(categoryItem.mView);
-            Log.e("sss", "setDataCategory: e");
+
             myHolderCategory.mNameCategory.setText(categoryList.get(i).getName());
             mLinearLayoutBook.addView(categoryItem);
         }
