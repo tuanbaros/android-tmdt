@@ -1,6 +1,7 @@
 package bookstore.android.com.bookstore.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
+import bookstore.android.com.bookstore.activities.SellActivity;
 import bookstore.android.com.bookstore.models.CartBook;
 
 
@@ -50,6 +52,7 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
         holder.mBooksPrice.setText(item.getBook().getPrice()+"");
         holder.mBooksName.setText(item.getBook().getTitle());
         holder.mBooksAuthor.setText(item.getBook().getAuthor().getName());
+
     }
 
     @Override

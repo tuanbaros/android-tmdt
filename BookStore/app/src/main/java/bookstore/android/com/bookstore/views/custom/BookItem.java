@@ -1,6 +1,8 @@
 package bookstore.android.com.bookstore.views.custom;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import bookstore.android.com.bookstore.R;
+import bookstore.android.com.bookstore.activities.SellActivity;
 
 /**
  * Created by vxhuy176 on 07/12/2016.
@@ -18,6 +21,7 @@ public class BookItem extends LinearLayout{
     public View mView;
     public ImageButton mImageButton;
     private TextView mTextView;
+    public int position;
     public BookItem(Context context) {
         super(context);
         init(context);
@@ -38,7 +42,17 @@ public class BookItem extends LinearLayout{
         mView = layoutInflater.inflate(R.layout.item_book, this, true);
         mImageButton = (ImageButton)findViewById(R.id.image_book);
         mTextView = (TextView)findViewById(R.id.textview_name_book);
+        mImageButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), SellActivity.class);
 
+                Bundle bundle = new Bundle();
+                bundle.putInt("id_book",position);
+                i.putExtra("Mypackage",bundle);
+                getContext().startActivity(i);
+            }
+        });
     }
 
 

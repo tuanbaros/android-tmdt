@@ -43,11 +43,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>
         </RelativeLayout>
-        <bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView
+        <bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView
             android:id="@+id/list_book_best_seller"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView>
+        </bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -67,11 +67,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>
         </RelativeLayout>
-        <bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView
+        <bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView
             android:id="@+id/list_book_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView>
+        </bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -91,11 +91,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>
         </RelativeLayout>
-        <bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView
+        <bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView
             android:id="@+id/list_book_new_releases"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView>
+        </bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -115,11 +115,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>
         </RelativeLayout>
-        <bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView
+        <bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView
             android:id="@+id/list_book_sales"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView>
+        </bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -139,11 +139,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>
         </RelativeLayout>
-        <bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView
+        <bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView
             android:id="@+id/list_book_best_of_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView>
+        </bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -163,11 +163,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>
         </RelativeLayout>
-        <bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView
+        <bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView
             android:id="@+id/list_book_kindle_ebooks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView>
+        </bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView>
 
     </LinearLayout>
 

@@ -19,8 +19,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/AppTheme.Theme"
             android:label="@string/cart_name"
             android:name=".activities.CartActivity">
+        </activity>
+        <activity
+            android:name=".activities.SellActivity">
         </activity>
     </application>
 

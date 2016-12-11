@@ -2,6 +2,7 @@ package bookstore.android.com.bookstore.views.custom;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,10 +46,9 @@ public class RatingView extends LinearLayout {
 
     }
 
-    public void setRate(String numberRating){
-
+    public void setRate(int numberRating){
         switch (numberRating){
-            case "5":
+            case 5:
                 mImageStar1.setImageResource(R.drawable.featured_on);
                 mImageStar2.setImageResource(R.drawable.featured_on);
                 mImageStar3.setImageResource(R.drawable.featured_on);
@@ -56,7 +56,7 @@ public class RatingView extends LinearLayout {
                 mImageStar5.setImageResource(R.drawable.featured_on);
                 break;
 
-            case "4.5":
+            case 4:
                 mImageStar1.setImageResource(R.drawable.featured_on);
                 mImageStar2.setImageResource(R.drawable.featured_on);
                 mImageStar3.setImageResource(R.drawable.featured_on);
@@ -64,7 +64,7 @@ public class RatingView extends LinearLayout {
                 mImageStar5.setImageResource(R.drawable.featured);
                 break;
 
-            case "3":
+            case 3:
                 mImageStar1.setImageResource(R.drawable.featured_on);
                 mImageStar2.setImageResource(R.drawable.featured_on);
                 mImageStar3.setImageResource(R.drawable.featured_on);
@@ -72,7 +72,7 @@ public class RatingView extends LinearLayout {
                 mImageStar5.setImageResource(R.drawable.featured);
                 break;
 
-            case "2":
+            case 2:
                 mImageStar1.setImageResource(R.drawable.featured_on);
                 mImageStar2.setImageResource(R.drawable.featured_on);
                 mImageStar3.setImageResource(R.drawable.featured);
@@ -80,15 +80,13 @@ public class RatingView extends LinearLayout {
                 mImageStar5.setImageResource(R.drawable.featured);
                 break;
 
-            case "1":
+            case 1:
                 mImageStar1.setImageResource(R.drawable.featured_on);
                 mImageStar2.setImageResource(R.drawable.featured);
                 mImageStar3.setImageResource(R.drawable.featured);
                 mImageStar4.setImageResource(R.drawable.featured);
                 mImageStar5.setImageResource(R.drawable.featured);
                 break;
-
-            case "0":
             default:
                 mImageStar1.setImageResource(R.drawable.featured);
                 mImageStar2.setImageResource(R.drawable.featured);

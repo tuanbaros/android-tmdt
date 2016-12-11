@@ -17,7 +17,7 @@ public class User {
     private ArrayList<Rate> listRate = new ArrayList<>();
     private ArrayList<View> listView = new ArrayList<>();
     private ArrayList<Bill> listBills = new ArrayList<>();
-    private ArrayList<CustomerReview> listReviews = new ArrayList<>();
+    private ArrayList<Review> listReviews = new ArrayList<>();
     private Cart cart;
 
     public Cart getCart() {
@@ -108,11 +108,11 @@ public class User {
         this.listBills = listBills;
     }
 
-    public ArrayList<CustomerReview> getListReviews() {
+    public ArrayList<Review> getListReviews() {
         return listReviews;
     }
 
-    public void setListReviews(ArrayList<CustomerReview> listReviews) {
+    public void setListReviews(ArrayList<Review> listReviews) {
         this.listReviews = listReviews;
     }
 }
