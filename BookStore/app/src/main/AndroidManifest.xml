@@ -20,7 +20,6 @@
         </activity>
         <activity
             android:label="@string/cart_name"
-            android:theme="@style/AppTheme.NoActionBar"
             android:name=".activities.CartActivity">
         </activity>
     </application>

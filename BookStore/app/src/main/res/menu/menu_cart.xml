@@ -2,9 +2,9 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="cart"
-        android:icon="@drawable/ic_cart"
-        android:id="@+id/ic_cart"
+        android:title="home"
+        android:icon="@drawable/ic_home"
+        android:id="@+id/ic_home"
         android:showAsAction="always"
         tools:ignore="AppCompatResource">
     </item>
