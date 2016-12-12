@@ -3,34 +3,40 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageView
         android:id="@+id/image_star1"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@drawable/featured_on"/>
 
     <ImageView
         android:id="@+id/image_star2"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@drawable/featured_on"/>
 
     <ImageView
         android:id="@+id/image_star3"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@drawable/featured_on"/>
 
     <ImageView
         android:id="@+id/image_star4"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@drawable/featured_on"/>
 
     <ImageView
         android:id="@+id/image_star5"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@drawable/featured_on"/>
 
 </LinearLayout>

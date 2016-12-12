@@ -101,11 +101,11 @@
         android:shadowRadius="5"
         android:text="Buy more ..."
         android:layout_margin="10dp"/>
-        <bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView
+        <bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView
             android:id="@+id/horizontal_buy_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView>
+        </bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView>
     </LinearLayout>
 </ScrollView>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".activities.SellActivity">
     <item
         android:title="home"
-        android:icon="@drawable/ic_home"
+        android:icon="@android:drawable/stat_notify_sync_noanim"
         android:id="@+id/ic_home"
-        android:showAsAction="always"
-        tools:ignore="AppCompatResource">
+        android:showAsAction="ifRoom">
     </item>
 </menu>

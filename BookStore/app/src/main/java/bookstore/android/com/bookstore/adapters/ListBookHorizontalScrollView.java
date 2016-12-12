@@ -1,7 +1,8 @@
-package bookstore.android.com.bookstore.views.custom;
+package bookstore.android.com.bookstore.adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +17,15 @@ import java.util.List;
 
 import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.activities.MainActivity;
+import bookstore.android.com.bookstore.activities.SellActivity;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Category;
+import bookstore.android.com.bookstore.views.custom.BookItem;
+import bookstore.android.com.bookstore.views.custom.CategoryItem;
 
 public class ListBookHorizontalScrollView extends HorizontalScrollView {
-    public LinearLayout mLinearLayoutBook;
+
+    private LinearLayout mLinearLayoutBook;
     private LinearLayout mFavoriteLinearLayout;
     public ListBookHorizontalScrollView(Context context) {
         super(context);
@@ -45,16 +50,21 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
         for(int i = 0;i<5;i++){
             BookItem bookItem = new BookItem(this.getContext());
             MyHolder myHolder = new MyHolder(bookItem.mView);
+            if(bookList.get(i).getId()!=0){
+                bookItem.position = bookList.get(i).getId();
+            }else{
+                bookItem.position =i;
+            }
             myHolder.mBookName.setText(bookList.get(i).getTitle());
             myHolder.mBookName.setSelected(true);
-
             myHolder.mBookOldPrice.setText(bookList.get(i).getOldPrice()+"");
             myHolder.mBookPrice.setText(bookList.get(i).getPrice()+"");
             mLinearLayoutBook.addView(bookItem);
-
         }
 
     }
+
+
     public void setDataCategory(List<Category> categoryList){
         mLinearLayoutBook = (LinearLayout)findViewById(R.id.linearlayout_list_book);
         for(int i = 0; i<5;i++){

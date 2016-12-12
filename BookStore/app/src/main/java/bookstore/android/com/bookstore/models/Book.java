@@ -13,7 +13,7 @@ public class Book {
     private String status;
     private Category category;
     private ArrayList<Image> listImages;
-    private ArrayList<CustomerReview> listReviews;
+    private ArrayList<Review> listReviews;
     private float price;
     private float oldPrice;
     private String language;
@@ -79,11 +79,11 @@ public class Book {
         this.listImages = listImages;
     }
 
-    public ArrayList<CustomerReview> getListReviews() {
+    public ArrayList<Review> getListReviews() {
         return listReviews;
     }
 
-    public void setListReviews(ArrayList<CustomerReview> listReviews) {
+    public void setListReviews(ArrayList<Review> listReviews) {
         this.listReviews = listReviews;
     }
 

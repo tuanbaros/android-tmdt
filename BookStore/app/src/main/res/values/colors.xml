@@ -10,4 +10,7 @@
     <color name="colorBackground">#e828daed</color>
     <color name="colorCategory">#918f8f</color>
     <color name="colorYellow">#fffd74</color>
+    <color name="white">#ffffff</color>
+    <color name="colorBookName">#2b2b2b</color>
+    <color name="colorBookAuthor">#ababab</color>
 </resources>

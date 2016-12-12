@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,9 +16,8 @@ import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.adapters.BookCartAdapter;
 import bookstore.android.com.bookstore.models.Author;
 import bookstore.android.com.bookstore.models.Book;
-import bookstore.android.com.bookstore.models.Cart;
 import bookstore.android.com.bookstore.models.CartBook;
-import bookstore.android.com.bookstore.views.custom.ListBookHorizontalScrollView;
+import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
 
 /**
  * Created by vxhuy176 on 09/12/2016.
