@@ -1,5 +1,6 @@
 package bookstore.android.com.bookstore.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,8 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,13 +31,15 @@ import bookstore.android.com.bookstore.views.custom.RatingView;
  * Created by vxhuy176 on 11/12/2016.
  */
 
-public class SellActivity extends AppCompatActivity {
+@SuppressWarnings("ResourceAsColor")
+public class SellActivity extends AppCompatActivity implements View.OnClickListener {
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private CustomScrollviewReview mCustomScrollviewReview;
     private ArrayList<Review> mListReviews = new ArrayList<>();
     private List<Book> bookList = new ArrayList<>();
     private TextView mTextAuthor,mTextBookName,mTextOldPrice,mTextPrice,mTextNumRating;
     private RatingView mRating;
+    private Button mSeeAllDescription, mSeeAllReView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +52,13 @@ public class SellActivity extends AppCompatActivity {
         mTextPrice = (TextView)findViewById(R.id.text_price_book_sell);
         mTextNumRating = (TextView)findViewById(R.id.text_num_rating_sell);
         mCustomScrollviewReview = (CustomScrollviewReview)findViewById(R.id.scrollview_part_of_reviews);
+        mSeeAllDescription = (Button)findViewById(R.id.bt_seeall_description);
+        mSeeAllDescription.setOnClickListener(this);
+        mRating.setOnClickListener(this);
+        mSeeAllReView = (Button)findViewById(R.id.bt_seeall_review);
+        mSeeAllReView.setOnClickListener(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_sell);
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -120,4 +131,22 @@ public class SellActivity extends AppCompatActivity {
 //        mListReviews.add(new Review("quá hay.hay không tưởng nổi :))5","vxhuy176",5,"11/12/2016 22:11"));
 
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.bt_seeall_description:
+                break;
+            case R.id.bt_seeall_review:
+                Intent intent = new Intent(this,RateActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rating_book_sell:
+                Intent intent1 = new Intent(this,RateActivity.class);
+                startActivity(intent1);
+                break;
+            default:break;
+        }
+    }
+
 }

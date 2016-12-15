@@ -272,6 +272,7 @@
 
                     </LinearLayout>
                     <Button
+                        android:id="@+id/bt_seeall_description"
                         android:layout_width="200dp"
                         android:layout_height="40dp"
                         style="@style/primaryBt"
@@ -350,6 +351,7 @@
                         </bookstore.android.com.bookstore.adapters.CustomScrollviewReview>
                     </LinearLayout>
                     <Button
+                        android:id="@+id/bt_seeall_review"
                         android:layout_width="200dp"
                         android:layout_height="40dp"
                         style="@style/primaryBt"

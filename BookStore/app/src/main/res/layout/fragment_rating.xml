@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_user_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/avatar"/>
+    <TextView
+        android:id="@+id/text_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Huy Vuxuan"
+        android:textSize="18dp"
+        android:textColor="@color/colorBookName"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rating for this book"
+        android:gravity="center"/>
+    <bookstore.android.com.bookstore.views.custom.RatingView
+        android:id="@+id/ratingview_user_rating"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp">
+
+    </bookstore.android.com.bookstore.views.custom.RatingView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/cardview_dark_background">
+
+    </LinearLayout>
+</LinearLayout>

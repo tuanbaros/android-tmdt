@@ -22,6 +22,7 @@ import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Category;
 import bookstore.android.com.bookstore.views.custom.BookItem;
 import bookstore.android.com.bookstore.views.custom.CategoryItem;
+import bookstore.android.com.bookstore.views.custom.RatingView;
 
 public class ListBookHorizontalScrollView extends HorizontalScrollView {
 
@@ -55,6 +56,9 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
             }else{
                 bookItem.position =i;
             }
+            if(bookList.get(i).getRateAverage()!=0){
+//                myHolder.mRatingBook.bookList.get(i).getRateAverage();
+            }
             myHolder.mBookName.setText(bookList.get(i).getTitle());
             myHolder.mBookName.setSelected(true);
             myHolder.mBookOldPrice.setText(bookList.get(i).getOldPrice()+"");
@@ -79,12 +83,14 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
     class MyHolder{
         private TextView mBookName,mBookPrice,mBookOldPrice;
         private ImageButton mBtBook;
+        private RatingView mRatingBook;
         public MyHolder(View view){
             super();
             mBookName = (TextView)view.findViewById(R.id.textview_name_book);
             mBookOldPrice = (TextView)view.findViewById(R.id.textview_old_price);
             mBookPrice = (TextView)view.findViewById(R.id.textview_price);
             mBtBook = (ImageButton)view.findViewById(R.id.image_book);
+            mRatingBook = (RatingView)view.findViewById(R.id.rating_average_item_book);
         }
     }
     class MyHolderCategory{
