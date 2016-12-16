@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.activities.SellActivity;
@@ -42,6 +43,12 @@ public class BookItem extends LinearLayout{
         mView = layoutInflater.inflate(R.layout.item_book, this, true);
         mImageButton = (ImageButton)findViewById(R.id.image_book);
         mTextView = (TextView)findViewById(R.id.textview_name_book);
+        mTextView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), ""+mTextView, Toast.LENGTH_SHORT).show();
+            }
+        });
         mImageButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

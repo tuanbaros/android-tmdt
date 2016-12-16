@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 public class Book {
-    private int id;
+    private int id = 0;
     private String title;
     private Author author;
     private String status;

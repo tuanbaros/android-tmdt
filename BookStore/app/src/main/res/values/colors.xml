@@ -13,4 +13,11 @@
     <color name="white">#ffffff</color>
     <color name="colorBookName">#2b2b2b</color>
     <color name="colorBookAuthor">#ababab</color>
+
+    <color name="colorRate5">#00da0b</color>
+    <color name="colorRate4">#70f518</color>
+    <color name="colorRate3">#fbff17</color>
+    <color name="colorRate2">#f1c012</color>
+    <color name="colorRate1">#e45322</color>
 </resources>
+
