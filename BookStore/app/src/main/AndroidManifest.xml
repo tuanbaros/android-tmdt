@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="bookstore.android.com.bookstore">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
@@ -19,10 +24,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/AppTheme.Theme"
+            android:name=".activities.CartActivity"
             android:label="@string/cart_name"
-            android:name=".activities.CartActivity">
-        </activity>
+            android:theme="@style/AppTheme.Theme"></activity>
+        <activity android:name=".activities.Login"></activity>
         <activity
             android:name=".activities.SellActivity">
         </activity>
@@ -40,6 +45,10 @@
             android:label="Bill Details"
             android:name=".activities.DetailsBillActivity">
         </activity>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
     </application>
 
 </manifest>
