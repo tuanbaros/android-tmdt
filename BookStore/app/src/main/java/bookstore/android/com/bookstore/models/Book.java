@@ -11,18 +11,17 @@ public class Book {
     private String title;
     private Author author;
     private String status;
-    private Category category;
-    private ArrayList<Image> listImages;
-    private ArrayList<Review> listReviews;
+    private String images;
     private float price;
     private float oldPrice;
     private String language;
     private String discription;
-    private int countViews;
     private float rateAverage;
     private int quantityBuy;
     private String type;
     private String time;
+    private int userRate;
+
 
     public Book(String title, Author author, float price, float oldPrice) {
         this.title = title;
@@ -63,30 +62,6 @@ public class Book {
         this.status = status;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public ArrayList<Image> getListImages() {
-        return listImages;
-    }
-
-    public void setListImages(ArrayList<Image> listImages) {
-        this.listImages = listImages;
-    }
-
-    public ArrayList<Review> getListReviews() {
-        return listReviews;
-    }
-
-    public void setListReviews(ArrayList<Review> listReviews) {
-        this.listReviews = listReviews;
-    }
-
     public float getPrice() {
         return price;
     }
@@ -119,14 +94,6 @@ public class Book {
         this.discription = discription;
     }
 
-    public int getCountViews() {
-        return countViews;
-    }
-
-    public void setCountViews(int countViews) {
-        this.countViews = countViews;
-    }
-
     public float getRateAverage() {
         return rateAverage;
     }
@@ -157,5 +124,21 @@ public class Book {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public int getUserRate() {
+        return userRate;
+    }
+
+    public void setUserRate(int userRate) {
+        this.userRate = userRate;
     }
 }

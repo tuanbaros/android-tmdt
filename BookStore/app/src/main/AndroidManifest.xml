@@ -27,7 +27,18 @@
             android:name=".activities.SellActivity">
         </activity>
         <activity
+            android:theme="@style/AppTheme.Theme"
             android:name=".activities.RateActivity">
+        </activity>
+        <activity
+            android:theme="@style/AppTheme.Theme"
+            android:label="Bill Status"
+            android:name=".activities.BillActivity">
+        </activity>
+        <activity
+            android:theme="@style/AppTheme.Theme"
+            android:label="Bill Details"
+            android:name=".activities.DetailsBillActivity">
         </activity>
     </application>
 

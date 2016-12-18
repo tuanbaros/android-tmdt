@@ -6,6 +6,7 @@
         android:title="home"
         android:icon="@android:drawable/stat_notify_sync_noanim"
         android:id="@+id/ic_home"
-        android:showAsAction="ifRoom">
+        android:showAsAction="ifRoom"
+        tools:ignore="AppCompatResource">
     </item>
 </menu>

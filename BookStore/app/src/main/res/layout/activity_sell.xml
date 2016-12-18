@@ -361,7 +361,32 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Same Books"
+                    android:textColor="@color/colorCategory"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"/>
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_input_add"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+            <bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView
+                android:id="@+id/list_sell_same_books"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView>
+
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
 
 

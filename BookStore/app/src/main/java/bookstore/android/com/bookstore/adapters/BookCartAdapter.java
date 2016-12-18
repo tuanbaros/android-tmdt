@@ -1,9 +1,7 @@
 package bookstore.android.com.bookstore.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +12,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
-import bookstore.android.com.bookstore.activities.SellActivity;
+import bookstore.android.com.bookstore.models.Cart;
 import bookstore.android.com.bookstore.models.CartBook;
 
 
@@ -48,10 +44,10 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
 
         CartBook item = mListCartBook.get(position);
 //        Picasso.with(mContext).load(item.getBook().getListImages().get(0).getUrl()).into(holder.mImageButton);
-        holder.mBooksOldPrice.setText(item.getBook().getOldPrice()+"");
-        holder.mBooksPrice.setText(item.getBook().getPrice()+"");
-        holder.mBooksName.setText(item.getBook().getTitle());
-        holder.mBooksAuthor.setText(item.getBook().getAuthor().getName());
+        holder.mBooksOldPrice.setText(item.getOldPrice()+"");
+        holder.mBooksPrice.setText(item.getPrice()+"");
+        holder.mBooksName.setText(item.getTitle());
+        holder.mBooksAuthor.setText(item.getAuthor());
 
     }
 

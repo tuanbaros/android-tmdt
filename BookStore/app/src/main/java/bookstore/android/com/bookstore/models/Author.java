@@ -9,11 +9,12 @@ import java.util.ArrayList;
 public class Author {
     private int id;
     private String name;
+    private int rateBookAverage;
+    private int TotalSold;
     private String recommend;
     private String contact;
-    private String time;
-    private Image avatar;
-    private ArrayList<Book> listBooks = new ArrayList<>();
+    private String avatar;
+    private ArrayList<BookOfAuthor> listBooks = new ArrayList<>();
 
     public Author(String name) {
         this.name = name;
@@ -21,6 +22,22 @@ public class Author {
 
     public int getId() {
         return id;
+    }
+
+    public int getRateBookAverage() {
+        return rateBookAverage;
+    }
+
+    public void setRateBookAverage(int rateBookAverage) {
+        this.rateBookAverage = rateBookAverage;
+    }
+
+    public int getTotalSold() {
+        return TotalSold;
+    }
+
+    public void setTotalSold(int totalSold) {
+        TotalSold = totalSold;
     }
 
     public void setId(int id) {
@@ -51,27 +68,68 @@ public class Author {
         this.contact = contact;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public ArrayList<Book> getListBooks() {
-        return listBooks;
-    }
-
-    public Image getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Image avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
-    public void setListBooks(ArrayList<Book> listBooks) {
+
+    public ArrayList<BookOfAuthor> getListBooks() {
+        return listBooks;
+    }
+
+    public void setListBooks(ArrayList<BookOfAuthor> listBooks) {
         this.listBooks = listBooks;
+    }
+
+    private class BookOfAuthor{
+        private int idBook;
+        private String urlImage;
+        private String title;
+        private float rateAverage;
+        private float price;
+
+        public int getIdBook() {
+            return idBook;
+        }
+
+        public void setIdBook(int idBook) {
+            this.idBook = idBook;
+        }
+
+        public String getUrlImage() {
+            return urlImage;
+        }
+
+        public void setUrlImage(String urlImage) {
+            this.urlImage = urlImage;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public float getRateAverage() {
+            return rateAverage;
+        }
+
+        public void setRateAverage(float rateAverage) {
+            this.rateAverage = rateAverage;
+        }
+
+        public float getPrice() {
+            return price;
+        }
+
+        public void setPrice(float price) {
+            this.price = price;
+        }
     }
 }
