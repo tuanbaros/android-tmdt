@@ -1,6 +1,5 @@
 package bookstore.android.com.bookstore.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +21,7 @@ import java.util.List;
 
 import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.adapters.CustomScrollviewReview;
+import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
 import bookstore.android.com.bookstore.models.Author;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Review;
@@ -40,6 +40,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTextAuthor,mTextBookName,mTextOldPrice,mTextPrice,mTextNumRating;
     private RatingView mRating;
     private Button mSeeAllDescription, mSeeAllReView;
+    private ListBookHorizontalScrollView mListSameBook;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +54,15 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         mTextNumRating = (TextView)findViewById(R.id.text_num_rating_sell);
         mCustomScrollviewReview = (CustomScrollviewReview)findViewById(R.id.scrollview_part_of_reviews);
         mSeeAllDescription = (Button)findViewById(R.id.bt_seeall_description);
+        mListSameBook = (ListBookHorizontalScrollView)findViewById(R.id.list_sell_same_books);
+        mSeeAllReView = (Button)findViewById(R.id.bt_seeall_review);
+        setDataReview();
+        mListSameBook.setDataListBook(bookList);
         mSeeAllDescription.setOnClickListener(this);
         mRating.setOnClickListener(this);
-        mSeeAllReView = (Button)findViewById(R.id.bt_seeall_review);
         mSeeAllReView.setOnClickListener(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_sell);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_sell);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -66,7 +70,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         Bundle packageFromCaller=
                 callerIntent.getBundleExtra("Mypackage");
         int id_book=packageFromCaller.getInt("id_book");
-        setDataReview();
+
         mRating.setRate(4);
         mTextAuthor.setText(bookList.get(id_book).getAuthor().getName());
         mTextBookName.setText((bookList.get(id_book).getTitle()));
@@ -109,21 +113,25 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.ic_home:
+                onBackPressed();
+                break;
+            default:break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
     public void setDataReview(){
-        Book book = new Book("Cửu âm Bạch cốt trảo 1 + Hang long thap bat skill",new Author("Quách Tương"),100000,200000);
-        bookList.add(book);
-        Book book1 = new Book("Cửu âm Bạch cốt trảo 2",new Author("Quách Tương"),100000,200000);
-        bookList.add(book1);
-        Book book2 = new Book("Cửu âm Bạch cốt trảo 3",new Author("Quách Tương"),100000,200000);
-        bookList.add(book2);
-        Book book3 = new Book("Cửu âm Bạch cốt trảo 4",new Author("Quách Tương"),100000,200000);
-        bookList.add(book3);
-        Book book4 = new Book("Cửu âm Bạch cốt trảo 5",new Author("Quách Tương"),100000,200000);
-        bookList.add(book4);
-        Book book5 = new Book("Cửu âm Bạch cốt trảo 6",new Author("Quách Tương"),100000,200000);
+
+        bookList.add(new Book("Cửu âm Bạch cốt trảo 6",new Author("Quách Tương"),100000,200000));
+        bookList.add(new Book("Cửu âm Bạch cốt trảo 6",new Author("Quách Tương"),100000,200000));
+        bookList.add(new Book("Cửu âm Bạch cốt trảo 6",new Author("Quách Tương"),100000,200000));
+        bookList.add(new Book("Cửu âm Bạch cốt trảo 6",new Author("Quách Tương"),100000,200000));
+        bookList.add(new Book("Cửu âm Bạch cốt trảo 6",new Author("Quách Tương"),100000,200000));
+        bookList.add(new Book("Cửu âm Bạch cốt trảo 6",new Author("Quách Tương"),100000,200000));
+        bookList.add(new Book("Cửu âm Bạch cốt trảo 6",new Author("Quách Tương"),100000,200000));
+
         mListReviews.add(new Review("quá hay.hay không tưởng nổi1 :))","vxhuy176",5,"11/12/2016 22:11"));
         mListReviews.add(new Review("quá hay.hay không tưởng nổi 2:))","vxhuy176",3,"11/12/2016 22:11"));
         mListReviews.add(new Review("quá hay.hay không tưởng nổi :3))","vxhuy176",4,"11/12/2016 22:11"));

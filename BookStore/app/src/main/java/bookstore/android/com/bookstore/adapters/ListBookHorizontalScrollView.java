@@ -48,7 +48,8 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
     }
     public void setDataListBook(List<Book> bookList){
         mLinearLayoutBook = (LinearLayout)findViewById(R.id.linearlayout_list_book);
-        for(int i = 0;i<5;i++){
+        int tmp = bookList.size()<10?bookList.size():10;
+        for(int i = 0;i<tmp;i++){
             BookItem bookItem = new BookItem(this.getContext());
             MyHolder myHolder = new MyHolder(bookItem.mView);
             if(bookList.get(i).getId()!=0){
@@ -61,7 +62,7 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
             }
             myHolder.mBookName.setText(bookList.get(i).getTitle());
             myHolder.mBookName.setSelected(true);
-            myHolder.mBookOldPrice.setText(bookList.get(i).getOldPrice()+"");
+//            myHolder.mBookOldPrice.setText(bookList.get(i).getOldPrice()+"");
             myHolder.mBookPrice.setText(bookList.get(i).getPrice()+"");
             mLinearLayoutBook.addView(bookItem);
         }
@@ -87,7 +88,7 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
         public MyHolder(View view){
             super();
             mBookName = (TextView)view.findViewById(R.id.textview_name_book);
-            mBookOldPrice = (TextView)view.findViewById(R.id.textview_old_price);
+//            mBookOldPrice = (TextView)view.findViewById(R.id.textview_old_price);
             mBookPrice = (TextView)view.findViewById(R.id.textview_price);
             mBtBook = (ImageButton)view.findViewById(R.id.image_book);
             mRatingBook = (RatingView)view.findViewById(R.id.rating_average_item_book);

@@ -14,10 +14,6 @@ public class User {
     private String address;
     private String phone;
     private String time;
-    private ArrayList<Rate> listRate = new ArrayList<>();
-    private ArrayList<View> listView = new ArrayList<>();
-    private ArrayList<Bill> listBills = new ArrayList<>();
-    private ArrayList<Review> listReviews = new ArrayList<>();
     private Cart cart;
 
     public Cart getCart() {
@@ -84,35 +80,4 @@ public class User {
         this.time = time;
     }
 
-    public ArrayList<Rate> getListRate() {
-        return listRate;
-    }
-
-    public void setListRate(ArrayList<Rate> listRate) {
-        this.listRate = listRate;
-    }
-
-    public ArrayList<View> getListView() {
-        return listView;
-    }
-
-    public void setListView(ArrayList<View> listView) {
-        this.listView = listView;
-    }
-
-    public ArrayList<Bill> getListBills() {
-        return listBills;
-    }
-
-    public void setListBills(ArrayList<Bill> listBills) {
-        this.listBills = listBills;
-    }
-
-    public ArrayList<Review> getListReviews() {
-        return listReviews;
-    }
-
-    public void setListReviews(ArrayList<Review> listReviews) {
-        this.listReviews = listReviews;
-    }
 }

@@ -16,8 +16,8 @@ import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.adapters.BookCartAdapter;
 import bookstore.android.com.bookstore.models.Author;
 import bookstore.android.com.bookstore.models.Book;
-import bookstore.android.com.bookstore.models.CartBook;
 import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
+import bookstore.android.com.bookstore.models.CartBook;
 
 /**
  * Created by vxhuy176 on 09/12/2016.
@@ -74,17 +74,12 @@ public class CartActivity extends AppCompatActivity {
 
     }
     private void setData(){
-        mListCartBook.add(new CartBook(new Book("Cửu âm Bạch cốt trảo 1",
-                new Author("Quách Tương"),100000,3450000),1));
-        mListCartBook.add(new CartBook(new Book("Cửu âm Bạch cốt trảo 1 + Hang long thap bat skill",
-                new Author("Quách Tương"),100000,200000),3));
-        mListCartBook.add(new CartBook(new Book("Cửu âm Bạch cốt trảo 1 + Hang long thap bat skill",
-                new Author("Quách Tương"),100000,212000),4));
-        mListCartBook.add(new CartBook(new Book("Cửu âm Bạch cốt trảo 1 + Hang long thap bat skill",
-                new Author("Quách Tương"),100000,22222000),1));
-        mListCartBook.add(new CartBook(new Book("Cửu âm Bạch cốt trảo 1 + Hang long thap bat skill",
-                new Author("Quách Tương"),100000,2110000),1));
-
+        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
+        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
+        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
+        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
+        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
+        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
         mListBook.add(new Book("Cửu âm Bạch cốt trảo",new Author("Quách Tương"),100000,200000));
         mListBook.add(new Book("Cửu âm Bạch cốt trảo",new Author("Quách Tương"),100000,200000));
         mListBook.add(new Book("Cửu âm Bạch cốt trảo",new Author("Quách Tương"),100000,200000));

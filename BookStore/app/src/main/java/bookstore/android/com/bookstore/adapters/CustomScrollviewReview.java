@@ -2,7 +2,6 @@ package bookstore.android.com.bookstore.adapters;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
-import bookstore.android.com.bookstore.models.Image;
 import bookstore.android.com.bookstore.models.Rate;
 import bookstore.android.com.bookstore.models.Review;
 import bookstore.android.com.bookstore.views.custom.RatingView;
