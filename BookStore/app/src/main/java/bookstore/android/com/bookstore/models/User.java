@@ -7,29 +7,27 @@ import java.util.ArrayList;
  */
 
 public class User {
-    private int id;
+    private int userId;
+    private int fbId;
     private String name;
-    private String email;
-    private String password;
-    private String address;
-    private String phone;
-    private String time;
-    private Cart cart;
+    private String avatar;
+    private String accesstoken;
+    private String userToken;
 
-    public Cart getCart() {
-        return cart;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public int getId() {
-        return id;
+    public int getFbId() {
+        return fbId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFbId(int fbId) {
+        this.fbId = fbId;
     }
 
     public String getName() {
@@ -40,44 +38,27 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAccesstoken() {
+        return accesstoken;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAccesstoken(String accesstoken) {
+        this.accesstoken = accesstoken;
     }
 
-    public String getAddress() {
-        return address;
+    public String getUserToken() {
+        return userToken;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
     }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
 }

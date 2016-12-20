@@ -2,28 +2,40 @@ package bookstore.android.com.bookstore.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ItemBookOfBill {
+import java.util.ArrayList;
+
+/**
+ * Created by vxhuy176 on 18/12/2016.
+ */
+
+public class ItemBookSimple {
     @SerializedName("id")
     private int id;
     @SerializedName("title")
     private String title;
     @SerializedName("price")
     private float price;
-    @SerializedName("quantity")
-    private int quantity;
+    @SerializedName("urlImage")
+    private String urlImage="";
+    @SerializedName("rateAverage")
+    private float rateAverage;
     @SerializedName("author")
-    private String authorName;
-    @SerializedName("url_image")
-    private String urlImage;
+    private String author;
 
-    public ItemBookOfBill(int id, String title, float price, int quantity, String authorName, String urlImage) {
+    public String getAuthor() {
+        return author;
+    }
 
-        this.id = id;
-        this.title = title;
-        this.price = price;
-        this.quantity = quantity;
-        this.authorName = authorName;
-        this.urlImage = urlImage;
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public float getRateAverage() {
+        return rateAverage;
+    }
+
+    public void setRateAverage(float rateAverage) {
+        this.rateAverage = rateAverage;
     }
 
     public int getId() {
@@ -50,22 +62,6 @@ public class ItemBookOfBill {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-
     public String getUrlImage() {
         return urlImage;
     }
@@ -74,4 +70,3 @@ public class ItemBookOfBill {
         this.urlImage = urlImage;
     }
 }
-

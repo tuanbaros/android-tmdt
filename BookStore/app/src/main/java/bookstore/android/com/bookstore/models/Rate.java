@@ -1,5 +1,7 @@
 package bookstore.android.com.bookstore.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -7,12 +9,19 @@ import java.util.ArrayList;
  */
 
 public class Rate {
+    @SerializedName("idBook")
     private int idBook;
+    @SerializedName("rate1star")
     private int rate1star;
+    @SerializedName("rate2star")
     private int rate2star;
+    @SerializedName("rate3star")
     private int rate3star;
+    @SerializedName("rate4tar")
     private int rate4star;
+    @SerializedName("rate5star")
     private int rate5star;
+    @SerializedName("listReviews")
     private ArrayList<Review> listReviews = new ArrayList<>();
 
     public int getIdBook() {

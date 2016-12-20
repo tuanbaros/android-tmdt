@@ -1,5 +1,7 @@
 package bookstore.android.com.bookstore.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -7,9 +9,13 @@ import java.util.ArrayList;
  */
 
 public class Bill {
+    @SerializedName("id")
     private int id;
+    @SerializedName("status")
     private String status;
+    @SerializedName("time")
     private String time;
+    @SerializedName("listbooks")
     private ArrayList<ItemBookOfBill> listBooks = new ArrayList<>();
 
     public Bill(int id, String status, String time, ArrayList<ItemBookOfBill> listBooks) {

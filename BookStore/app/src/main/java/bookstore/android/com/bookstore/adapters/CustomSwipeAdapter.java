@@ -8,24 +8,32 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
 import bookstore.android.com.bookstore.R;
+import bookstore.android.com.bookstore.models.ItemBookSimple;
+import bookstore.android.com.bookstore.views.custom.RatingView;
 
 /**
  * Created by vxhuy176 on 09/09/2016.
  */
 public class CustomSwipeAdapter extends PagerAdapter {
-    private int[] mImageBook = {R.drawable.image_book,R.drawable.image_book,R.drawable.image_book,R.drawable.image_book,R.drawable.image_book};
     private Context mContext;
     private LayoutInflater mLayoutInflater;
 
-    public CustomSwipeAdapter(Context context) {
-        this.mContext = context;
+    private ArrayList<ItemBookSimple> mListBestBook = new ArrayList<>();
 
+    public CustomSwipeAdapter(Context context,ArrayList<ItemBookSimple> list) {
+        this.mContext = context;
+        this.mListBestBook = list;
     }
 
     @Override
     public int getCount() {
-        return mImageBook.length;
+        return mListBestBook.size()<6?mListBestBook.size():6;
     }
 
     @Override
@@ -39,7 +47,18 @@ public class CustomSwipeAdapter extends PagerAdapter {
         mLayoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View item_view = mLayoutInflater.inflate(R.layout.swipe_book,container,false);
         ImageView imageView = (ImageView)item_view.findViewById(R.id.image_swipe_book);
-        imageView.setImageResource(mImageBook[position]);
+        TextView mPrice,mOldPrice,mBookName,mAuthor;
+        RatingView mRating;
+        mPrice = (TextView)item_view.findViewById(R.id.textview_price);
+        mAuthor = (TextView)item_view.findViewById(R.id.textview_author_book);
+        mBookName = (TextView)item_view.findViewById(R.id.textview_name_book);
+        mOldPrice = (TextView)item_view.findViewById(R.id.textview_old_price);
+        mRating = (RatingView)item_view.findViewById(R.id.rating_slide);
+
+        mBookName.setText(mListBestBook.get(position).getTitle());
+        mAuthor.setText(mListBestBook.get(position).getAuthor());
+        mPrice.setText(mListBestBook.get(position).getPrice()+" $");
+        Picasso.with(item_view.getContext()).load(mListBestBook.get(position).getUrlImage()).into(imageView);
         container.addView(item_view);
         return item_view;
 
@@ -49,4 +68,6 @@ public class CustomSwipeAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((LinearLayout)object);
     }
+
+
 }

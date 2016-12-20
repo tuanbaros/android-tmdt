@@ -20,6 +20,8 @@ import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.adapters.CustomScrollViewBill;
 import bookstore.android.com.bookstore.models.Bill;
 import bookstore.android.com.bookstore.models.ItemBookOfBill;
+import bookstore.android.com.bookstore.network.ApiBookStore;
+import bookstore.android.com.bookstore.network.RestClient;
 
 /**
  * Created by vxhuy176 on 16/12/2016.
@@ -73,15 +75,19 @@ public class BillActivity extends AppCompatActivity implements AdapterView.OnIte
         return super.onOptionsItemSelected(item);
     }
     private void setDataBill(){
-        ArrayList<ItemBookOfBill> listItemBookOfBills = new ArrayList<>();
-        listItemBookOfBills.add(new  ItemBookOfBill(1,"Cuu duong than cong",(float)10.5,2,"Huy","xxxx"));
-        listItemBookOfBills.add(new  ItemBookOfBill(1,"Cuu duong than cong",(float)10.5,2,"Huy","xxxx"));
-        listItemBookOfBills.add(new  ItemBookOfBill(1,"Cuu duong than cong",(float)10.5,2,"Huy","xxxx"));
-        mListBill.add(new Bill(1,"Processing","18/12/2016",listItemBookOfBills));
-        mListBill.add(new Bill(1,"Processing","18/12/2016",listItemBookOfBills));
-        mListBill.add(new Bill(1,"Processing","18/12/2016",listItemBookOfBills));
-        mListBill.add(new Bill(1,"Processing","18/12/2016",listItemBookOfBills));
-        mListBill.add(new Bill(1,"Processing","18/12/2016",listItemBookOfBills));
+
+
+
+
+//        ArrayList<ItemBookOfBill> listItemBookOfBills = new ArrayList<>();
+//        listItemBookOfBills.add(new  ItemBookOfBill(1,"Cuu duong than cong",(float)10.5,2,"Huy","xxxx"));
+//        listItemBookOfBills.add(new  ItemBookOfBill(1,"Cuu duong than cong",(float)10.5,2,"Huy","xxxx"));
+//        listItemBookOfBills.add(new  ItemBookOfBill(1,"Cuu duong than cong",(float)10.5,2,"Huy","xxxx"));
+//        mListBill.add(new Bill(1,"Processing","18/12/2016",listItemBookOfBills));
+//        mListBill.add(new Bill(1,"Processing","18/12/2016",listItemBookOfBills));
+//        mListBill.add(new Bill(1,"Processing","18/12/2016",listItemBookOfBills));
+//        mListBill.add(new Bill(1,"Processing","18/12/2016",listItemBookOfBills));
+//        mListBill.add(new Bill(1,"Processing","18/12/2016",listItemBookOfBills));
     }
 
 }

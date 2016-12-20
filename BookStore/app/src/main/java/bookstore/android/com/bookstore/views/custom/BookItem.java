@@ -38,7 +38,7 @@ public class BookItem extends LinearLayout{
         init(context);
     }
 
-    private void init(Context context){
+    private void init(final Context context){
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         mView = layoutInflater.inflate(R.layout.item_book, this, true);
         mImageButton = (ImageButton)findViewById(R.id.image_book);
@@ -46,12 +46,13 @@ public class BookItem extends LinearLayout{
         mTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), ""+mTextView, Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), ""+mTextView.getText(), Toast.LENGTH_SHORT).show();
             }
         });
         mImageButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(view.getContext(),""+position,Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(view.getContext(), SellActivity.class);
 
                 Bundle bundle = new Bundle();

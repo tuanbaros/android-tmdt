@@ -1,6 +1,8 @@
 package bookstore.android.com.bookstore.activities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -20,9 +22,16 @@ import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
 import bookstore.android.com.bookstore.fragment.RatingFragment;
 import bookstore.android.com.bookstore.models.Author;
 import bookstore.android.com.bookstore.models.Book;
+import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.models.Rate;
 import bookstore.android.com.bookstore.models.Review;
+import bookstore.android.com.bookstore.network.ApiBookStore;
+import bookstore.android.com.bookstore.network.RestClient;
 import bookstore.android.com.bookstore.views.custom.RatingView;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * Created by vxhuy176 on 15/12/2016.
@@ -36,8 +45,10 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
     private CustomScrollviewReview mReviews;
     private ListBookHorizontalScrollView mListBookSame;
     private ArrayList<Review> mListReviews = new ArrayList<>();
-    private ArrayList<Book> mListBook = new ArrayList<>();
+    private ArrayList<ItemBookSimple> mListBook = new ArrayList<>();
     private FloatingActionButton mAddReview;
+    private ProgressDialog mProgressDialog;
+    private Rate mRate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +69,7 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
         setDataReview();
         mReviews.setData(mListReviews);
         mListBookSame = (ListBookHorizontalScrollView)findViewById(R.id.scrollhorizontal_same_type);
-        mListBookSame.setDataListBook(mListBook);
+
         mAddReview.setOnClickListener(this);
 
     }
@@ -87,21 +98,36 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setDataReview(){
-        mListBook.add(new Book("Cửu âm Bạch cốt trảo 1 + Hang long thap bat skill",new Author("Quách Tương"),100000,200000));
-        mListBook.add(new Book("Cửu âm Bạch cốt trảo 1 + Hang long thap bat skill",new Author("Quách Tương"),100000,200000));
-        mListBook.add(new Book("Cửu âm Bạch cốt trảo 2 + Hang long thap bat skill",new Author("Quách Tương"),100000,200000));
-        mListBook.add(new Book("Cửu âm Bạch cốt trảo 3 + Hang long thap bat skill",new Author("Quách Tương"),100000,200000));
-        mListBook.add(new Book("Cửu âm Bạch cốt trảo 4 + Hang long thap bat skill",new Author("Quách Tương"),100000,200000));
+        ApiBookStore apiBookStore = RestClient.getClient().create(ApiBookStore.class);
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.show();
+        Intent callintent = getIntent();
+        Bundle packageFromCaller=
+                callintent.getBundleExtra("Mypackage");
+        mScoreRatingTextView.setText(packageFromCaller.getFloat(SellActivity.RATEAVERAGE_BOOK)+"");
+        mCountRatingTextView.setText(packageFromCaller.getInt(SellActivity.COUNT_RATE_BOOK)+"");
+        Call<Rate> callRate = apiBookStore.getRate(packageFromCaller.getInt(SellActivity.BOOK_ID));
+        callRate.enqueue(new Callback<Rate>() {
+            @Override
+            public void onResponse(Response<Rate> response, Retrofit retrofit) {
+                if (response.isSuccess()){
+                    mRate = response.body();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
         mListReviews.add(new Review("quá hay.hay không tưởng nổi1 :))","vxhuy176",5,"11/12/2016 22:11"));
         mListReviews.add(new Review("quá hay.hay không tưởng nổi 2:))","vxhuy176",3,"11/12/2016 22:11"));
         mListReviews.add(new Review("quá hay.hay không tưởng nổi :3))","vxhuy176",4,"11/12/2016 22:11"));
         mListReviews.add(new Review("quá hay.hay không tưởng nổi :)4)","vxhuy176",5,"11/12/2016 22:11"));
         mListReviews.add(new Review("quá hay.hay không tưởng nổi :))5","vxhuy176",5,"11/12/2016 22:11"));
         mListReviews.add(new Review("quá hay.hay không tưởng nổi1 :))","vxhuy176",5,"11/12/2016 22:11"));
-        mListReviews.add(new Review("quá hay.hay không tưởng nổi 2:))","vxhuy176",3,"11/12/2016 22:11"));
-        mListReviews.add(new Review("quá hay.hay không tưởng nổi :3))","vxhuy176",4,"11/12/2016 22:11"));
-        mListReviews.add(new Review("quá hay.hay không tưởng nổi :)4)","vxhuy176",5,"11/12/2016 22:11"));
-        mListReviews.add(new Review("quá hay.hay không tưởng nổi :))5","vxhuy176",5,"11/12/2016 22:11"));
 
     }
 

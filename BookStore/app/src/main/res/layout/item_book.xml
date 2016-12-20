@@ -31,7 +31,8 @@
                 android:layout_width="100dp"
                 android:layout_height="160dp"
                 android:layout_gravity="center|center_vertical"
-                android:background="@drawable/image_book"
+                android:scaleType="centerCrop"
+                android:background="#ffffff"
                 android:maxWidth="100dp"
                 android:minHeight="150dp" />
 

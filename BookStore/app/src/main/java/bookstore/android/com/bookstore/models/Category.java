@@ -1,5 +1,7 @@
 package bookstore.android.com.bookstore.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -7,8 +9,11 @@ import java.util.ArrayList;
  */
 
 public class Category {
+    @SerializedName("id")
     private int id;
+    @SerializedName("urlImage")
     private String image;
+    @SerializedName("name")
     private String name;
 
     public Category(String name) {

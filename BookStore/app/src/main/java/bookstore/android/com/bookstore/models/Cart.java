@@ -1,5 +1,7 @@
 package bookstore.android.com.bookstore.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -7,10 +9,12 @@ import java.util.ArrayList;
  */
 
 public class Cart {
+    @SerializedName("id")
     private int id;
+    @SerializedName("cartbooks")
     private ArrayList<CartBook> listCartBooks = new ArrayList<>();
+    @SerializedName("total_cost")
     private float totalCost;
-    private String time;
 
     public int getId() {
         return id;
@@ -36,13 +40,6 @@ public class Cart {
         this.totalCost = totalCost;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
 
 }
