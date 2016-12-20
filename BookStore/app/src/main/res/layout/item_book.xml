@@ -55,12 +55,17 @@
                     android:textSize="15dp"
                     android:textStyle="normal" />
 
-                <bookstore.android.com.bookstore.views.custom.RatingView
+                <RatingBar
                     android:id="@+id/rating_average_item_book"
-                    android:layout_width="75dp"
-                    android:layout_height="15dp">
+                    android:layout_width="80dp"
+                    android:layout_height="15dp"
+                    android:isIndicator="true"
+                    style="?ratingBarStyleSmall"
+                    android:numStars="5"
+                    android:stepSize="0.1"
+                    android:rating="1">
 
-                </bookstore.android.com.bookstore.views.custom.RatingView>
+                </RatingBar>
 
                 <TextView
                     android:id="@+id/textview_price"

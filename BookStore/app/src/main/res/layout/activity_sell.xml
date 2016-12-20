@@ -21,7 +21,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
-                android:src="@drawable/image_book"
+                android:src="@drawable/bg_loading"
                 android:id="@+id/profile_id"
                 app:layout_collapseMode="parallax" />
 
@@ -30,6 +30,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />
+
+            <TextView
+                android:id="@+id/text_author_book_sell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextBookAuthor"
+                android:text="book's author"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -55,12 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/cardview_light_background">
-                    <TextView
-                        android:id="@+id/text_author_book_sell"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/TextBookAuthor"
-                        android:text="book's author"/>
+
                     <TextView
                         android:id="@+id/text_name_book_sell"
                         android:layout_width="match_parent"
@@ -82,28 +84,31 @@
                                 android:orientation="horizontal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
-                                <bookstore.android.com.bookstore.views.custom.RatingView
+                                <RatingBar
                                     android:id="@+id/rating_book_sell"
-                                    android:layout_width="100dp"
-                                    android:layout_height="20dp"
-                                    style="@style/TextBookAuthor" />
+                                    android:isIndicator="true"
+                                    style="?ratingBarStyleSmall"
+                                    android:numStars="5"
+                                    android:stepSize="0.1"
+                                    android:rating="1"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="15dp" />
                                 <TextView
                                     android:id="@+id/text_num_rating_sell1"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_marginTop="7dp"/>
+                                    android:textSize="12dp" />
                             </LinearLayout>
                             <TextView
                                 android:id="@+id/text_price_book_sell"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="5000000"
                                 style="@style/StylePrice"/>
                             <TextView
                                 android:id="@+id/text_old_price_book_sell"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="6000000"
                                 style="@style/StyleOldPrice"/>
                         </LinearLayout>
                         <LinearLayout
@@ -301,6 +306,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
+                            android:id="@+id/text_ratingAverage_sell"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -314,18 +320,25 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:layout_weight="1">
-                            <bookstore.android.com.bookstore.views.custom.RatingView
-                                android:layout_width="100dp"
-                                android:layout_height="20dp"
+                            <RatingBar
+                                android:id="@+id/rating_reviews"
+                                android:isIndicator="true"
+                                style="@style/foodRatingBar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginLeft="5dp">
+                                android:layout_marginLeft="5dp"
+                                android:numStars="5"
+                                android:stepSize="0.1"
+                                android:rating="1"/>
 
-                            </bookstore.android.com.bookstore.views.custom.RatingView>
+
                             <LinearLayout
                                 android:orientation="horizontal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
                                 <TextView
+                                    android:id="@+id/text_count_Rating_sell"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="100"

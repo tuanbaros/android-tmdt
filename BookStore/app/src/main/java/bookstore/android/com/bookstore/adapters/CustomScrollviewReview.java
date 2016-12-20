@@ -50,7 +50,6 @@ public class CustomScrollviewReview extends ScrollView {
             myHolder.mNameUser.setText(listReviews.get(i).getUsername());
             myHolder.mTime.setText(listReviews.get(i).getTime());
             myHolder.mContent.setText(listReviews.get(i).getContent());
-//            Log.e("TEST", "mRate: "+ myHolder.mRate );
             myHolder.mRate.setRate(listReviews.get(i).getRating());
             mLinearLayout.addView(reviewItem);
         }

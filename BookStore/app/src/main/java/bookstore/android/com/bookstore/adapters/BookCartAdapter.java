@@ -9,8 +9,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,12 +46,13 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
     public void onBindViewHolder(MyHolder holder, int position) {
 
         CartBook item = mListCartBook.get(position);
-//        Picasso.with(mContext).load(item.getBook().getListImages().get(0).getUrl()).into(holder.mImageButton);
+        Picasso.with(mContext).load(item.getUrlImage()).placeholder(R.drawable.bg_loading)
+                .error(R.drawable.bg_error).into(holder.mImageButton);
         holder.mBooksOldPrice.setText(item.getOldPrice()+"");
         holder.mBooksPrice.setText(item.getPrice()+"");
         holder.mBooksName.setText(item.getTitle());
         holder.mBooksAuthor.setText(item.getAuthor());
-
+        holder.mPosition = position;
     }
 
     @Override
@@ -60,9 +64,10 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
 
 
     public class MyHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener {
+        private int mPosition;
         private TextView mBooksName, mBooksAuthor, mBooksPrice, mBooksOldPrice;
         private Spinner mQuantityBook;
-        private ImageButton mImageButton;
+        private ImageView mImageButton;
         private Button mDeleteBookCart;
         public MyHolder(View itemView) {
             super(itemView);
@@ -75,13 +80,14 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
                     R.array.spinner_array, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             mQuantityBook.setAdapter(adapter);
-            mImageButton = (ImageButton)itemView.findViewById(R.id.imagebt_book_cart);
+            mImageButton = (ImageView)itemView.findViewById(R.id.imagebt_book_cart);
             mDeleteBookCart = (Button)itemView.findViewById(R.id.bt_delete_book_cart);
             mQuantityBook.setOnItemSelectedListener(this);
         }
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            String item = adapterView.getItemAtPosition(i).toString();
+            String quantity = adapterView.getItemAtPosition(i).toString();
+            mListCartBook.get(mPosition).setQuantity(Integer.parseInt(quantity));
         }
 
         @Override
