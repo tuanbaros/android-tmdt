@@ -1,15 +1,25 @@
 package bookstore.android.com.bookstore.models;
 
-public class CartBook {
+import com.google.gson.annotations.SerializedName;
 
+public class CartBook {
+    @SerializedName("id")
     private int id;
+    @SerializedName("idBook")
     private int idBook;
+    @SerializedName("title")
     private String title;
+    @SerializedName("author")
     private String author;
+    @SerializedName("images")
     private String urlImage;
+    @SerializedName("price")
     private float price;
+    @SerializedName("oldprice")
     private float oldPrice;
+    @SerializedName("quantity")
     private int quantity;
+    @SerializedName("time")
     private String time;
 
     public CartBook(int idBook, String title, String author, float price, float oldPrice, int quantity) {

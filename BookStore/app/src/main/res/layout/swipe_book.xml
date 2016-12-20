@@ -36,6 +36,7 @@
                android:textStyle="italic"
                android:layout_marginLeft="10dp" />
            <bookstore.android.com.bookstore.views.custom.RatingView
+               android:id="@+id/rating_slide"
                android:layout_width="150dp"
                android:layout_height="25dp"
                android:layout_marginLeft="10dp">

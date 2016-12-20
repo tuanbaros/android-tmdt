@@ -1,15 +1,23 @@
 package bookstore.android.com.bookstore.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by vxhuy176 on 05/12/2016.
  */
 
 public class Review {
+    @SerializedName("id")
     private int id;
+    @SerializedName("content")
     private String content;
+    @SerializedName("urlAvatar")
     private String urlImageAvatar;
+    @SerializedName("userNameRating")
     private String username;
+    @SerializedName("rating")
     private int rating;
+    @SerializedName("time")
     private String time;
 
     public Review(String content, String username, int rating, String time) {

@@ -1,5 +1,7 @@
 package bookstore.android.com.bookstore.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -7,13 +9,21 @@ import java.util.ArrayList;
  */
 
 public class Author {
+    @SerializedName("id")
     private int id;
+    @SerializedName("name")
     private String name;
-    private int rateBookAverage;
+    @SerializedName("rateBookAverage")
+    private float rateBookAverage;
+    @SerializedName("TotalSold")
     private int TotalSold;
+    @SerializedName("introduce")
     private String recommend;
-    private String contact;
+//    @SerializedName("contact")
+//    private String contact;
+    @SerializedName("avatar")
     private String avatar;
+    @SerializedName("listBooks")
     private ArrayList<BookOfAuthor> listBooks = new ArrayList<>();
 
     public Author(String name) {
@@ -24,11 +34,11 @@ public class Author {
         return id;
     }
 
-    public int getRateBookAverage() {
+    public float getRateBookAverage() {
         return rateBookAverage;
     }
 
-    public void setRateBookAverage(int rateBookAverage) {
+    public void setRateBookAverage(float rateBookAverage) {
         this.rateBookAverage = rateBookAverage;
     }
 
@@ -60,13 +70,13 @@ public class Author {
         this.recommend = recommend;
     }
 
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
+//    public String getContact() {
+//        return contact;
+//    }
+//
+//    public void setContact(String contact) {
+//        this.contact = contact;
+//    }
 
     public String getAvatar() {
         return avatar;
@@ -86,10 +96,15 @@ public class Author {
     }
 
     private class BookOfAuthor{
+        @SerializedName("idBook")
         private int idBook;
+        @SerializedName("image")
         private String urlImage;
+        @SerializedName("title")
         private String title;
+        @SerializedName("rateAverage")
         private float rateAverage;
+        @SerializedName("price")
         private float price;
 
         public int getIdBook() {

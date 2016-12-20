@@ -1,26 +1,50 @@
 package bookstore.android.com.bookstore.models;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by vxhuy176 on 05/12/2016.
  */
 
 public class Book {
+    @SerializedName("id")
     private int id = 0;
+    @SerializedName("title")
     private String title;
+    @SerializedName("author")
     private Author author;
+    @SerializedName("status")
     private String status;
+    @SerializedName("image_url")
     private String images;
+    @SerializedName("new_price")
     private float price;
+    @SerializedName("price")
     private float oldPrice;
+    @SerializedName("language")
     private String language;
-    private String discription;
+    @SerializedName("description")
+    private String description;
+    @SerializedName("rate_average")
     private float rateAverage;
+    @SerializedName("quantityBuy")
     private int quantityBuy;
-    private String type;
+    @SerializedName("date_releases")
     private String time;
+    @SerializedName("userRate")
     private int userRate;
+    @SerializedName("author_id")
+    private int authorId;
+    @SerializedName("category_id")
+    private int categoryId;
+    @SerializedName("discount_percent")
+    private float discount;
+    @SerializedName("quantity_selling")
+    private int quantitySelling;
+    @SerializedName("quantity_remain")
+    private int quantityRemain;
+    @SerializedName("quantityRating")
+    private int quantityRating;
 
 
     public Book(String title, Author author, float price, float oldPrice) {
@@ -28,6 +52,54 @@ public class Book {
         this.author = author;
         this.price = price;
         this.oldPrice = oldPrice;
+    }
+
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
+    }
+
+    public int getQuantitySelling() {
+        return quantitySelling;
+    }
+
+    public void setQuantitySelling(int quantitySelling) {
+        this.quantitySelling = quantitySelling;
+    }
+
+    public int getQuantityRemain() {
+        return quantityRemain;
+    }
+
+    public void setQuantityRemain(int quantityRemain) {
+        this.quantityRemain = quantityRemain;
+    }
+
+    public int getQuantityRating() {
+        return quantityRating;
+    }
+
+    public void setQuantityRating(int quantityRating) {
+        this.quantityRating = quantityRating;
     }
 
     public int getId() {
@@ -86,12 +158,12 @@ public class Book {
         this.language = language;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public float getRateAverage() {
@@ -116,14 +188,6 @@ public class Book {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getImages() {

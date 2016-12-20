@@ -49,7 +49,7 @@ public class CartActivity extends AppCompatActivity {
         mRecycleBookCart.setHasFixedSize(true);
         mRecycleBookCart.setLayoutManager(mLinearLayoutManager);
         mRecycleBookCart.setAdapter(mBookCartAdapter);
-        mListBookBuyMore.setDataListBook(mListBook);
+
 
 
     }

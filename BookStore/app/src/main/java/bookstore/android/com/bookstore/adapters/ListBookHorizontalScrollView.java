@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ import bookstore.android.com.bookstore.activities.MainActivity;
 import bookstore.android.com.bookstore.activities.SellActivity;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Category;
+import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.views.custom.BookItem;
 import bookstore.android.com.bookstore.views.custom.CategoryItem;
 import bookstore.android.com.bookstore.views.custom.RatingView;
@@ -46,7 +49,8 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(R.layout.list_horizontal_book, this, true);
     }
-    public void setDataListBook(List<Book> bookList){
+
+    public void setDataListBook(ArrayList<ItemBookSimple> bookList){
         mLinearLayoutBook = (LinearLayout)findViewById(R.id.linearlayout_list_book);
         int tmp = bookList.size()<10?bookList.size():10;
         for(int i = 0;i<tmp;i++){
@@ -60,22 +64,26 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
             if(bookList.get(i).getRateAverage()!=0){
 //                myHolder.mRatingBook.bookList.get(i).getRateAverage();
             }
+            if (!bookList.get(i).getUrlImage().equals("")){
+                Picasso.with(bookItem.mView.getContext()).load(bookList.get(i).getUrlImage()).into(myHolder.mBtBook);
+            }
             myHolder.mBookName.setText(bookList.get(i).getTitle());
             myHolder.mBookName.setSelected(true);
-//            myHolder.mBookOldPrice.setText(bookList.get(i).getOldPrice()+"");
-            myHolder.mBookPrice.setText(bookList.get(i).getPrice()+"");
+            myHolder.mBookPrice.setText(bookList.get(i).getPrice()+"$");
             mLinearLayoutBook.addView(bookItem);
         }
 
     }
 
 
-    public void setDataCategory(List<Category> categoryList){
+    public void setDataCategory(ArrayList<Category> categoryList){
         mLinearLayoutBook = (LinearLayout)findViewById(R.id.linearlayout_list_book);
-        for(int i = 0; i<5;i++){
+        for(int i = 0; i<10;i++){
             CategoryItem categoryItem = new CategoryItem(this.getContext());
             MyHolderCategory myHolderCategory = new MyHolderCategory(categoryItem.mView);
-
+            if (!categoryList.get(i).getImage().equals("")){
+                Picasso.with(getContext()).load(categoryList.get(i).getImage()).into(myHolderCategory.mImageCategory);
+            }
             myHolderCategory.mNameCategory.setText(categoryList.get(i).getName());
             mLinearLayoutBook.addView(categoryItem);
         }
