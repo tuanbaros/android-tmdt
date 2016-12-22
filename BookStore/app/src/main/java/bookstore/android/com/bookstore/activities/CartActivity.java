@@ -1,5 +1,6 @@
 package bookstore.android.com.bookstore.activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,14 @@ import bookstore.android.com.bookstore.adapters.BookCartAdapter;
 import bookstore.android.com.bookstore.models.Author;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
+import bookstore.android.com.bookstore.models.Cart;
 import bookstore.android.com.bookstore.models.CartBook;
+import bookstore.android.com.bookstore.models.ItemBookSimple;
+import bookstore.android.com.bookstore.utils.DataController;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * Created by vxhuy176 on 09/12/2016.
@@ -29,11 +37,11 @@ public class CartActivity extends AppCompatActivity {
     private TextView mTextCountItem;
     private TextView mTextTotalCost;
     private Button mBtBuyCart;
-    private ArrayList<Book> mListBook = new ArrayList<>();
+    private ArrayList<ItemBookSimple> mListBookMore = new ArrayList<>();
     private BookCartAdapter mBookCartAdapter;
     private LinearLayoutManager mLinearLayoutManager;
-    private CartActivity mCartActivity;
     private ArrayList<CartBook> mListCartBook = new ArrayList<>();
+    private ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,15 +51,8 @@ public class CartActivity extends AppCompatActivity {
         mRecycleBookCart = (RecyclerView)findViewById(R.id.recycleview_books);
         mListBookBuyMore = (ListBookHorizontalScrollView) findViewById(R.id.horizontal_buy_more);
         mBtBuyCart = (Button)findViewById(R.id.bt_buy_cart);
-        setData();
-        mBookCartAdapter = new BookCartAdapter(getApplicationContext(),mListCartBook);
         mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecycleBookCart.setHasFixedSize(true);
-        mRecycleBookCart.setLayoutManager(mLinearLayoutManager);
-        mRecycleBookCart.setAdapter(mBookCartAdapter);
-
-
-
+        setData();
     }
 
     @Override
@@ -74,16 +75,33 @@ public class CartActivity extends AppCompatActivity {
 
     }
     private void setData(){
-        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
-        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
-        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
-        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
-        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
-        mListCartBook.add(new CartBook(1,"Cửu âm chân kinh 1","Kim Dung",100000,10000,10));
-        mListBook.add(new Book("Cửu âm Bạch cốt trảo",new Author("Quách Tương"),100000,200000));
-        mListBook.add(new Book("Cửu âm Bạch cốt trảo",new Author("Quách Tương"),100000,200000));
-        mListBook.add(new Book("Cửu âm Bạch cốt trảo",new Author("Quách Tương"),100000,200000));
-        mListBook.add(new Book("Cửu âm Bạch cốt trảo",new Author("Quách Tương"),100000,200000));
-        mListBook.add(new Book("Cửu âm Bạch cốt trảo",new Author("Quách Tương"),100000,200000));
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.show();
+        Call<Cart> cartCall = DataController.apiBookStore.getCart(4);
+        cartCall.enqueue(new Callback<Cart>() {
+            @Override
+            public void onResponse(Response<Cart> response, Retrofit retrofit) {
+                if (response.isSuccess()){
+                    mListCartBook = response.body().getListCartBooks();
+                    mBookCartAdapter = new BookCartAdapter(getApplicationContext(),mListCartBook);
+                    mRecycleBookCart.setHasFixedSize(true);
+                    mRecycleBookCart.setLayoutManager(mLinearLayoutManager);
+                    mRecycleBookCart.setAdapter(mBookCartAdapter);
+                    mTextCountItem.setText(mListCartBook.size()+"");
+                    float cost = 0;
+                    for(int i = 0;i<mListCartBook.size();i++){
+                        cost+=mListCartBook.get(i).getPrice()*mListCartBook.get(i).getQuantity();
+                    }
+                    mTextTotalCost.setText(cost+"");
+                }
+                mProgressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                mProgressDialog.dismiss();
+            }
+        });
     }
 }

@@ -1,6 +1,7 @@
 package bookstore.android.com.bookstore.activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -8,6 +9,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -27,6 +29,7 @@ import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.network.ApiBookStore;
 import bookstore.android.com.bookstore.network.RestClient;
+import bookstore.android.com.bookstore.utils.DataController;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -116,6 +119,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(this,BillActivity.class));
                 break;
             case R.id.nav_cart:
+
                 startActivity(new Intent(this,CartActivity.class));
                 break;
             case R.id.nav_rate:
@@ -154,24 +158,25 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void createData(){
+    public void createData() {
 
-        ApiBookStore apiBookStore = RestClient.getClient().create(ApiBookStore.class);
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
-        Call<ArrayList<ItemBookSimple>> callListTopSelling = apiBookStore.getListTopSelling();
-        Call<ArrayList<ItemBookSimple>> callListBookSales = apiBookStore.getListTopSaleOff();
-        Call<ArrayList<ItemBookSimple>> callListNewReleases = apiBookStore.getListNewReleases();
-        Call<ArrayList<Category>> callListCategory = apiBookStore.getListCategory();
+        Call<ArrayList<ItemBookSimple>> callListTopSelling = DataController.apiBookStore.getListTopSelling();
+        Call<ArrayList<ItemBookSimple>> callListBookSales = DataController.apiBookStore.getListTopSaleOff();
+        Call<ArrayList<ItemBookSimple>> callListNewReleases = DataController.apiBookStore.getListNewReleases();
+        Call<ArrayList<Category>> callListCategory = DataController.apiBookStore.getListCategory();
         callListTopSelling.enqueue(new Callback<ArrayList<ItemBookSimple>>() {
             @Override
             public void onResponse(Response<ArrayList<ItemBookSimple>> response, Retrofit retrofit) {
-                if(response.isSuccess()){
+                if (response.isSuccess()) {
                     mListBestSelling = response.body();
                     mBestSeller.setDataListBook(mListBestSelling);
                     mKindleEBooks.setDataListBook(mListBestSelling);
                     mBestBookOfMonth.setDataListBook(mListBestSelling);
-                    mCustomSwipeAdapter = new CustomSwipeAdapter(getApplicationContext(),mListBestSelling);
+                    mCustomSwipeAdapter = new CustomSwipeAdapter(getApplicationContext(), mListBestSelling);
                     mViewPager.setAdapter(mCustomSwipeAdapter);
                 }
                 mProgressDialog.dismiss();
@@ -179,79 +184,80 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(getApplicationContext(),"mListBestSelling???",Toast.LENGTH_SHORT).show();
+                ReloadActivity();
             }
         });
 
         callListCategory.enqueue(new Callback<ArrayList<Category>>() {
             @Override
             public void onResponse(Response<ArrayList<Category>> response, Retrofit retrofit) {
-                if(response.isSuccess()){
+                if (response.isSuccess()) {
                     mCategoryList = response.body();
+//                    Log.e("sss","mCategoryList"+mCategoryList);
                     mCategory.setDataCategory(mCategoryList);
-
+                    mProgressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(getApplicationContext(),"mCategoryList???",Toast.LENGTH_SHORT).show();
+                ReloadActivity();
             }
         });
 
         callListBookSales.enqueue(new Callback<ArrayList<ItemBookSimple>>() {
             @Override
             public void onResponse(Response<ArrayList<ItemBookSimple>> response, Retrofit retrofit) {
-                if(response.isSuccess()){
+                if (response.isSuccess()) {
                     mListSalesBook = response.body();
+//                    Log.e("sss",""+mListSalesBook);
                     mSales.setDataListBook(mListSalesBook);
-
+                    mProgressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(getApplicationContext(),"mListSalesBook???",Toast.LENGTH_SHORT).show();
+                ReloadActivity();
             }
         });
 
         callListNewReleases.enqueue(new Callback<ArrayList<ItemBookSimple>>() {
             @Override
             public void onResponse(Response<ArrayList<ItemBookSimple>> response, Retrofit retrofit) {
-                if(response.isSuccess()){
+                if (response.isSuccess()) {
                     mListNewRelease = response.body();
+//                    Log.e("sss",""+mListNewRelease);
                     mNewReleases.setDataListBook(mListNewRelease);
+                    mProgressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(getApplicationContext(),"mListNewRelease???",Toast.LENGTH_SHORT).show();
+                ReloadActivity();
             }
         });
 
+    }
 
-        Book book = new Book("Cửu âm Bạch cốt trảo 1 + Hang long thap bat skill",new Author("Quách Tương"),100000,200000);
-        bookList.add(book);
-        Book book1 = new Book("Cửu âm Bạch cốt trảo 2",new Author("Quách Tương"),100000,200000);
-        bookList.add(book1);
-        Book book2 = new Book("Cửu âm Bạch cốt trảo 3",new Author("Quách Tương"),100000,200000);
-        bookList.add(book2);
-        Book book3 = new Book("Cửu âm Bạch cốt trảo 4",new Author("Quách Tương"),100000,200000);
-        bookList.add(book3);
-        Book book4 = new Book("Cửu âm Bạch cốt trảo 5",new Author("Quách Tương"),100000,200000);
-        bookList.add(book4);
-        Book book5 = new Book("Cửu âm Bạch cốt trảo 6",new Author("Quách Tương"),100000,200000);
-        bookList.add(book5);
-//        Category category = new Category("Skill1");
-//        categoryList.add(category);
-//        Category category1 = new Category("Skill2");
-//        categoryList.add(category1);
-//        Category category2 = new Category("Skill3");
-//        categoryList.add(category2);
-//        Category category3 = new Category("Skill4");
-//        categoryList.add(category3);
-//        Category category4 = new Category("Skill5");
-//        categoryList.add(category4);
+    public void ReloadActivity(){
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Notification")
+                .setMessage("Check your Internet, please!" +
+                        "Would you want to reload?")
+                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                        startActivity(getIntent());
+                    }
+                }).setPositiveButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 }

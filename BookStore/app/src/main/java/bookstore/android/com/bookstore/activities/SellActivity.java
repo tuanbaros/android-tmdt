@@ -1,6 +1,7 @@
 package bookstore.android.com.bookstore.activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +38,7 @@ import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.models.Review;
 import bookstore.android.com.bookstore.network.ApiBookStore;
 import bookstore.android.com.bookstore.network.RestClient;
+import bookstore.android.com.bookstore.utils.DataController;
 import bookstore.android.com.bookstore.views.custom.RatingView;
 import retrofit.Call;
 import retrofit.Callback;
@@ -51,8 +55,8 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     private CustomScrollviewReview mCustomScrollviewReview;
     private ArrayList<Review> mListReviews = new ArrayList<>();
     private ArrayList<ItemBookSimple> mListSameBook = new ArrayList<>();
-    private TextView mTextAuthor, mTextBookName, mTextOldPrice, mTextPrice, mTextNumRating;
-    private RatingView mRating;
+    private TextView mTextAuthor, mTextBookName, mTextOldPrice, mTextPrice, mTextNumRating,mCountRatingSell, mRatingAverageSell;
+    private RatingBar mRating,mRatingReviews;
     private Button mSeeAllDescription, mSeeAllReView;
     private ListBookHorizontalScrollView mSameBook;
     private ImageView mImageBar;
@@ -61,13 +65,13 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     public static final String BOOK_ID = "bookId";
     public static final String RATEAVERAGE_BOOK = "rateAverage";
     public static final String COUNT_RATE_BOOK = "countRate";
-    public static ApiBookStore apiBookStore = RestClient.getClient().create(ApiBookStore.class);
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
 
-        mRating = (RatingView) findViewById(R.id.rating_book_sell);
+        mRating = (RatingBar) findViewById(R.id.rating_book_sell);
         mTextAuthor = (TextView) findViewById(R.id.text_author_book_sell);
         mTextBookName = (TextView) findViewById(R.id.text_name_book_sell);
         mTextOldPrice = (TextView) findViewById(R.id.text_old_price_book_sell);
@@ -78,7 +82,11 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         mSameBook = (ListBookHorizontalScrollView) findViewById(R.id.list_sell_same_books);
         mSeeAllReView = (Button) findViewById(R.id.bt_seeall_review);
         mImageBar = (ImageView) findViewById(R.id.profile_id);
+        mCountRatingSell = (TextView)findViewById(R.id.text_count_Rating_sell);
+        mRatingAverageSell =(TextView)findViewById(R.id.text_ratingAverage_sell);
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
+        mRatingReviews = (RatingBar)findViewById(R.id.rating_reviews);
+
         setDataReview();
         mSeeAllDescription.setOnClickListener(this);
         mRating.setOnClickListener(this);
@@ -118,6 +126,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
 
     public void setDataReview() {
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
         Intent callerIntent = getIntent();
         Bundle packageFromCaller =
@@ -125,7 +134,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         int id_book = packageFromCaller.getInt("id_book");
 
 
-        Call<Book> callBook = apiBookStore.getBook(id_book);
+        Call<Book> callBook = DataController.apiBookStore.getBook(id_book);
         callBook.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Response<Book> response, Retrofit retrofit) {
@@ -134,26 +143,39 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                     mTextAuthor.setText(mBook.getAuthor().getName());
                     mTextBookName.setText(mBook.getTitle());
                     mTextPrice.setText(mBook.getPrice() + "$");
-                    mTextOldPrice.setText(mBook.getOldPrice() + "$");
-                    Log.e("aaa",""+mBook.getQuantityRating());
+                    if(mBook.getOldPrice()!=mBook.getPrice()&&mBook.getOldPrice()!=0){
+                        mTextOldPrice.setText(mBook.getOldPrice() + "$");
+                    }
                     mTextNumRating.setText("("+mBook.getQuantityRating()+")");
-                    Picasso.with(getApplicationContext()).load(mBook.getImages()).into(mImageBar);
+//                    mRating.setRatingAverage(mBook.getRateAverage());
+                    mRatingAverageSell.setText(mBook.getRateAverage()+"");
+                    mCountRatingSell.setText(mBook.getQuantityRating()+"");
+                    float tmp2 = mBook.getRateAverage()*10;
+                    while (tmp2>50){
+                        tmp2-=50;
+                    }
+                    int tmp_int = (int)tmp2;
+                    mRating.setRating((float) (((float)tmp_int)/10.0));
+                    mRatingReviews.setRating((float) (((float)tmp_int)/10.0));
+                    Picasso.with(getApplicationContext()).load(mBook.getImages()).placeholder(R.drawable.bg_loading)
+                            .error(R.drawable.bg_error).into(mImageBar);
                     collapsingToolbarLayout.setTitle(mBook.getTitle());
                     if (mBook != null) {
-                        Call<ArrayList<ItemBookSimple>> callListSameBook = apiBookStore.getListBookInCategory(mBook.getCategoryId());
+                        Call<ArrayList<ItemBookSimple>> callListSameBook = DataController.apiBookStore.getListBookInCategory(mBook.getCategoryId());
                         callListSameBook.enqueue(new Callback<ArrayList<ItemBookSimple>>() {
                             @Override
                             public void onResponse(Response<ArrayList<ItemBookSimple>> response, Retrofit retrofit) {
                                 if (response.isSuccess()) {
                                     mListSameBook = response.body();
-                                    Log.e("sss",mListSameBook+"");
                                     mSameBook.setDataListBook(mListSameBook);
+                                    mProgressDialog.dismiss();
                                 }
                             }
 
                             @Override
                             public void onFailure(Throwable t) {
-                                Log.e("sss",t+"");
+                                mProgressDialog.dismiss();
+                                ReloadActivity();
                             }
                         });
                     }
@@ -163,9 +185,8 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(getApplicationContext(), "mBook??", Toast.LENGTH_SHORT).show();
-                Log.e("sss", "onFailure: " + t);
                 mProgressDialog.dismiss();
+                ReloadActivity();
             }
         });
 
@@ -185,6 +206,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                 bundle.putInt(BOOK_ID, mBook.getId());
                 bundle.putInt(COUNT_RATE_BOOK, mBook.getQuantityRating());
                 bundle.putFloat(RATEAVERAGE_BOOK, mBook.getRateAverage());
+                bundle.putInt("CategoryId", mBook.getCategoryId());
                 intent.putExtra("Mypackage", bundle);
                 startActivity(intent);
                 break;
@@ -195,6 +217,26 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    public void ReloadActivity(){
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Notification")
+                .setMessage("Check your Internet, please!" +
+                        "Would you want to reload?")
+                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                        startActivity(getIntent());
+                    }
+                }).setPositiveButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
 }

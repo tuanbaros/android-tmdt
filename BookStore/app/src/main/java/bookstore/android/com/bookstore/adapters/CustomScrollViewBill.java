@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
@@ -16,7 +18,6 @@ import bookstore.android.com.bookstore.models.Bill;
 import bookstore.android.com.bookstore.models.ItemBookOfBill;
 import bookstore.android.com.bookstore.views.custom.BillItem;
 import bookstore.android.com.bookstore.views.custom.DetailsBillItem;
-import bookstore.android.com.bookstore.views.custom.RatingView;
 
 /**
  * Created by vxhuy176 on 18/12/2016.
@@ -47,12 +48,44 @@ public class CustomScrollViewBill extends ScrollView {
         for(int i = 0;i<listBill.size();i++){
             BillItem billItem = new BillItem(this.getContext());
             MyHolder myHolder = new MyHolder(billItem.view);
+            billItem.id = i;
             myHolder.mBillStatus.setText(listBill.get(i).getStatus());
             myHolder.mBillTimeBuy.setText(listBill.get(i).getTime());
             float tmp = 0;
             for(int j = 0; j<listBill.get(i).getListBooks().size();j++){
                 tmp+= listBill.get(i).getListBooks().get(j).getQuantity()*listBill.get(i).getListBooks().get(j).getPrice();
             }
+           if (listBill.get(i).getStatus().toLowerCase().equals("processing")){
+               Picasso.with(getContext())
+                       .load(R.drawable.proccessing)
+                       .placeholder(R.drawable.loading)
+                       .error(R.drawable.error)
+                       .into(myHolder.mBillStatusImage);
+           }else{
+               if (listBill.get(i).getStatus().toLowerCase().equals("shipping")){
+                   Picasso.with(getContext())
+                           .load(R.drawable.shipping)
+                           .placeholder(R.drawable.loading)
+                           .error(R.drawable.error)
+                           .into(myHolder.mBillStatusImage);
+               }else{
+                   if (listBill.get(i).getStatus().toLowerCase().equals("cancel")){
+                       Picasso.with(getContext())
+                               .load(R.drawable.cancel)
+                               .placeholder(R.drawable.loading)
+                               .error(R.drawable.error)
+                               .into(myHolder.mBillStatusImage);
+                   }else{
+                       if (listBill.get(i).getStatus().toLowerCase().equals("completed")){
+                           Picasso.with(getContext())
+                                   .load(R.drawable.complete)
+                                   .placeholder(R.drawable.loading)
+                                   .error(R.drawable.error)
+                                   .into(myHolder.mBillStatusImage);
+                       }
+                   }
+               }
+           }
             myHolder.mBillTotalCost.setText(tmp+"");
             mLinearLayout.addView(billItem);
         }
@@ -66,6 +99,11 @@ public class CustomScrollViewBill extends ScrollView {
             myHolder.mAuthor.setText(dataDetailsBill.get(i).getAuthorName());
             myHolder.mPrice.setText(dataDetailsBill.get(i).getPrice()+"");
             myHolder.mQuantity.setText(dataDetailsBill.get(i).getQuantity()+"");
+            Picasso.with(getContext())
+                    .load(dataDetailsBill.get(i).getUrlImage())
+                    .placeholder(R.drawable.bg_loading)
+                    .error(R.drawable.bg_error)
+                    .into(myHolder.mBookImage);
             myHolder.mTitle.setText(dataDetailsBill.get(i).getTitle());
             mLinearLayout.addView(detailsBillItem);
         }

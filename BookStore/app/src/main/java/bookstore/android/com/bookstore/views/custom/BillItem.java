@@ -2,6 +2,7 @@ package bookstore.android.com.bookstore.views.custom;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import bookstore.android.com.bookstore.activities.DetailsBillActivity;
 public class BillItem extends LinearLayout {
     public View view;
     public int id;
+    public static final String BILL_ID = "billId";
     public BillItem(Context context) {
         super(context);
         init(context);
@@ -38,7 +40,9 @@ public class BillItem extends LinearLayout {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.getContext().startActivity(new Intent(view.getContext(), DetailsBillActivity.class));
+                Intent intent = new Intent(view.getContext(), DetailsBillActivity.class);
+                intent.putExtra(BILL_ID,id);
+                view.getContext().startActivity(intent);
             }
         });
     }

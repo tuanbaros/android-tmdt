@@ -4,8 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import bookstore.android.com.bookstore.R;
 
@@ -13,11 +15,8 @@ public class RatingView extends LinearLayout {
 
     LayoutInflater mLayoutInflater;
 
-    ImageView mImageStar1;
-    ImageView mImageStar2;
-    ImageView mImageStar3;
-    ImageView mImageStar4;
-    ImageView mImageStar5;
+    ImageView mImageStar1,mImageStar2,mImageStar3,mImageStar4,mImageStar5;
+    View mView;
 
     public RatingView(Context context) {
         super(context);
@@ -37,13 +36,12 @@ public class RatingView extends LinearLayout {
     private void initView(Context context){
         mLayoutInflater = LayoutInflater.from(context);
 
-        mLayoutInflater.inflate(R.layout.item_star, this);
-        mImageStar1 = (ImageView) findViewById(R.id.image_star1);
-        mImageStar2 = (ImageView) findViewById(R.id.image_star2);
-        mImageStar3 = (ImageView) findViewById(R.id.image_star3);
-        mImageStar4 = (ImageView) findViewById(R.id.image_star4);
-        mImageStar5 = (ImageView) findViewById(R.id.image_star5);
-
+        mView = mLayoutInflater.inflate(R.layout.item_star, this);
+        mImageStar1 = (ImageView) mView.findViewById(R.id.image_star1);
+        mImageStar2 = (ImageView) mView.findViewById(R.id.image_star2);
+        mImageStar3 = (ImageView) mView.findViewById(R.id.image_star3);
+        mImageStar4 = (ImageView) mView.findViewById(R.id.image_star4);
+        mImageStar5 = (ImageView) mView.findViewById(R.id.image_star5);
     }
 
     public void setRate(int numberRating){
@@ -97,4 +95,7 @@ public class RatingView extends LinearLayout {
 
         }
     }
+
+
+
 }
