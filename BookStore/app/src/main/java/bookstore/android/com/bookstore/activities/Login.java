@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -52,23 +53,26 @@ public class Login extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 if (AccessToken.getCurrentAccessToken() != null) {
+                    String token=AccessToken.getCurrentAccessToken().toString();
+                    Log.v("main",token);
+                    GraphRequest request = GraphRequest.newMeRequest(
+                            loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(JSONObject object, GraphResponse response) {
+                                    Intent i=new Intent(Login.this,MainActivity.class);
+                                    i.putExtra("jsondata",object.toString());
+                                    startActivity(i);
 
-
-
-//                    GraphRequest request = GraphRequest.newMeRequest(
-//                            loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-//                                @Override
-//                                public void onCompleted(JSONObject object, GraphResponse response) {
-//                                    Log.v("Main", response.toString());
+                                    finish();
 //                                    setProfileToView(object);
-//                                }
-//                            }
-//                    );
-//                    Bundle parameters = new Bundle();
-//                    parameters.putString("fields", "id,name,gender");
-//                    request.setParameters(parameters);
-//                    request.executeAsync();
-//                    Toast.makeText(Login.this, "Success", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                    );
+                    Bundle parameters = new Bundle();
+                    parameters.putString("fields", "id,name,gender");
+                    request.setParameters(parameters);
+                    request.executeAsync();
+                    Toast.makeText(Login.this, "Success", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -84,36 +88,36 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        mProfileTracker = new ProfileTracker() {
-            @Override
-            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                if (currentProfile != null) {
-                    name.setText(currentProfile.getName());
-                    profilePictureView.setPresetSize(ProfilePictureView.NORMAL);
-                    profilePictureView.setProfileId(currentProfile.getId());
-                }
-            }
-        };
-        mProfileTracker.startTracking();
+//        mProfileTracker = new ProfileTracker() {
+//            @Override
+//            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+//                if (currentProfile != null) {
+//                    name.setText(currentProfile.getName());
+//                    profilePictureView.setPresetSize(ProfilePictureView.NORMAL);
+//                    profilePictureView.setProfileId(currentProfile.getId());
+//                }
+//            }
+//        };
+//        mProfileTracker.startTracking();
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mProfileTracker.stopTracking();
+//        mProfileTracker.stopTracking();
     }
 
-//    private void setProfileToView(JSONObject object) {
-//        try {
-//            name.setText(object.getString("name"));
-//            profilePictureView.setPresetSize(ProfilePictureView.NORMAL);
-//            profilePictureView.setProfileId(object.getString("id"));
-//            infoLayout.setVisibility(View.VISIBLE);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void setProfileToView(JSONObject object) {
+        try {
+            name.setText(object.getString("name"));
+            profilePictureView.setPresetSize(ProfilePictureView.NORMAL);
+            profilePictureView.setProfileId(object.getString("id"));
+            infoLayout.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

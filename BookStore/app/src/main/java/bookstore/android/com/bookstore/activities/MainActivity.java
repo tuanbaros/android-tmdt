@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,9 +14,19 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.Profile;
+import com.facebook.login.widget.ProfilePictureView;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,15 +57,27 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<ItemBookSimple> mListNewRelease = new ArrayList<>();
     private ArrayList<Book> bookList = new ArrayList<>();
 
+    private JSONObject response, profile_pic_data, profile_pic_url;
+
     private MainActivity mMainActivity;
     private ArrayList<Category> mCategoryList = new ArrayList<>();
     private ProgressDialog mProgressDialog;
+    private NavigationView navigation_view;
+    private TextView user_name,userId;
+    private ProfilePictureView user_picture;
+    private FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent i=getIntent();
+        String jsondata=i.getStringExtra("jsondata");
+        setNavigationHeader();
+        setUserProfile(jsondata);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -71,9 +94,45 @@ public class MainActivity extends AppCompatActivity
         mNewReleases = (ListBookHorizontalScrollView)findViewById(R.id.list_book_new_releases);
 
         createData();
+        fab=(FloatingActionButton)findViewById(R.id.fabSearch);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent itSearch=new Intent(MainActivity.this,SearchActivity.class);
+                startActivity(itSearch);
+            }
+        });
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setUserProfile(String jsondata) {
+        try {
+            response = new JSONObject(jsondata);
+            user_name.setText(response.get("name").toString());
+            userId.setText(response.get("id").toString());
+            user_picture.setProfileId(response.get("id").toString());
+//            profile_pic_data = new JSONObject(response.get("picture").toString());
+//            profile_pic_url = new JSONObject(profile_pic_data.getString("data"));
+//
+//            Picasso.with(this).load(profile_pic_url.getString("url"))
+//                    .into(user_picture);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void setNavigationHeader() {
+        navigation_view = (NavigationView) findViewById(R.id.nav_view);
+
+        View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
+        navigation_view.addHeaderView(header);
+
+        user_name = (TextView) header.findViewById(R.id.username);
+        userId=(TextView) header.findViewById(R.id.userid);
+        user_picture = (ProfilePictureView) header.findViewById(R.id.profile_image);
     }
 
     @Override
