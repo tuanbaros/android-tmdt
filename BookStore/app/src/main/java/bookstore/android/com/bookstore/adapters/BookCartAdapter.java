@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
+import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Cart;
 import bookstore.android.com.bookstore.models.CartBook;
 
@@ -27,11 +28,11 @@ import bookstore.android.com.bookstore.models.CartBook;
  */
 
 public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHolder>  {
-    private ArrayList<CartBook> mListCartBook = new ArrayList<>();
+    private ArrayList<Book> mListCartBook = new ArrayList<>();
     private Context mContext;
 
 
-    public BookCartAdapter(Context context,ArrayList<CartBook> listCartBook){
+    public BookCartAdapter(Context context,ArrayList<Book> listCartBook){
         this.mListCartBook = listCartBook;
         this.mContext = context;
     }
@@ -45,13 +46,13 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
 
-        CartBook item = mListCartBook.get(position);
-        Picasso.with(mContext).load(item.getUrlImage()).placeholder(R.drawable.bg_loading)
+        Book item = mListCartBook.get(position);
+        Picasso.with(mContext).load(item.getImages()).placeholder(R.drawable.bg_loading)
                 .error(R.drawable.bg_error).into(holder.mImageButton);
-        holder.mBooksOldPrice.setText(item.getOldPrice()+"");
-        holder.mBooksPrice.setText(item.getPrice()+"");
+        holder.mBooksOldPrice.setText(""+item.getOldPrice());
+        holder.mBooksPrice.setText(""+item.getPrice());
         holder.mBooksName.setText(item.getTitle());
-        holder.mBooksAuthor.setText(item.getAuthor());
+        holder.mBooksAuthor.setText(""+item.getAuthor());
         holder.mPosition = position;
     }
 
@@ -87,7 +88,8 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             String quantity = adapterView.getItemAtPosition(i).toString();
-            mListCartBook.get(mPosition).setQuantity(Integer.parseInt(quantity));
+            //int book_id = mListCartBook.get(mPosition).getId();
+            //mListCartBook.get(mPosition).setQuantity(Integer.parseInt(quantity));
         }
 
         @Override
