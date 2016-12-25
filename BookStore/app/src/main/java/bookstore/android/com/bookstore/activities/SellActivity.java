@@ -3,6 +3,7 @@ package bookstore.android.com.bookstore.activities;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -30,10 +31,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bookstore.android.com.bookstore.R;
+import bookstore.android.com.bookstore.adapters.BookCartAdapter;
 import bookstore.android.com.bookstore.adapters.CustomScrollviewReview;
 import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
 import bookstore.android.com.bookstore.models.Author;
 import bookstore.android.com.bookstore.models.Book;
+import bookstore.android.com.bookstore.models.Cart;
+import bookstore.android.com.bookstore.models.CartBook;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.models.Review;
 import bookstore.android.com.bookstore.network.ApiBookStore;
@@ -58,7 +62,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<ItemBookSimple> mListSameBook = new ArrayList<>();
     private TextView mTextAuthor, mTextBookName, mTextOldPrice, mTextPrice, mTextNumRating,mCountRatingSell, mRatingAverageSell, mCategoryTextView;
     private RatingBar mRating,mRatingReviews;
-    private Button mSeeAllDescription, mSeeAllReView;
+    private Button mSeeAllDescription, mSeeAllReView, mAddCart;
     private ListBookHorizontalScrollView mSameBook;
     private ImageView mImageBar;
     private Book mBook;
@@ -66,6 +70,8 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     public static final String BOOK_ID = "bookId";
     public static final String RATEAVERAGE_BOOK = "rateAverage";
     public static final String COUNT_RATE_BOOK = "countRate";
+
+    private ArrayList<CartBook> mListCartBook = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,8 +94,10 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         mRatingReviews = (RatingBar)findViewById(R.id.rating_reviews);
         mCategoryTextView = (TextView) findViewById(R.id.category_text_view);
+        mAddCart = (Button)findViewById(R.id.bt_add_cart);
 
         setDataReview();
+        mAddCart.setOnClickListener(this);
         mSeeAllDescription.setOnClickListener(this);
         mRating.setOnClickListener(this);
         mSeeAllReView.setOnClickListener(this);
@@ -201,9 +209,6 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.bt_add_cart:
-                Toast.makeText(getBaseContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.bt_seeall_description:
                 break;
             case R.id.bt_seeall_review:
@@ -219,6 +224,44 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.rating_book_sell:
                 Intent intent1 = new Intent(this, RateActivity.class);
                 startActivity(intent1);
+                break;
+            case R.id.bt_add_cart:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(R.string.dialog_add_cart)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // add book for cart
+                                Cart cart = new Cart(getBaseContext());
+                                cart.open();
+                                int id_fb = 1;
+                                Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
+                                boolean check_already_add = false;
+                                if (cursor.moveToFirst())
+                                {
+                                    do {
+                                        if (cursor.getInt(2)==mBook.getId()){
+                                            check_already_add = true;
+                                            Toast.makeText(getBaseContext(), "Book already added!",Toast.LENGTH_SHORT).show();
+                                            break;
+                                        }
+                                    } while (cursor.moveToNext());
+                                }
+                                if (!check_already_add){
+                                    cart.insertCart(id_fb,mBook.getId(),1);
+                                    cart.close();
+                                    Toast.makeText(getBaseContext(), "Add book successful!",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                                dialog.cancel();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.create();
+                builder.show();
                 break;
             default:
                 break;
