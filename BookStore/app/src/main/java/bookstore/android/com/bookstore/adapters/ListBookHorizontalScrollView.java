@@ -54,6 +54,7 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
     public void setDataListBook(ArrayList<ItemBookSimple> bookList){
 //        Log.e("sss","sssssss"+ bookList);
         mLinearLayoutBook = (LinearLayout)findViewById(R.id.linearlayout_list_book);
+        mLinearLayoutBook.removeAllViews();
         int tmp = bookList.size()<10?bookList.size():10;
         for(int i = 0;i<tmp;i++){
             BookItem bookItem = new BookItem(this.getContext());

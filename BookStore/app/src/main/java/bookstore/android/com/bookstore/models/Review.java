@@ -13,9 +13,9 @@ public class Review {
     private String content;
     @SerializedName("urlAvatar")
     private String urlImageAvatar;
-    @SerializedName("userNameRating")
+    @SerializedName("usernameRating")
     private String username;
-    @SerializedName("rating")
+    @SerializedName("rate")
     private int rating;
     @SerializedName("time")
     private String time;

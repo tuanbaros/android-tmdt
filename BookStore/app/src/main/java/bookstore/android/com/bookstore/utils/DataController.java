@@ -23,6 +23,10 @@ import retrofit.Retrofit;
 public class DataController {
     public static ArrayList<Bill> listBill = new ArrayList<>();
     public static ApiBookStore apiBookStore = RestClient.getClient().create(ApiBookStore.class);
-    public static User user=null;
+
+
+
+    public static User user = new User(1,"test");
+
 
 }

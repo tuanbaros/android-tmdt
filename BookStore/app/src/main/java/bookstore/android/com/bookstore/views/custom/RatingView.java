@@ -35,7 +35,6 @@ public class RatingView extends LinearLayout {
 
     private void initView(Context context){
         mLayoutInflater = LayoutInflater.from(context);
-
         mView = mLayoutInflater.inflate(R.layout.item_star, this);
         mImageStar1 = (ImageView) mView.findViewById(R.id.image_star1);
         mImageStar2 = (ImageView) mView.findViewById(R.id.image_star2);
