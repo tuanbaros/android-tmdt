@@ -30,6 +30,7 @@ import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.network.ApiBookStore;
 import bookstore.android.com.bookstore.network.RestClient;
 import bookstore.android.com.bookstore.utils.DataController;
+import bookstore.android.com.bookstore.utils.Variables;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -194,6 +195,10 @@ public class MainActivity extends AppCompatActivity
                 if (response.isSuccess()) {
                     mCategoryList = response.body();
 //                    Log.e("sss","mCategoryList"+mCategoryList);
+                    for (Category category:
+                         mCategoryList) {
+                        Variables.categoryHashMap.put(category.getId(), category.getName());
+                    }
                     mCategory.setDataCategory(mCategoryList);
                     mProgressDialog.dismiss();
                 }
