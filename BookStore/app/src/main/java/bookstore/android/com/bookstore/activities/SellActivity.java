@@ -210,6 +210,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_seeall_description:
+
                 break;
             case R.id.bt_seeall_review:
                 Intent intent = new Intent(this, RateActivity.class);
