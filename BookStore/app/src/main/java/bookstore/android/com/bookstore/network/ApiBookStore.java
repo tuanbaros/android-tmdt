@@ -8,6 +8,7 @@ import bookstore.android.com.bookstore.models.Cart;
 import bookstore.android.com.bookstore.models.Category;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.models.Rate;
+import bookstore.android.com.bookstore.models.User;
 import retrofit.Call;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -50,7 +51,9 @@ public interface ApiBookStore {
     @GET("author/{book_id}")
     Call<Book> getAuthor(@Path("book_id") int book_id);
 
-//    @FormUrlEncoded
-//    @POST("cart/add")
-//    Call<User> updateUser(@Field("first_name") String first, @Field("last_name") String last);
+    @FormUrlEncoded
+    @POST("login")
+    Call<User.CallBackUser> updateUser(@Field("facebookId") String userId, @Field("name") String name,
+                                       @Field("avatar") String avatar, @Field("fbToken")String fbToken);
+
 }

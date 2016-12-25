@@ -13,33 +13,26 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.Profile;
 import com.facebook.login.widget.ProfilePictureView;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.adapters.CustomSwipeAdapter;
-import bookstore.android.com.bookstore.models.Author;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Category;
 import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
-import bookstore.android.com.bookstore.network.ApiBookStore;
-import bookstore.android.com.bookstore.network.RestClient;
+import bookstore.android.com.bookstore.models.User;
 import bookstore.android.com.bookstore.utils.DataController;
 import bookstore.android.com.bookstore.utils.Variables;
 import retrofit.Call;
@@ -74,9 +67,9 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         Intent i=getIntent();
-        String jsondata=i.getStringExtra("jsondata");
+
         setNavigationHeader();
-        setUserProfile(jsondata);
+        setUserProfile(DataController.user);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,12 +100,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void setUserProfile(String jsondata) {
+    private void setUserProfile(User user) {
         try {
-            response = new JSONObject(jsondata);
-            user_name.setText(response.get("name").toString());
-            userId.setText(response.get("id").toString());
-            user_picture.setProfileId(response.get("id").toString());
+            user_name.setText(user.getName());
+            userId.setText(user.getFbId());
+            user_picture.setProfileId(String.valueOf(user.getFbId()));
+            Toast.makeText(MainActivity.this,user.getFbId(),Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,user.getName(),Toast.LENGTH_LONG).show();
 //            profile_pic_data = new JSONObject(response.get("picture").toString());
 //            profile_pic_url = new JSONObject(profile_pic_data.getString("data"));
 //
@@ -121,6 +115,7 @@ public class MainActivity extends AppCompatActivity
 
         } catch (Exception e){
             e.printStackTrace();
+            Toast.makeText(MainActivity.this,"error",Toast.LENGTH_LONG);
         }
     }
 
@@ -195,7 +190,7 @@ public class MainActivity extends AppCompatActivity
            default:break;
         }
         if(id==R.id.nav_login){
-            Intent i=new Intent(getApplicationContext(),Login.class);
+            Intent i=new Intent(getApplicationContext(),LoginActivity.class);
             startActivity(i);
         }
 //

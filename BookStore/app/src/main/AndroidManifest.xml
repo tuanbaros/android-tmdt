@@ -27,7 +27,7 @@
             android:name=".activities.CartActivity"
             android:label="@string/cart_name"
             android:theme="@style/AppTheme.Theme"></activity>
-        <activity android:name=".activities.Login"></activity>
+        <activity android:name=".activities.LoginActivity"></activity>
         <activity
             android:name=".activities.SellActivity">
         </activity>
