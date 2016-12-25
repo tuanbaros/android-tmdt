@@ -14,6 +14,16 @@ public class User {
     private String accesstoken;
     private String userToken;
 
+    public User(int userId){
+        this.userId = userId;
+    }
+    public User(){
+    }
+    public User(int userId, String userToken){
+        this.userId = userId;
+        this.userToken = userToken;
+    }
+
     public int getUserId() {
         return userId;
     }

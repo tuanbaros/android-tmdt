@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
@@ -48,9 +50,14 @@ public class CustomScrollviewReview extends ScrollView {
             ReviewItem reviewItem = new ReviewItem(this.getContext());
             MyHolder myHolder = new MyHolder(reviewItem.view);
             myHolder.mNameUser.setText(listReviews.get(i).getUsername());
+            if(listReviews.get(i).getUrlImageAvatar()!=null){
+                Picasso.with(getContext()).load(listReviews.get(i).getUrlImageAvatar()).into(myHolder.mAvatar);
+            }
             myHolder.mTime.setText(listReviews.get(i).getTime());
             myHolder.mContent.setText(listReviews.get(i).getContent());
-            myHolder.mRate.setRate(listReviews.get(i).getRating());
+            if(listReviews.get(i).getRating()<=5&&listReviews.get(i).getRating()>=0){
+                myHolder.mRate.setRate(listReviews.get(i).getRating());
+            }
             mLinearLayout.addView(reviewItem);
         }
 
