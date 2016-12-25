@@ -207,6 +207,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3">
                             <TextView
+                                android:id="@+id/category_text_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 style="@style/TextBookName"
@@ -240,7 +241,7 @@
                                 android:layout_height="wrap_content"
                                 style="@style/TextBookName"
                                 android:textSize="15dp"
-                                android:text="Vietnames"
+                                android:text="Vietnamese"
                                 android:maxLines="1"/>
                         </LinearLayout>
                     </LinearLayout>
