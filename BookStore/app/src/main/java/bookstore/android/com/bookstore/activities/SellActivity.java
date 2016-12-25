@@ -43,6 +43,7 @@ import bookstore.android.com.bookstore.models.Review;
 import bookstore.android.com.bookstore.network.ApiBookStore;
 import bookstore.android.com.bookstore.network.RestClient;
 import bookstore.android.com.bookstore.utils.DataController;
+import bookstore.android.com.bookstore.utils.Variables;
 import bookstore.android.com.bookstore.views.custom.RatingView;
 import retrofit.Call;
 import retrofit.Callback;
@@ -59,7 +60,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     private CustomScrollviewReview mCustomScrollviewReview;
     private ArrayList<Review> mListReviews = new ArrayList<>();
     private ArrayList<ItemBookSimple> mListSameBook = new ArrayList<>();
-    private TextView mTextAuthor, mTextBookName, mTextOldPrice, mTextPrice, mTextNumRating,mCountRatingSell, mRatingAverageSell;
+    private TextView mTextAuthor, mTextBookName, mTextOldPrice, mTextPrice, mTextNumRating,mCountRatingSell, mRatingAverageSell, mCategoryTextView;
     private RatingBar mRating,mRatingReviews;
     private Button mSeeAllDescription, mSeeAllReView, mAddCart;
     private ListBookHorizontalScrollView mSameBook;
@@ -92,7 +93,9 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         mRatingAverageSell =(TextView)findViewById(R.id.text_ratingAverage_sell);
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         mRatingReviews = (RatingBar)findViewById(R.id.rating_reviews);
+
         mAddCart = (Button)findViewById(R.id.bt_add_cart);
+        mCategoryTextView = (TextView)findViewById(R.id.category_text_view);
 
         setDataReview();
         mAddCart.setOnClickListener(this);
@@ -158,6 +161,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
 //                    mRating.setRatingAverage(mBook.getRateAverage());
                     mRatingAverageSell.setText(mBook.getRateAverage()+"");
                     mCountRatingSell.setText(mBook.getQuantityRating()+"");
+                    mCategoryTextView.setText((String) Variables.categoryHashMap.get(mBook.getCategoryId()));
                     float tmp2 = mBook.getRateAverage()*10;
                     while (tmp2>50){
                         tmp2-=50;
