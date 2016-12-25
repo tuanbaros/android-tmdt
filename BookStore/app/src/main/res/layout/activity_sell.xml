@@ -31,12 +31,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />
 
-            <TextView
-                android:id="@+id/text_author_book_sell"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextBookAuthor"
-                android:text="book's author"/>
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -69,6 +64,12 @@
                         android:layout_height="wrap_content"
                         style="@style/TextBookName"
                         android:text="Book's Name"/>
+                    <TextView
+                        android:id="@+id/text_author_book_sell"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/TextBookAuthor"
+                        android:text="book's author"/>
 
                     <LinearLayout
                         android:orientation="horizontal"

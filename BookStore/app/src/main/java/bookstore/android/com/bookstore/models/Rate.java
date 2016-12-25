@@ -80,5 +80,18 @@ public class Rate {
         this.listReviews = listReviews;
     }
 
+    public class Status{
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        @SerializedName("status")
+        String status;
+
+    }
 
 }

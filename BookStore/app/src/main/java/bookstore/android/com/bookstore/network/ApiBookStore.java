@@ -12,6 +12,7 @@ import retrofit.Call;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
 
@@ -53,4 +54,12 @@ public interface ApiBookStore {
 //    @FormUrlEncoded
 //    @POST("cart/add")
 //    Call<User> updateUser(@Field("first_name") String first, @Field("last_name") String last);
+    @FormUrlEncoded
+    @POST("user/review/store")
+    Call<Rate.Status> postReviews(@Field("user_id") int userId, @Field("book_id") int bookId,
+                                  @Field("user_token") String userToken, @Field("review") String review);
+    @FormUrlEncoded
+    @POST("user/rate/store")
+    Call<Rate.Status> postRate(@Field("user_id") int userId, @Field("book_id") int bookId,
+                                  @Field("user_token") String userToken, @Field("rate") int rate);
 }

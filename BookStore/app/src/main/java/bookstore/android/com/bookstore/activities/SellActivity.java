@@ -67,6 +67,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mImageBar;
     private Book mBook;
     private ProgressDialog mProgressDialog;
+    public static final String USER_RATING_BOOK = "userRating";
     public static final String BOOK_ID = "bookId";
     public static final String RATEAVERAGE_BOOK = "rateAverage";
     public static final String COUNT_RATE_BOOK = "countRate";
@@ -216,6 +217,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                 Bundle bundle = new Bundle();
                 bundle.putInt(BOOK_ID, mBook.getId());
                 bundle.putInt(COUNT_RATE_BOOK, mBook.getQuantityRating());
+                bundle.putInt(USER_RATING_BOOK, mBook.getUserRate());
                 bundle.putFloat(RATEAVERAGE_BOOK, mBook.getRateAverage());
                 bundle.putInt("CategoryId", mBook.getCategoryId());
                 intent.putExtra("Mypackage", bundle);
