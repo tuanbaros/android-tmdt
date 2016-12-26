@@ -45,6 +45,7 @@ public class CartActivity extends AppCompatActivity {
     private Book mBook;
     private ArrayList<Book> mListCartBook = new ArrayList<>();
     private ProgressDialog mProgressDialog;
+    private ArrayList<Integer> quantityBook = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +58,7 @@ public class CartActivity extends AppCompatActivity {
         mLinearLayoutManager = new LinearLayoutManager(this);
         setData();
 
-        mBookCartAdapter = new BookCartAdapter(getApplicationContext(),mListCartBook);
-        mRecycleBookCart.setHasFixedSize(true);
-        mRecycleBookCart.setLayoutManager(mLinearLayoutManager);
-        mRecycleBookCart.setAdapter(mBookCartAdapter);
+        mTextTotalCost.setText("");
     }
 
     @Override
@@ -94,6 +92,7 @@ public class CartActivity extends AppCompatActivity {
         {
             do {
                 DisplayBook(cursor);
+                quantityBook.add(cursor.getInt(3));
             } while (cursor.moveToNext());
         }
         cart.close();
@@ -110,12 +109,20 @@ public class CartActivity extends AppCompatActivity {
                     mBook = response.body();
                     mListCartBook.add(mBook);
 
-                    /*mTextCountItem.setText(mListCartBook.size()+"");
+                    // get total items in cart
+                    mTextCountItem.setText(mListCartBook.size()+"");
+
+                    // set total cost of all item in user's cart
                     float cost = 0;
                     for(int i = 0;i<mListCartBook.size();i++){
-                        cost+=mListCartBook.get(i).getPrice()*mListCartBook.get(i).getQuantity();
+                        cost+=mListCartBook.get(i).getPrice()*quantityBook.get(i);
                     }
-                    mTextTotalCost.setText(cost+"");*/
+                    mTextTotalCost.setText(cost+"");
+
+                    mBookCartAdapter = new BookCartAdapter(getApplicationContext(),mListCartBook);
+                    mRecycleBookCart.setHasFixedSize(true);
+                    mRecycleBookCart.setLayoutManager(mLinearLayoutManager);
+                    mRecycleBookCart.setAdapter(mBookCartAdapter);
                 }
             }
 

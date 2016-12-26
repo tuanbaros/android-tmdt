@@ -64,7 +64,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<ItemBookSimple> mListSameBook = new ArrayList<>();
     private TextView mTextAuthor, mTextBookName, mTextOldPrice, mTextPrice, mTextNumRating,mCountRatingSell, mRatingAverageSell, mCategoryTextView;
     private RatingBar mRating,mRatingReviews;
-    private Button mSeeAllDescription, mSeeAllReView, mAddCart;
+    private Button mSeeAllDescription, mSeeAllReView, mAddCart, mBuyBook;
     private ListBookHorizontalScrollView mSameBook;
     private ImageView mImageBar;
     private Book mBook;
@@ -99,6 +99,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         mRatingReviews = (RatingBar)findViewById(R.id.rating_reviews);
         mCategoryTextView = (TextView) findViewById(R.id.category_text_view);
         mAddCart = (Button)findViewById(R.id.bt_add_cart);
+        mBuyBook = (Button)findViewById(R.id.bt_buy_book);
         tvLang=(TextView)findViewById(R.id.language_text_view);
         tvContent=(TextView)findViewById(R.id.content_text_view);
         tvStatus=(TextView)findViewById(R.id.status_text_view);
@@ -107,6 +108,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
 
 
         mAddCart.setOnClickListener(this);
+        mBuyBook.setOnClickListener(this);
         setDataSell();
         mSeeAllDescription.setOnClickListener(this);
         mRating.setOnClickListener(this);
@@ -192,46 +194,60 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent1);
                 break;
             case R.id.bt_add_cart:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.dialog_add_cart)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // add book for cart
-                                Cart cart = new Cart(getBaseContext());
-                                cart.open();
-                                int id_fb = 1;
-                                Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
-                                boolean check_already_add = false;
-                                if (cursor.moveToFirst()) {
-                                    do {
-                                        if (cursor.getInt(2) == mBook.getId()) {
-                                            check_already_add = true;
-                                            Toast.makeText(getBaseContext(), "Book already added!", Toast.LENGTH_SHORT).show();
-                                            break;
-                                        }
-                                    } while (cursor.moveToNext());
-                                }
-                                if (!check_already_add) {
-                                    cart.insertCart(id_fb, mBook.getId(), 1);
-                                    cart.close();
-                                    Toast.makeText(getBaseContext(), "Add book successful!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                                dialog.cancel();
-                            }
-                        });
-                // Create the AlertDialog object and return it
-                builder.create();
-                builder.show();
+                addBookInCart("add");
+                break;
+            case R.id.bt_buy_book:
+                addBookInCart("buy");
                 break;
             default:
                 break;
         }
     }
+
+    // add current book in user's cart
+    public void addBookInCart(final String add_or_buy){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.dialog_add_cart)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // add book for cart
+                        Cart cart = new Cart(getBaseContext());
+                        cart.open();
+                        int id_fb = 1;
+                        Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
+                        boolean check_already_add = false;
+                        if (cursor.moveToFirst()) {
+                            do {
+                                if (cursor.getInt(2) == mBook.getId()) {
+                                    check_already_add = true;
+                                    Toast.makeText(getBaseContext(), "Book already added!", Toast.LENGTH_SHORT).show();
+                                    break;
+                                }
+                            } while (cursor.moveToNext());
+                        }
+                        if (!check_already_add) {
+                            cart.insertCart(id_fb, mBook.getId(), 1);
+                            cart.close();
+                            Toast.makeText(getBaseContext(), "Add book successful!", Toast.LENGTH_SHORT).show();
+                        }
+                        if (add_or_buy.equals("buy")){
+                            Intent intent2 = new Intent(getBaseContext(), CartActivity.class);
+                            startActivity(intent2);
+                        }
+
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                        dialog.cancel();
+                    }
+                });
+        // Create the AlertDialog object and return it
+        builder.create();
+        builder.show();
+    }
+
     public void setDataSell() {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setCanceledOnTouchOutside(false);
