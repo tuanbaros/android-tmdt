@@ -15,7 +15,14 @@
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                android:src="@drawable/bg_loading"
+                android:id="@+id/profile_id"
+                app:layout_collapseMode="parallax" />
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_sell"
                 android:layout_width="match_parent"
@@ -373,14 +380,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:fitsSystemWindows="true"
-                    android:src="@drawable/bg_loading"
-                    android:id="@+id/profile_id"
-                    app:layout_collapseMode="parallax" />
+
 
                 <TextView
                     android:layout_width="match_parent"
