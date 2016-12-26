@@ -55,6 +55,8 @@ public interface ApiBookStore {
     @GET("author/{book_id}")
     Call<Book> getAuthor(@Path("book_id") int book_id);
 
+    @GET("search/{key}")
+    Call<ArrayList<ItemBookSimple>> getListBooks(@Path("key") String key);
 
     @FormUrlEncoded
     @POST("login")
