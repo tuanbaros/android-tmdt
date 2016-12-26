@@ -104,7 +104,6 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         tvStatus=(TextView)findViewById(R.id.status_text_view);
         tvCategory=(TextView)findViewById(R.id.category_text_view);
 
-        setDataReview();
 
 
         mAddCart.setOnClickListener(this);
@@ -276,6 +275,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                             .error(R.drawable.bg_error).into(mImageBar);
                     collapsingToolbarLayout.setTitle(mBook.getTitle());
                     if (mBook != null) {
+                        Log.e("sss","mbook_id = "+mBook.getId());
                         setDataReview();
                         setDataSameBook();
                     }
@@ -291,6 +291,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
     public void setDataReview() {
+
         Call<Rate> callRate = DataController.apiBookStore.getRate(mBook.getId());
         callRate.enqueue(new Callback<Rate>() {
             @Override
