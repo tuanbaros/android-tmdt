@@ -2,6 +2,7 @@ package bookstore.android.com.bookstore.app;
 
 import android.app.Application;
 
+import com.androidnetworking.AndroidNetworking;
 import com.facebook.FacebookSdk;
 
 /**
@@ -13,5 +14,6 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
+        AndroidNetworking.initialize(getApplicationContext());
     }
 }

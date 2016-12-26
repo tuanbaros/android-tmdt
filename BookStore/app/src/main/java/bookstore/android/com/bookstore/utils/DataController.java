@@ -26,7 +26,7 @@ public class DataController {
 
 
 
-    public static User user = new User(1,"test");
-
+//    public static User user = new User(1,"test");
+    public static User user = null;
 
 }
