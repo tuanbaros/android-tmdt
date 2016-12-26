@@ -2,12 +2,15 @@ package bookstore.android.com.bookstore.adapters;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -44,13 +47,19 @@ public class CustomScrollviewReview extends ScrollView {
 
     public void setData(ArrayList<Review> listReviews){
         mLinearLayout = (LinearLayout)findViewById(R.id.linearlayout_list_review);
+        mLinearLayout.removeAllViews();
         for(int i = 0;i<listReviews.size();i++){
             ReviewItem reviewItem = new ReviewItem(this.getContext());
             MyHolder myHolder = new MyHolder(reviewItem.view);
             myHolder.mNameUser.setText(listReviews.get(i).getUsername());
+            if(listReviews.get(i).getUrlImageAvatar()!=null){
+                Picasso.with(getContext()).load(listReviews.get(i).getUrlImageAvatar()).into(myHolder.mAvatar);
+            }
             myHolder.mTime.setText(listReviews.get(i).getTime());
             myHolder.mContent.setText(listReviews.get(i).getContent());
-            myHolder.mRate.setRate(listReviews.get(i).getRating());
+            if(listReviews.get(i).getRating()<=5&&listReviews.get(i).getRating()>=0){
+                myHolder.mRate.setRate(listReviews.get(i).getRating());
+            }
             mLinearLayout.addView(reviewItem);
         }
 

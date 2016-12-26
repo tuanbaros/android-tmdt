@@ -40,6 +40,7 @@ import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Cart;
 import bookstore.android.com.bookstore.models.CartBook;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
+import bookstore.android.com.bookstore.models.Rate;
 import bookstore.android.com.bookstore.models.Review;
 import bookstore.android.com.bookstore.network.ApiBookStore;
 import bookstore.android.com.bookstore.network.RestClient;
@@ -69,6 +70,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     private Book mBook;
     private TextView tvStatus,tvCategory,tvLang,tvContent;
     private ProgressDialog mProgressDialog;
+    public static final String USER_RATING_BOOK = "userRating";
     public static final String BOOK_ID = "bookId";
     public static final String RATEAVERAGE_BOOK = "rateAverage";
     public static final String COUNT_RATE_BOOK = "countRate";
@@ -106,6 +108,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
 
 
         mAddCart.setOnClickListener(this);
+        setDataSell();
         mSeeAllDescription.setOnClickListener(this);
         mRating.setOnClickListener(this);
         mSeeAllReView.setOnClickListener(this);
@@ -115,13 +118,10 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        mCustomScrollviewReview.setData(mListReviews);
+
 
 
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -142,7 +142,98 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    public void setDataReview() {
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_seeall_description: {
+                final Dialog dialog = new Dialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
+                dialog.setContentView(R.layout.dialog_description);
+                dialog.setTitle("Description");
+                dialog.show();
+
+                TextView status = (TextView) dialog.findViewById(R.id.status_text_view);
+                TextView category = (TextView) dialog.findViewById(R.id.category_text_view);
+                TextView author = (TextView) dialog.findViewById(R.id.author_text_view);
+                TextView date = (TextView) dialog.findViewById(R.id.date_text_view);
+                TextView lang = (TextView) dialog.findViewById(R.id.language_text_view);
+                TextView des = (TextView) dialog.findViewById(R.id.content_text_view);
+                TextView title = (TextView) dialog.findViewById(R.id.title_text_view);
+
+
+                author.setText(mBook.getAuthor().toString());
+                title.setText(mBook.getTitle().toString());
+                category.setText(String.valueOf(mBook.getCategoryId()));
+                date.setText(mBook.getTime().toString());
+                status.setText(mBook.getStatus().toString());
+                lang.setText(mBook.getLanguage().toString());
+                des.setText(mBook.getDescription().toString());
+
+                Button btOk = (Button) dialog.findViewById(R.id.btDescription);
+                btOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                break;
+            }
+            case R.id.bt_seeall_review:
+                Intent intent = new Intent(this, RateActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(BOOK_ID, mBook.getId());
+                bundle.putInt(COUNT_RATE_BOOK, mBook.getQuantityRating());
+                bundle.putInt(USER_RATING_BOOK, mBook.getUserRate());
+                bundle.putFloat(RATEAVERAGE_BOOK, mBook.getRateAverage());
+                bundle.putInt("CategoryId", mBook.getCategoryId());
+                intent.putExtra("Mypackage", bundle);
+                startActivity(intent);
+                break;
+            case R.id.rating_book_sell:
+                Intent intent1 = new Intent(this, RateActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.bt_add_cart:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(R.string.dialog_add_cart)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // add book for cart
+                                Cart cart = new Cart(getBaseContext());
+                                cart.open();
+                                int id_fb = 1;
+                                Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
+                                boolean check_already_add = false;
+                                if (cursor.moveToFirst()) {
+                                    do {
+                                        if (cursor.getInt(2) == mBook.getId()) {
+                                            check_already_add = true;
+                                            Toast.makeText(getBaseContext(), "Book already added!", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        }
+                                    } while (cursor.moveToNext());
+                                }
+                                if (!check_already_add) {
+                                    cart.insertCart(id_fb, mBook.getId(), 1);
+                                    cart.close();
+                                    Toast.makeText(getBaseContext(), "Add book successful!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                                dialog.cancel();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.create();
+                builder.show();
+                break;
+            default:
+                break;
+        }
+    }
+    public void setDataSell() {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
@@ -171,7 +262,6 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                         mTextOldPrice.setText(mBook.getOldPrice() + "$");
                     }
                     mTextNumRating.setText("("+mBook.getQuantityRating()+")");
-//                    mRating.setRatingAverage(mBook.getRateAverage());
                     mRatingAverageSell.setText(mBook.getRateAverage()+"");
                     mCountRatingSell.setText(mBook.getQuantityRating()+"");
                     mCategoryTextView.setText((String) Variables.categoryHashMap.get(mBook.getCategoryId()));
@@ -186,23 +276,8 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                             .error(R.drawable.bg_error).into(mImageBar);
                     collapsingToolbarLayout.setTitle(mBook.getTitle());
                     if (mBook != null) {
-                        Call<ArrayList<ItemBookSimple>> callListSameBook = DataController.apiBookStore.getListBookInCategory(mBook.getCategoryId());
-                        callListSameBook.enqueue(new Callback<ArrayList<ItemBookSimple>>() {
-                            @Override
-                            public void onResponse(Response<ArrayList<ItemBookSimple>> response, Retrofit retrofit) {
-                                if (response.isSuccess()) {
-                                    mListSameBook = response.body();
-                                    mSameBook.setDataListBook(mListSameBook);
-                                    mProgressDialog.dismiss();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Throwable t) {
-                                mProgressDialog.dismiss();
-                                ReloadActivity();
-                            }
-                        });
+                        setDataReview();
+                        setDataSameBook();
                     }
                 }
                 mProgressDialog.dismiss();
@@ -214,102 +289,55 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                 ReloadActivity();
             }
         });
+    }
+    public void setDataReview() {
+        Call<Rate> callRate = DataController.apiBookStore.getRate(mBook.getId());
+        callRate.enqueue(new Callback<Rate>() {
+            @Override
+            public void onResponse(Response<Rate> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    mListReviews = response.body().getListReviews();
+                    if (mListReviews.size()>3){
+                        ArrayList<Review> tmp = new ArrayList<>();
+                        for(int i =0;i<3;i++){
+                            tmp.add(mListReviews.get(i));
+                        }
+                        mCustomScrollviewReview.setData(tmp);
+                    }else{
+                        mCustomScrollviewReview.setData(mListReviews);
+                    }
 
+                }
+            }
 
-
+            @Override
+            public void onFailure(Throwable t) {
+                mProgressDialog.dismiss();
+                ReloadActivity();
+            }
+        });
+        mProgressDialog.dismiss();
 
     }
+    public void setDataSameBook(){
+        Call<ArrayList<ItemBookSimple>> callListSameBook = DataController.apiBookStore.getListBookInCategory(mBook.getCategoryId());
+        callListSameBook.enqueue(new Callback<ArrayList<ItemBookSimple>>() {
+            @Override
+            public void onResponse(Response<ArrayList<ItemBookSimple>> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    mListSameBook = response.body();
+                    mSameBook.setDataListBook(mListSameBook);
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.bt_seeall_description: {
-                final Dialog dialog = new Dialog(this,android.R.style.Theme_Material_Light_Dialog_Alert);
-                dialog.setContentView(R.layout.dialog_description);
-                dialog.setTitle("Description");
-                dialog.show();
-
-                TextView status = (TextView) dialog.findViewById(R.id.status_text_view);
-                TextView category = (TextView) dialog.findViewById(R.id.category_text_view);
-                TextView author = (TextView) dialog.findViewById(R.id.author_text_view);
-                TextView date=(TextView)dialog.findViewById(R.id.date_text_view);
-                TextView lang = (TextView) dialog.findViewById(R.id.language_text_view);
-                TextView des =(TextView)dialog.findViewById(R.id.content_text_view);
-                TextView title=(TextView)dialog.findViewById(R.id.title_text_view);
-
-
-                author.setText(mBook.getAuthor().toString());
-                title.setText(mBook.getTitle().toString());
-                category.setText(String.valueOf(mBook.getCategoryId()));
-                date.setText(mBook.getTime().toString());
-                status.setText(mBook.getStatus().toString());
-                lang.setText(mBook.getLanguage().toString());
-                des.setText(mBook.getDescription().toString());
-
-                Button btOk=(Button)dialog.findViewById(R.id.btDescription);
-                btOk.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                break;
+                    mProgressDialog.dismiss();
+                }
             }
-            case R.id.bt_seeall_review:
-                Intent intent = new Intent(this, RateActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(BOOK_ID, mBook.getId());
-                bundle.putInt(COUNT_RATE_BOOK, mBook.getQuantityRating());
-                bundle.putFloat(RATEAVERAGE_BOOK, mBook.getRateAverage());
-                bundle.putInt("CategoryId", mBook.getCategoryId());
-                intent.putExtra("Mypackage", bundle);
-                startActivity(intent);
-                break;
-            case R.id.rating_book_sell:
-                Intent intent1 = new Intent(this, RateActivity.class);
-                startActivity(intent1);
-                break;
-            case R.id.bt_add_cart:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.dialog_add_cart)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // add book for cart
-                                Cart cart = new Cart(getBaseContext());
-                                cart.open();
-                                int id_fb = 1;
-                                Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
-                                boolean check_already_add = false;
-                                if (cursor.moveToFirst())
-                                {
-                                    do {
-                                        if (cursor.getInt(2)==mBook.getId()){
-                                            check_already_add = true;
-                                            Toast.makeText(getBaseContext(), "Book already added!",Toast.LENGTH_SHORT).show();
-                                            break;
-                                        }
-                                    } while (cursor.moveToNext());
-                                }
-                                if (!check_already_add){
-                                    cart.insertCart(id_fb,mBook.getId(),1);
-                                    cart.close();
-                                    Toast.makeText(getBaseContext(), "Add book successful!",Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                                dialog.cancel();
-                            }
-                        });
-                // Create the AlertDialog object and return it
-                builder.create();
-                builder.show();
-                break;
-            default:
-                break;
-        }
+
+            @Override
+            public void onFailure(Throwable t) {
+                mProgressDialog.dismiss();
+                ReloadActivity();
+            }
+        });
     }
 
     public void ReloadActivity(){

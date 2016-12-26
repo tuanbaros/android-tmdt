@@ -13,6 +13,7 @@ import retrofit.Call;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
 
@@ -42,6 +43,9 @@ public interface ApiBookStore {
     @GET("book/{book_id}")
     Call<Book> getBook(@Path("book_id") int book_id);
 
+    @GET("book/{book_id}/{user_id}")
+    Call<Book> getBook(@Path("book_id") int book_id, @Path("user_id") int user_id);
+
     @GET("bill/{user_id}")
     Call<ArrayList<Bill>> getBill(@Path("user_id") int user_id);
 
@@ -51,9 +55,23 @@ public interface ApiBookStore {
     @GET("author/{book_id}")
     Call<Book> getAuthor(@Path("book_id") int book_id);
 
+
     @FormUrlEncoded
     @POST("login")
     Call<User.CallBackUser> updateUser(@Field("facebookId") String userId, @Field("name") String name,
                                        @Field("avatar") String avatar, @Field("fbToken")String fbToken);
+
+
+//    @FormUrlEncoded
+//    @POST("cart/add")
+//    Call<User> updateUser(@Field("first_name") String first, @Field("last_name") String last);
+    @FormUrlEncoded
+    @POST("user/review/store")
+    Call<Rate.Status> postReviews(@Field("user_id") int userId, @Field("book_id") int bookId,
+                                  @Field("user_token") String userToken, @Field("review") String review);
+    @FormUrlEncoded
+    @POST("user/rate/store")
+    Call<Rate.Status> postRate(@Field("user_id") int userId, @Field("book_id") int bookId,
+                                  @Field("user_token") String userToken, @Field("rate") int rate);
 
 }

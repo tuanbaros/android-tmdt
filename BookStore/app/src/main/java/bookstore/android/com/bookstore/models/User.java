@@ -12,8 +12,8 @@ public class User {
     @SerializedName("user_id")
     private int userId;
     private String fbId;
-    private String name;
-    private String avatar;
+    private String name = "Huy Vuxuan";
+    private String avatar = "https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-32.png";
     private String accesstoken;
     @SerializedName("user_token")
     private String userToken;

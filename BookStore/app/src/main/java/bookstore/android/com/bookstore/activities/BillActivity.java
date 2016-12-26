@@ -75,7 +75,7 @@ public class BillActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void setDataBill(){
-        Call<ArrayList<Bill>> callListBill = DataController.apiBookStore.getBill(1);
+        Call<ArrayList<Bill>> callListBill = DataController.apiBookStore.getBill(DataController.user.getUserId());
         callListBill.enqueue(new Callback<ArrayList<Bill>>() {
             @Override
             public void onResponse(Response<ArrayList<Bill>> response, Retrofit retrofit) {
