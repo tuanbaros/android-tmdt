@@ -222,7 +222,7 @@
                                 android:layout_height="wrap_content"
                                 style="@style/TextBookName"
                                 android:textSize="16dp"
-                                android:text="Language:"/>
+                                android:text="Lang:"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="0dp"
@@ -233,7 +233,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 style="@style/TextBookName"
-                                android:textSize="15dp"
+                                android:textSize="16dp"
                                 android:text="Vietnamese"
                                 android:maxLines="1"/>
                         </LinearLayout>
@@ -263,7 +263,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 style="@style/TextBookName"
-                                android:textSize="15dp"
+                                android:textSize="16dp"
                                 android:text="VietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnames
                                 VietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnamesVietnames"
                                 android:maxLines="3"/>

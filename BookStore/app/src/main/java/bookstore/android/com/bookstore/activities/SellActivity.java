@@ -1,5 +1,6 @@
 package bookstore.android.com.bookstore.activities;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -66,6 +67,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     private ListBookHorizontalScrollView mSameBook;
     private ImageView mImageBar;
     private Book mBook;
+    private TextView tvStatus,tvCategory,tvLang,tvContent;
     private ProgressDialog mProgressDialog;
     public static final String BOOK_ID = "bookId";
     public static final String RATEAVERAGE_BOOK = "rateAverage";
@@ -95,8 +97,14 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         mRatingReviews = (RatingBar)findViewById(R.id.rating_reviews);
         mCategoryTextView = (TextView) findViewById(R.id.category_text_view);
         mAddCart = (Button)findViewById(R.id.bt_add_cart);
+        tvLang=(TextView)findViewById(R.id.language_text_view);
+        tvContent=(TextView)findViewById(R.id.content_text_view);
+        tvStatus=(TextView)findViewById(R.id.status_text_view);
+        tvCategory=(TextView)findViewById(R.id.category_text_view);
 
         setDataReview();
+
+
         mAddCart.setOnClickListener(this);
         mSeeAllDescription.setOnClickListener(this);
         mRating.setOnClickListener(this);
@@ -152,6 +160,12 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                     mBook = response.body();
                     mTextAuthor.setText(mBook.getAuthor().getName());
                     mTextBookName.setText(mBook.getTitle());
+
+                    tvLang.setText(mBook.getLanguage().toString());
+                    tvStatus.setText(mBook.getStatus().toString());
+                    tvContent.setText(mBook.getDescription().toString());
+                    tvCategory.setText(String.valueOf(mBook.getCategoryId()));
+
                     mTextPrice.setText(mBook.getPrice() + "$");
                     if(mBook.getOldPrice()!=mBook.getPrice()&&mBook.getOldPrice()!=0){
                         mTextOldPrice.setText(mBook.getOldPrice() + "$");
@@ -209,9 +223,38 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.bt_seeall_description:
+            case R.id.bt_seeall_description: {
+                final Dialog dialog = new Dialog(this,android.R.style.Theme_Material_Light_Dialog_Alert);
+                dialog.setContentView(R.layout.dialog_description);
+                dialog.setTitle("Description");
+                dialog.show();
 
+                TextView status = (TextView) dialog.findViewById(R.id.status_text_view);
+                TextView category = (TextView) dialog.findViewById(R.id.category_text_view);
+                TextView author = (TextView) dialog.findViewById(R.id.author_text_view);
+                TextView date=(TextView)dialog.findViewById(R.id.date_text_view);
+                TextView lang = (TextView) dialog.findViewById(R.id.language_text_view);
+                TextView des =(TextView)dialog.findViewById(R.id.content_text_view);
+                TextView title=(TextView)dialog.findViewById(R.id.title_text_view);
+
+
+                author.setText(mBook.getAuthor().toString());
+                title.setText(mBook.getTitle().toString());
+                category.setText(String.valueOf(mBook.getCategoryId()));
+                date.setText(mBook.getTime().toString());
+                status.setText(mBook.getStatus().toString());
+                lang.setText(mBook.getLanguage().toString());
+                des.setText(mBook.getDescription().toString());
+
+                Button btOk=(Button)dialog.findViewById(R.id.btDescription);
+                btOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
                 break;
+            }
             case R.id.bt_seeall_review:
                 Intent intent = new Intent(this, RateActivity.class);
                 Bundle bundle = new Bundle();
