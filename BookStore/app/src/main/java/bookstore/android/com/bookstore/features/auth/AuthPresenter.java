@@ -34,9 +34,22 @@ public class AuthPresenter implements FacebookCallback<LoginResult> {
 
     private CallbackManager mCallbackManager;
 
+    private ProfileTracker mProfileTracker;
+
     public AuthPresenter(AuthView aAuthView) {
         mCallbackManager = CallbackManager.Factory.create();
         this.mAuthView = aAuthView;
+        mProfileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                if (currentProfile != null)
+                    Profile.setCurrentProfile(currentProfile);
+            }
+        };
+    }
+
+    public ProfileTracker getProfileTracker() {
+        return mProfileTracker;
     }
 
     public CallbackManager getCallbackManager() {
@@ -49,7 +62,7 @@ public class AuthPresenter implements FacebookCallback<LoginResult> {
     }
 
     public void logout() {
-
+        LoginManager.getInstance().logOut();
     }
 
     public boolean checkAuth(Context context) {
@@ -103,15 +116,7 @@ public class AuthPresenter implements FacebookCallback<LoginResult> {
 
     @Override
     public void onSuccess(LoginResult loginResult) {
-        ProfileTracker profileTracker = new ProfileTracker() {
-            @Override
-            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                if (currentProfile != null) {
-                    getToken();
-                }
-            }
-        };
-        profileTracker.startTracking();
+        getToken();
     }
 
     @Override

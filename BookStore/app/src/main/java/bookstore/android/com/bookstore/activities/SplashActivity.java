@@ -30,11 +30,11 @@ public class SplashActivity extends AppCompatActivity implements AuthView, View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppEventsLogger.activateApp(this);
         mSplashBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         mSplashBinding.loginButton.setTag(R.string.login_button);
         mSplashBinding.loginButton.setOnClickListener(this);
         mAuthPresenter = new AuthPresenter(this);
+        mAuthPresenter.getProfileTracker().startTracking();
         if (mAuthPresenter.checkAuth(this))
             mAuthPresenter.retrieveCurrentUser(this);
     }
@@ -51,6 +51,7 @@ public class SplashActivity extends AppCompatActivity implements AuthView, View.
         switch (tag) {
             case R.string.login_button:
                 mSplashBinding.loginProgressBar.setVisibility(View.VISIBLE);
+                mSplashBinding.loginButton.setEnabled(false);
                 mAuthPresenter.login(this);
                 break;
             case R.string.continue_button:
@@ -69,6 +70,7 @@ public class SplashActivity extends AppCompatActivity implements AuthView, View.
         mSplashBinding.nameTextView.setText("Welcome, " + DataController.user.getName());
         mSplashBinding.loginButton.setText(R.string.continue_button);
         mSplashBinding.loginButton.setTag(R.string.continue_button);
+        mSplashBinding.loginButton.setEnabled(true);
     }
 
     @Override
@@ -80,6 +82,14 @@ public class SplashActivity extends AppCompatActivity implements AuthView, View.
 
     @Override
     public void onLoginError() {
+        mAuthPresenter.logout();
+        mSplashBinding.loginButton.setEnabled(true);
         Toast.makeText(this, "Đã xảy ra lỗi! Vui lòng thử lại sau", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAuthPresenter.getProfileTracker().stopTracking();
     }
 }
