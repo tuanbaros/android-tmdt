@@ -77,7 +77,7 @@ public class AuthPresenter implements FacebookCallback<LoginResult> {
         DataController.user.setFbId(profile.getId());
         DataController.user.setName(profile.getName());
         DataController.user.setAccesstoken(accessToken.getToken());
-        DataController.user.setAvatar(profile.getProfilePictureUri(100, 100).toString());
+        DataController.user.setAvatar(profile.getProfilePictureUri(480, 480).toString());
         DataController.user.setUserToken(Token.retrieveToken(context));
         DataController.user.setUserId(Token.retrieveId(context));
         mAuthView.onRetrieveCurrentUserSuccess();
@@ -90,7 +90,7 @@ public class AuthPresenter implements FacebookCallback<LoginResult> {
         AndroidNetworking.post("http://android-samsung.herokuapp.com/api/login")
                 .addBodyParameter("facebookId", profile.getId())
                 .addBodyParameter("name", profile.getName())
-                .addBodyParameter("avatar", profile.getProfilePictureUri(200, 200).toString())
+                .addBodyParameter("avatar", profile.getProfilePictureUri(500, 500).toString())
                 .addBodyParameter("fbToken", accessToken.getToken())
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
