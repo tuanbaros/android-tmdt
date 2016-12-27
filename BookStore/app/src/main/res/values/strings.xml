@@ -14,4 +14,9 @@
     <string name="login_button">Login with Facebook</string>
     <string name="continue_button">Tap to continue</string>
     <string name="avatar_description_image_view">facebook avatar</string>
+    <string name="order_button">Order</string>
+    <string name="receiver_text_view">Receiver</string>
+    <string name="phone_text_view">Phone</string>
+    <string name="address_text_view">Address</string>
+    <string name="item_text_view">List Book</string>
 </resources>
