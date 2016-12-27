@@ -95,56 +95,5 @@ public class Author {
         this.listBooks = listBooks;
     }
 
-    private class BookOfAuthor{
-        @SerializedName("idBook")
-        private int idBook;
-        @SerializedName("image")
-        private String urlImage;
-        @SerializedName("title")
-        private String title;
-        @SerializedName("rateAverage")
-        private float rateAverage;
-        @SerializedName("price")
-        private float price;
 
-        public int getIdBook() {
-            return idBook;
-        }
-
-        public void setIdBook(int idBook) {
-            this.idBook = idBook;
-        }
-
-        public String getUrlImage() {
-            return urlImage;
-        }
-
-        public void setUrlImage(String urlImage) {
-            this.urlImage = urlImage;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public float getRateAverage() {
-            return rateAverage;
-        }
-
-        public void setRateAverage(float rateAverage) {
-            this.rateAverage = rateAverage;
-        }
-
-        public float getPrice() {
-            return price;
-        }
-
-        public void setPrice(float price) {
-            this.price = price;
-        }
-    }
 }

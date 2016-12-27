@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mMainActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -205,12 +206,12 @@ public class MainActivity extends AppCompatActivity
 
                 startActivity(new Intent(this,CartActivity.class));
                 break;
-            case R.id.nav_rate:
+//            case R.id.nav_rate:
+//
+//                break;
+//            case R.id.nav_not_rate:
 
-                break;
-            case R.id.nav_not_rate:
-
-                break;
+//                break;
             case R.id.nav_setting:
                 break;
             case R.id.nav_signout:
@@ -246,7 +247,7 @@ public class MainActivity extends AppCompatActivity
                     mBestSeller.setDataListBook(mListBestSelling);
                     mKindleEBooks.setDataListBook(mListBestSelling);
                     mBestBookOfMonth.setDataListBook(mListBestSelling);
-                    mCustomSwipeAdapter = new CustomSwipeAdapter(getApplicationContext(), mListBestSelling);
+                    mCustomSwipeAdapter = new CustomSwipeAdapter(mMainActivity,getApplicationContext(), mListBestSelling);
                     mViewPager.setAdapter(mCustomSwipeAdapter);
                 }
                 mProgressDialog.dismiss();
