@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ import retrofit.Retrofit;
  * Created by toan on 26/12/2016.
  */
 public class BookGridviewAdapter extends ArrayAdapter<ItemBookSimple> {
-    public View mView;
+
     public ImageButton mImageButton;
     private TextView mTextView;
     int layoutId;
@@ -55,8 +56,7 @@ public class BookGridviewAdapter extends ArrayAdapter<ItemBookSimple> {
         if(convertView==null){
             viewHolder=new ViewHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            mView = layoutInflater.inflate(R.layout.item_book,parent,false);
-            convertView=layoutInflater.inflate(layoutId,null);
+            convertView = layoutInflater.inflate(R.layout.item_book,parent,false);
             viewHolder.gridViewItem=(CardView)convertView.findViewById(R.id.item_book);
             viewHolder.bookImage=(ImageButton) convertView.findViewById(R.id.image_book);
             viewHolder.bookPrice=(TextView)convertView.findViewById(R.id.textview_price);
@@ -88,7 +88,8 @@ public class BookGridviewAdapter extends ArrayAdapter<ItemBookSimple> {
         viewHolder.bookPrice.setText(String.valueOf(book.getPrice())+"$");
         viewHolder.bookTitle.setText(book.getTitle());
         viewHolder.bookRating.setRating((float) (((float)tmp_int)/10.0));
-        Picasso.with(mView.getContext()).load(items.get(position).getUrlImage())
+        Log.e("sss","rating = "+  viewHolder.bookRating.getRating() );
+        Picasso.with(convertView.getContext()).load(items.get(position).getUrlImage())
                 .placeholder(R.drawable.loading).error(R.drawable.error).into(viewHolder.bookImage);
 
 

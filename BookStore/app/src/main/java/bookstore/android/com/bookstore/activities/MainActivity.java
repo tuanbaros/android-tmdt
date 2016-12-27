@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,7 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
     private ViewPager mViewPager;
     private CustomSwipeAdapter mCustomSwipeAdapter;
     private ListBookHorizontalScrollView mBestSeller,mCategory,mKindleEBooks,mBestBookOfMonth,mSales,mNewReleases;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<Book> bookList = new ArrayList<>();
 
     private JSONObject response, profile_pic_data, profile_pic_url;
-
+    private ImageButton mBtMoreBestSeller, mBtMoreSales, mBtMoreNewReleases;
     private MainActivity mMainActivity;
     private ArrayList<Category> mCategoryList = new ArrayList<>();
     private ProgressDialog mProgressDialog;
@@ -80,7 +82,9 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         mViewPager = (ViewPager) findViewById(R.id.viewpager_book);
 
-
+        mBtMoreBestSeller = (ImageButton)findViewById(R.id.bt_more_best_seller);
+        mBtMoreSales = (ImageButton)findViewById(R.id.bt_more_sales);
+        mBtMoreNewReleases = (ImageButton)findViewById(R.id.bt_more_new_releases);
         mBestSeller = (ListBookHorizontalScrollView)findViewById(R.id.list_book_best_seller);
         mCategory = (ListBookHorizontalScrollView)findViewById(R.id.list_book_category);
         mKindleEBooks = (ListBookHorizontalScrollView)findViewById(R.id.list_book_kindle_ebooks);
@@ -97,7 +101,9 @@ public class MainActivity extends AppCompatActivity
                 startActivity(itSearch);
             }
         });
-
+        mBtMoreBestSeller.setOnClickListener(this);
+        mBtMoreSales.setOnClickListener(this);
+        mBtMoreNewReleases.setOnClickListener(this);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -131,7 +137,27 @@ public class MainActivity extends AppCompatActivity
         userId=(TextView) header.findViewById(R.id.userid);
         user_picture = (ProfilePictureView) header.findViewById(R.id.profile_image);
     }
-
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.bt_more_best_seller:
+                DataController.isSpecialSearch = true;
+                DataController.type_search = R.id.bt_more_best_seller;
+                startActivity(new Intent(this,SearchActivity.class));
+                break;
+            case R.id.bt_more_sales:
+                DataController.isSpecialSearch = true;
+                DataController.type_search = R.id.bt_more_sales;
+                startActivity(new Intent(this,SearchActivity.class));
+                break;
+            case R.id.bt_more_new_releases:
+                DataController.isSpecialSearch = true;
+                DataController.type_search = R.id.bt_more_new_releases;
+                startActivity(new Intent(this,SearchActivity.class));
+                break;
+            default:break;
+        }
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -315,4 +341,6 @@ public class MainActivity extends AppCompatActivity
         if (DataController.user != null)
             Token.store(this, DataController.user.getUserToken(), DataController.user.getUserId());
     }
+
+
 }

@@ -60,7 +60,6 @@ public class CartActivity extends AppCompatActivity {
         mBtBuyCart = (Button)findViewById(R.id.bt_buy_cart);
         mLinearLayoutManager = new LinearLayoutManager(this);
         setData();
-
     }
 
     @Override
@@ -82,7 +81,6 @@ public class CartActivity extends AppCompatActivity {
             default:
                 return true;
         }
-
     }
     private void setData(){
         mProgressDialog = new ProgressDialog(this);
@@ -147,6 +145,7 @@ public class CartActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Throwable t) {
+
             }
         });
     }
