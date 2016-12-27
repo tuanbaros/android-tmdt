@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -63,6 +64,10 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
     EditText mEditText;
     ArrayList<Review> tmp = new ArrayList<>();
 
+    public FloatingActionButton getmAddReview() {
+        return mAddReview;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +89,20 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
         mListBookSame = (ListBookHorizontalScrollView) findViewById(R.id.scrollhorizontal_same_type);
         setData();
         mAddReview.setOnClickListener(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getIntent().getStringExtra("book_name"));
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -164,12 +182,11 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
                 callintent.getBundleExtra("Mypackage");
         mCategoryId = packageFromCaller.getInt("CategoryId");
         mBookId = packageFromCaller.getInt(SellActivity.BOOK_ID);
+        //tai sao rate r ma van bang 0 nhi
+
         mRatingFragment.setmBookId(mBookId,this);
-        if(book!=null&&book.getUserRate()>0){
-            mAddReview.setVisibility(View.VISIBLE);
-        }else{
-            mAddReview.setVisibility(View.GONE);
-        }
+
+        //neu o
         setDataReview();
         setDataSameBook();
     }

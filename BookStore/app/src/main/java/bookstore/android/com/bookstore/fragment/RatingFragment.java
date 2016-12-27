@@ -135,6 +135,7 @@ public class RatingFragment extends Fragment{
     public void setmBookId(int mBookId,RateActivity rateActivity) {
         this.mRateActivity = rateActivity;
         this.mBookId = mBookId;
+        Log.e("test","mBookID = "+mBookId);//cham the :)))
         if(mBookId>0){
             loadDataBook();
 
@@ -156,6 +157,12 @@ public class RatingFragment extends Fragment{
                             mRatingView.setIsIndicator(true);
                             mInorgeRatingBar = false;
                             mChangeRate.setVisibility(View.VISIBLE);
+                            if(mRateActivity.book!=null&&mRateActivity.book.getUserRate()>0){
+                                mRateActivity.getmAddReview().setVisibility(View.VISIBLE);
+                            }else{
+                                mRateActivity.getmAddReview().setVisibility(View.GONE);
+                            }
+                            //chac luc nay server ck
                         }
                     }
                 }

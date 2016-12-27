@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.adapters.CustomSwipeAdapter;
+import bookstore.android.com.bookstore.features.auth.Token;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Category;
 import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
@@ -318,5 +319,12 @@ public class MainActivity extends AppCompatActivity
                 }).create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (DataController.user != null)
+            Token.store(this, DataController.user.getUserToken(), DataController.user.getUserId());
     }
 }

@@ -19,5 +19,10 @@
     <color name="colorRate3">#fbff17</color>
     <color name="colorRate2">#f1c012</color>
     <color name="colorRate1">#e45322</color>
+    <color name="login_button">#3b5998</color>
+
+    <color name="button_pressed">#ff8a00</color>
+    <color name="button_focused">#ff8a00</color>
+    <color name="button_default">#3b5998</color>
 </resources>
 

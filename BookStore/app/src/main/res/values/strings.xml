@@ -10,4 +10,7 @@
     <string name="cancel">Cancel</string>
     <string name="dialog_add_cart">Do you want to add book for your cart?</string>
     <string name="ok">OK</string>
+    <string name="login_button">Login with Facebook</string>
+    <string name="continue_button">Tap to continue</string>
+    <string name="avatar_description_image_view">facebook avatar</string>
 </resources>

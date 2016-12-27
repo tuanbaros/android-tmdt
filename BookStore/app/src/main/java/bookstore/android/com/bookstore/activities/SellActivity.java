@@ -137,6 +137,9 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.ic_home:
                 onBackPressed();
                 break;
+            case android.R.id.home:
+                this.finish();
+                break;
             default:
                 break;
         }
@@ -149,7 +152,6 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_seeall_description: {
                 final Dialog dialog = new Dialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
                 dialog.setContentView(R.layout.dialog_description);
-                dialog.setTitle("Description");
                 dialog.show();
 
                 TextView status = (TextView) dialog.findViewById(R.id.status_text_view);
@@ -161,13 +163,13 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                 TextView title = (TextView) dialog.findViewById(R.id.title_text_view);
 
 
-                author.setText(mBook.getAuthor().toString());
-                title.setText(mBook.getTitle().toString());
-                category.setText(String.valueOf(mBook.getCategoryId()));
-                date.setText(mBook.getTime().toString());
-                status.setText(mBook.getStatus().toString());
-                lang.setText(mBook.getLanguage().toString());
-                des.setText(mBook.getDescription().toString());
+                author.setText(mBook.getAuthor().getName());
+                title.setText(mBook.getTitle());
+                category.setText(mCategoryTextView.getText().toString());
+                date.setText(mBook.getTime());
+                status.setText(mBook.getStatus());
+                lang.setText(mBook.getLanguage());
+                des.setText(mBook.getDescription());
 
                 Button btOk = (Button) dialog.findViewById(R.id.btDescription);
                 btOk.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +189,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                 bundle.putFloat(RATEAVERAGE_BOOK, mBook.getRateAverage());
                 bundle.putInt("CategoryId", mBook.getCategoryId());
                 intent.putExtra("Mypackage", bundle);
+                intent.putExtra("book_name", mBook.getTitle());
                 startActivity(intent);
                 break;
             case R.id.rating_book_sell:
@@ -214,22 +217,11 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                         Cart cart = new Cart(getBaseContext());
                         cart.open();
                         int id_fb = 1;
-                        Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
-                        boolean check_already_add = false;
-                        if (cursor.moveToFirst()) {
-                            do {
-                                if (cursor.getInt(2) == mBook.getId()) {
-                                    check_already_add = true;
-                                    Toast.makeText(getBaseContext(), "Book already added!", Toast.LENGTH_SHORT).show();
-                                    break;
-                                }
-                            } while (cursor.moveToNext());
-                        }
-                        if (!check_already_add) {
-                            cart.insertCart(id_fb, mBook.getId(), 1);
-                            cart.close();
-                            Toast.makeText(getBaseContext(), "Add book successful!", Toast.LENGTH_SHORT).show();
-                        }
+                        if (cart.insertCart(id_fb,mBook.getId(),mBook.getImages(),1) > 0)
+                            Toast.makeText(getBaseContext(), "Add book successful!",Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getBaseContext(), "Book already added!",Toast.LENGTH_SHORT).show();
+                        cart.close();
                         if (add_or_buy.equals("buy")){
                             Intent intent2 = new Intent(getBaseContext(), CartActivity.class);
                             startActivity(intent2);
@@ -348,7 +340,6 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                     mProgressDialog.dismiss();
                 }
             }
-
             @Override
             public void onFailure(Throwable t) {
                 mProgressDialog.dismiss();
