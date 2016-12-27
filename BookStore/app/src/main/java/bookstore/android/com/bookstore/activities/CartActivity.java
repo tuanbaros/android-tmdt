@@ -58,7 +58,6 @@ public class CartActivity extends AppCompatActivity {
         mLinearLayoutManager = new LinearLayoutManager(this);
         setData();
 
-        mTextTotalCost.setText("");
     }
 
     @Override
@@ -85,14 +84,14 @@ public class CartActivity extends AppCompatActivity {
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
         // get book in cart
+        int id_fb = 1;
         Cart cart = new Cart(getBaseContext());
         cart.open();
-        Cursor cursor = cart.getAllCartsFollowCartId(1);
+        Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
         if (cursor.moveToFirst())
         {
             do {
                 DisplayBook(cursor);
-                quantityBook.add(cursor.getInt(3));
             } while (cursor.moveToNext());
         }
         cart.close();
@@ -108,6 +107,21 @@ public class CartActivity extends AppCompatActivity {
                 if (response.isSuccess()){
                     mBook = response.body();
                     mListCartBook.add(mBook);
+
+                    // get quantity book
+                    int id_fb = 1;
+                    Cart cart = new Cart(getBaseContext());
+                    cart.open();
+                    Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
+                    if (cursor.moveToFirst())
+                    {
+                        do {
+                            if (cursor.getInt(2)==mBook.getId()){
+                                quantityBook.add(cursor.getInt(3));
+                            }
+                        } while (cursor.moveToNext());
+                    }
+                    cart.close();
 
                     // get total items in cart
                     mTextCountItem.setText(mListCartBook.size()+"");

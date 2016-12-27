@@ -117,4 +117,11 @@ public class Cart {
         args.put(KEY_QUANTITY, quantity);
         return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }
+    //---updates column quantity in cart---
+    public boolean updateQuantity(long rowId, int quantity)
+    {
+        ContentValues args = new ContentValues();
+        args.put(KEY_QUANTITY, quantity);
+        return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
+    }
 }
