@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.facebook.login.widget.ProfilePictureView;
 
 import org.json.JSONObject;
@@ -187,27 +188,14 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_setting:
                 break;
             case R.id.nav_signout:
+                LoginManager.getInstance().logOut();
+                DataController.user = null;
+                Intent intent = new Intent(getBaseContext(), SplashActivity.class);
+                startActivity(intent);
+                finish();
                 break;
            default:break;
         }
-        if(id==R.id.nav_login){
-            Intent i=new Intent(getApplicationContext(),LoginActivity.class);
-            startActivity(i);
-        }
-//
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
