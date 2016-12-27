@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -66,7 +67,7 @@ public class SplashActivity extends AppCompatActivity implements AuthView, View.
 
     @Override
     public void onRetrieveCurrentUserSuccess() {
-        Picasso.with(this).load(DataController.user.getAvatar()).fit().into(mSplashBinding.avatarImageView);
+        Picasso.with(this).load(DataController.user.getAvatar()).into(mSplashBinding.avatarImageView);
         mSplashBinding.nameTextView.setText("Welcome, " + DataController.user.getName());
         mSplashBinding.loginButton.setText(R.string.continue_button);
         mSplashBinding.loginButton.setTag(R.string.continue_button);
