@@ -16,12 +16,28 @@ import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by vxhuy176 on 19/12/2016.
  */
 
 public interface ApiBookStore {
+    @GET("status/top-selling")
+    Call<ArrayList<ItemBookSimple>> getListTopSelling(@Query("skip") int skip);
+
+    @GET("status/new-releases")
+    Call<ArrayList<ItemBookSimple>> getListNewReleases(@Query("skip") int skip);
+
+    @GET("status/top-saleoff")
+    Call<ArrayList<ItemBookSimple>> getListTopSaleOff(@Query("skip") int skip);
+
+    @GET("category")
+    Call<ArrayList<Category>> getListCategory();
+
+    @GET("category/{category_id}")
+    Call<ArrayList<ItemBookSimple>> getListBookInCategory(@Path("category_id") int category_id,@Query("skip") int skip);
+
     @GET("status/top-selling")
     Call<ArrayList<ItemBookSimple>> getListTopSelling();
 
@@ -30,9 +46,6 @@ public interface ApiBookStore {
 
     @GET("status/top-saleoff")
     Call<ArrayList<ItemBookSimple>> getListTopSaleOff();
-
-    @GET("category")
-    Call<ArrayList<Category>> getListCategory();
 
     @GET("category/{category_id}")
     Call<ArrayList<ItemBookSimple>> getListBookInCategory(@Path("category_id") int category_id);
@@ -57,6 +70,8 @@ public interface ApiBookStore {
 
     @GET("search/{key}")
     Call<ArrayList<ItemBookSimple>> getListBooks(@Path("key") String key);
+    @GET("search/{key}")
+    Call<ArrayList<ItemBookSimple>> getListBooks(@Path("key") String key,@Query("skip") int skip);
 
     @FormUrlEncoded
     @POST("login")

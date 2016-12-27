@@ -90,14 +90,14 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
 
     public void setDataCategory(ArrayList<Category> categoryList){
         mLinearLayoutBook = (LinearLayout)findViewById(R.id.linearlayout_list_book);
-        for(int i = 0; i<10;i++){
+        for(int i = 0; i<categoryList.size();i++){
             CategoryItem categoryItem = new CategoryItem(this.getContext());
             MyHolderCategory myHolderCategory = new MyHolderCategory(categoryItem.mView);
             if (!categoryList.get(i).getImage().equals("")){
                 Picasso.with(getContext()).load(categoryList.get(i).getImage())
                         .placeholder(R.drawable.loading).error(R.drawable.error).into(myHolderCategory.mImageCategory);
             }
-//            Log.e("sss","ssssssscategoryList.get(i).getName()"+ categoryList.get(i).getName());
+            categoryItem.idView = categoryList.get(i).getId();
             myHolderCategory.mNameCategory.setText(categoryList.get(i).getName());
             mLinearLayoutBook.addView(categoryItem);
         }
