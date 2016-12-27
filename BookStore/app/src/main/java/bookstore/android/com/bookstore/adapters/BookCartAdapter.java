@@ -84,7 +84,7 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
         cart.open();
         Cursor cursor = cart.getCart(getCartId(item));
         cart.close();
-        holder.mQuantityBook.setSelection(cursor.getInt(3)-1);
+        holder.mQuantityBook.setSelection(cursor.getInt(4)-1);
 
         // set quantity for each book
         holder.mQuantityBook.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

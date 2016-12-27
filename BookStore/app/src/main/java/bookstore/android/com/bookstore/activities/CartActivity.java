@@ -118,7 +118,7 @@ public class CartActivity extends AppCompatActivity {
                     {
                         do {
                             if (cursor.getInt(2)==mBook.getId()){
-                                quantityBook.add(cursor.getInt(3));
+                                quantityBook.add(cursor.getInt(4));
                             }
                         } while (cursor.moveToNext());
                     }
