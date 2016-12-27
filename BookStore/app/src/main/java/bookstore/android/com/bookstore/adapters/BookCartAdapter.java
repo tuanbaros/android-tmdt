@@ -25,13 +25,14 @@ import bookstore.android.com.bookstore.activities.CartActivity;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Cart;
 import bookstore.android.com.bookstore.models.CartBook;
+import bookstore.android.com.bookstore.utils.DataController;
 
 
 /**
  * Created by vxhuy176 on 10/12/2016.
  */
 
-public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHolder>  {
+ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHolder>  {
     private ArrayList<Book> mListCartBook = new ArrayList<>();
     private Context mContext;
 
@@ -63,15 +64,15 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
             @Override
             public void onClick(View view) {
                 // delete book in cart
-                int id_fb = 1;
                 Cart cart = new Cart(mContext);
                 cart.open();
                 cart.deleteCart(getCartId(item));
                 cart.close();
                 Toast.makeText(mContext,"delete book", Toast.LENGTH_SHORT).show();
-                /*Intent intent = new Intent(mContext, CartActivity.class);
-                mContext.startActivity(intent);*/
-
+                //
+                Intent intent = new Intent(mContext, CartActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
             }
         });
 
@@ -84,7 +85,7 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
         cart.open();
         Cursor cursor = cart.getCart(getCartId(item));
         cart.close();
-        holder.mQuantityBook.setSelection(cursor.getInt(4)-1);
+        holder.mQuantityBook.setSelection(cursor.getInt(4)-1,false);
 
         // set quantity for each book
         holder.mQuantityBook.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -95,7 +96,10 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
                 cart.open();
                 cart.updateQuantity(getCartId(item), Integer.parseInt(quantity));
                 cart.close();
-
+                //
+                Intent intent = new Intent(mContext, CartActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
             }
 
             @Override
@@ -106,11 +110,11 @@ public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHold
     }
 
     public int getCartId(Book item){
-        int id_fb = 1;
+        int id_user = DataController.user.getUserId();
         int cart_id = -1;
         Cart cart = new Cart(mContext);
         cart.open();
-        Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
+        Cursor cursor = cart.getAllCartsFollowCartId(id_user);
         if (cursor.moveToFirst())
         {
             do {

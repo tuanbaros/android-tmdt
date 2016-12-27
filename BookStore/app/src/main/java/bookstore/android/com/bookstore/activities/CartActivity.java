@@ -1,6 +1,8 @@
 package bookstore.android.com.bookstore.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -70,10 +72,12 @@ public class CartActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.ic_home:
-                onBackPressed();
+                Intent intent1 = new Intent(this, MainActivity.class);
+                startActivity(intent1);
                 return true;
             default:
                 return true;
@@ -85,10 +89,10 @@ public class CartActivity extends AppCompatActivity {
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
         // get book in cart
-        int id_fb = 1;
+        int id_user = DataController.user.getUserId();
         Cart cart = new Cart(getBaseContext());
         cart.open();
-        Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
+        Cursor cursor = cart.getAllCartsFollowCartId(id_user);
         if (cursor.moveToFirst())
         {
             do {
@@ -110,10 +114,10 @@ public class CartActivity extends AppCompatActivity {
                     mListCartBook.add(mBook);
 
                     // get quantity book
-                    int id_fb = 1;
+                    int id_user = DataController.user.getUserId();
                     Cart cart = new Cart(getBaseContext());
                     cart.open();
-                    Cursor cursor = cart.getAllCartsFollowCartId(id_fb);
+                    Cursor cursor = cart.getAllCartsFollowCartId(id_user);
                     if (cursor.moveToFirst())
                     {
                         do {
