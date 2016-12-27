@@ -4,17 +4,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -22,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,10 +24,8 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import bookstore.android.com.bookstore.R;
-import bookstore.android.com.bookstore.adapters.BookCartAdapter;
 import bookstore.android.com.bookstore.adapters.CustomScrollviewReview;
 import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
 import bookstore.android.com.bookstore.models.Author;
@@ -43,11 +35,8 @@ import bookstore.android.com.bookstore.models.CartBook;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.models.Rate;
 import bookstore.android.com.bookstore.models.Review;
-import bookstore.android.com.bookstore.network.ApiBookStore;
-import bookstore.android.com.bookstore.network.RestClient;
 import bookstore.android.com.bookstore.utils.DataController;
 import bookstore.android.com.bookstore.utils.Variables;
-import bookstore.android.com.bookstore.views.custom.RatingView;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -67,9 +56,10 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTextAuthor, mTextBookName, mTextOldPrice, mTextPrice, mTextNumRating,mCountRatingSell, mRatingAverageSell, mCategoryTextView;
     private RatingBar mRating,mRatingReviews;
     private Button mSeeAllDescription, mSeeAllReView, mAddCart, mBuyBook;
-    private ListBookHorizontalScrollView mSameBook;
+    private ListBookHorizontalScrollView mSameBook, bookListsOfAuthor;
     private ImageView mImageBar;
     private Book mBook;
+    private Dialog dAuthor;
     private TextView tvStatus,tvCategory,tvLang,tvContent;
     private ProgressDialog mProgressDialog;
     public static final String USER_RATING_BOOK = "userRating";
@@ -116,11 +106,12 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
 
         mAddCart.setOnClickListener(this);
         mBuyBook.setOnClickListener(this);
-        setDataSell();
         mSeeAllDescription.setOnClickListener(this);
         mRating.setOnClickListener(this);
         mSeeAllReView.setOnClickListener(this);
         mTextAuthor.setOnClickListener(this);
+        setDataSell();
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_sell);
         setSupportActionBar(toolbar);
@@ -159,35 +150,53 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.text_author_book_sell:{
-                final Dialog dAuthor = new Dialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
+                dAuthor = new Dialog(this,
+                        android.R.style.Theme_Material_Light_Dialog_Alert);
                 dAuthor.setContentView(R.layout.dialog_author);
                 dAuthor.setTitle("Detail Author");
                 dAuthor.show();
+                if(mBook!=null){
+                    Call<Author> call = DataController.apiBookStore.getAuthor(mBook.getId());
+                    call.enqueue(new Callback<Author>() {
+                        @Override
+                        public void onResponse(Response<Author> response, Retrofit retrofit) {
+                            if (response.isSuccess()){
+                                Author author = response.body();
 
-                TextView authorName = (TextView) dAuthor.findViewById(R.id.tvAuthorName);
-                TextView authorSold = (TextView) dAuthor.findViewById(R.id.authorSold);
-                TextView authorRate = (TextView) dAuthor.findViewById(R.id.authorRate);
-                TextView authorInfo=(TextView)dAuthor.findViewById(R.id.authorBook);
-                ImageView authorAvatar = (ImageView) dAuthor.findViewById(R.id.authorAvatar);
-                Button authorOK = (Button) dAuthor.findViewById(R.id.authorBt);
-//                ListBookHorizontalScrollView bookLists=
-//                        (ListBookHorizontalScrollView)dAuthor.findViewById(R.id.list_author_book);
-//                itemsBookOfAuthor=mBook.getAuthor().getListBooks();
-//                if(itemsBookOfAuthor.size()>0) {
-//                    bookLists.setDataListBook(itemsBookOfAuthor);
-//                }
-                authorName.setText(mBook.getAuthor().getName());
-                authorSold.setText(String.valueOf(mBook.getAuthor().getTotalSold()));
-                authorRate.setText(String.valueOf(mBook.getAuthor().getRateBookAverage()));
-                authorInfo.setText(mBook.getAuthor().getRecommend());
-                Picasso.with(getApplicationContext()).load(mBook.getAuthor().getAvatar())
-                        .placeholder(R.drawable.loading).error(R.drawable.error).into(authorAvatar);
-                authorOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dAuthor.dismiss();
-                    }
-                });
+                                TextView authorName = (TextView) dAuthor.findViewById(R.id.tvAuthorName);
+                                TextView authorSold = (TextView) dAuthor.findViewById(R.id.authorSold);
+                                TextView authorRate = (TextView) dAuthor.findViewById(R.id.authorRate);
+                                TextView authorInfo=(TextView)dAuthor.findViewById(R.id.authorBook);
+                                ImageView authorAvatar = (ImageView) dAuthor.findViewById(R.id.authorAvatar);
+                                Button authorOK = (Button) dAuthor.findViewById(R.id.authorBt);
+                                bookListsOfAuthor =
+                                        (ListBookHorizontalScrollView)dAuthor.findViewById(R.id.list_author_book);
+                                itemsBookOfAuthor=author.getListBooks();
+                                if(itemsBookOfAuthor.size()>0) {
+                                    bookListsOfAuthor.setDataListBook(itemsBookOfAuthor);
+                                }
+                                authorName.setText(author.getName());
+                                authorSold.setText(String.valueOf(author.getTotalSold()));
+                                authorRate.setText(String.valueOf(author.getRateBookAverage()));
+                                authorInfo.setText(author.getRecommend());
+                                Picasso.with(getApplicationContext()).load(author.getAvatar())
+                                        .placeholder(R.drawable.loading).error(R.drawable.error).into(authorAvatar);
+                                authorOK.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dAuthor.dismiss();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            Toast.makeText(getApplication(),"Error",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
                 break;
 
 

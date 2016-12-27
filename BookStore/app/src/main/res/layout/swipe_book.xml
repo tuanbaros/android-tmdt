@@ -54,7 +54,7 @@
                   android:id="@+id/textview_price"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="100.000 đ"
+                  android:text=""
                   android:textColor="@color/colorPrice"
                   android:textSize="20dp"
 
@@ -64,7 +64,7 @@
                   android:id="@+id/textview_old_price"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="150.000 đ"
+                  android:text=""
                   android:textColor="@color/colorOldPrice"
                   android:textSize="15dp"
                   android:textStyle="normal"

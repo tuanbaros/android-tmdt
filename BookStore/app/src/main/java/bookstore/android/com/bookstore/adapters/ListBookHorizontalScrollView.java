@@ -59,6 +59,7 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
         for(int i = 0;i<tmp;i++){
             BookItem bookItem = new BookItem(this.getContext());
             MyHolder myHolder = new MyHolder(bookItem.mView);
+            Log.e("sss", "bookList.get(i).getId(): "+ bookList.get(i).getId() );
             if(bookList.get(i).getId()!=0){
                 bookItem.position = bookList.get(i).getId();
             }else{
@@ -80,7 +81,6 @@ public class ListBookHorizontalScrollView extends HorizontalScrollView {
             }
             int tmp_int = (int)tmp2;
             myHolder.mRatingBook.setRating((float) (((float)tmp_int)/10.0));
-            Log.e("TAG", "instantiateItem: "+(float) (((float)tmp_int)/10.0) );
             myHolder.mBookPrice.setText(bookList.get(i).getPrice()+"$");
             mLinearLayoutBook.addView(bookItem);
         }

@@ -1,8 +1,12 @@
 package bookstore.android.com.bookstore.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.renderscript.Sampler;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,24 +15,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
+import bookstore.android.com.bookstore.activities.MainActivity;
+import bookstore.android.com.bookstore.activities.SellActivity;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.views.custom.RatingView;
 
 public class CustomSwipeAdapter extends PagerAdapter {
     private Context mContext;
     private LayoutInflater mLayoutInflater;
+    private int mPosition;
+    private AppCompatActivity mActivity;
 
     private ArrayList<ItemBookSimple> mListBestBook = new ArrayList<>();
 
-    public CustomSwipeAdapter(Context context,ArrayList<ItemBookSimple> list) {
+    public CustomSwipeAdapter(AppCompatActivity activity,Context context,ArrayList<ItemBookSimple> list) {
         this.mContext = context;
         this.mListBestBook = list;
+        this.mActivity = activity;
     }
 
     @Override
@@ -47,16 +57,6 @@ public class CustomSwipeAdapter extends PagerAdapter {
         mLayoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View item_view = mLayoutInflater.inflate(R.layout.swipe_book,container,false);
         final MyHolder myHolder = new MyHolder(item_view);
-//        myHolder.imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(view.getContext(), SellActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("id_book",mListBestBook.get().getId());
-//                i.putExtra("Mypackage",bundle);
-//                mContext.startActivity(i);
-//            }
-//        });
         myHolder.position = position;
         myHolder.mBookName.setText(mListBestBook.get(position).getTitle());
         myHolder.mAuthor.setText(mListBestBook.get(position).getAuthor());
@@ -70,6 +70,16 @@ public class CustomSwipeAdapter extends PagerAdapter {
         Picasso.with(item_view.getContext()).load(mListBestBook.get(position).getUrlImage())
                 .placeholder(R.drawable.loading).error(R.drawable.error).into(myHolder.imageView);
         container.addView(item_view);
+        myHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mActivity, SellActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id_book",mListBestBook.get(myHolder.position).getId());
+                i.putExtra("Mypackage",bundle);
+                mActivity.startActivity(i);
+            }
+        });
         return item_view;
 
     }
@@ -80,7 +90,7 @@ public class CustomSwipeAdapter extends PagerAdapter {
     }
 
     private class MyHolder{
-        private int position;
+        int position;
         TextView mPrice,mOldPrice,mBookName,mAuthor;
         RatingBar mRating;
         ImageView imageView;

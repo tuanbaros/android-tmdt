@@ -2,6 +2,7 @@ package bookstore.android.com.bookstore.network;
 
 import java.util.ArrayList;
 
+import bookstore.android.com.bookstore.models.Author;
 import bookstore.android.com.bookstore.models.Bill;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Cart;
@@ -66,7 +67,7 @@ public interface ApiBookStore {
     Call<Rate> getRate(@Path("book_id") int book_id);
 
     @GET("author/{book_id}")
-    Call<Book> getAuthor(@Path("book_id") int book_id);
+    Call<Author> getAuthor(@Path("book_id") int book_id);
 
     @GET("search/{key}")
     Call<ArrayList<ItemBookSimple>> getListBooks(@Path("key") String key);
