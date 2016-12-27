@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -59,7 +60,15 @@ public class CartActivity extends AppCompatActivity {
         mListBookBuyMore = (ListBookHorizontalScrollView) findViewById(R.id.horizontal_buy_more);
         mBtBuyCart = (Button)findViewById(R.id.bt_buy_cart);
         mLinearLayoutManager = new LinearLayoutManager(this);
-        setData();
+
+        mBtBuyCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), OrderActivity.class);
+                intent.putExtra("total", mTextTotalCost.getText().toString());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -71,8 +80,7 @@ public class CartActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                this.finish();
                 return true;
             case R.id.ic_home:
                 Intent intent1 = new Intent(this, MainActivity.class);
@@ -148,5 +156,11 @@ public class CartActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setData();
     }
 }

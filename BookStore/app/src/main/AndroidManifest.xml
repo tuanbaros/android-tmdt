@@ -17,40 +17,39 @@
 
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".activities.CartActivity"
             android:label="@string/cart_name"
             android:theme="@style/AppTheme.Theme" />
-        <activity android:name=".activities.SellActivity"/>
+        <activity android:name=".activities.SellActivity" />
         <activity
             android:name=".activities.RateActivity"
-            android:theme="@style/AppTheme.Theme"/>
+            android:theme="@style/AppTheme.Theme" />
         <activity
             android:name=".activities.BillActivity"
             android:label="Bill Status"
-            android:theme="@style/AppTheme.Theme"/>
+            android:theme="@style/AppTheme.Theme" />
         <activity
             android:name=".activities.DetailsBillActivity"
             android:label="Bill Details"
-            android:theme="@style/AppTheme.Theme"/>
+            android:theme="@style/AppTheme.Theme" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.SearchActivity"
             android:label="Search" />
@@ -61,6 +60,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.OrderActivity"
+            android:theme="@style/AppTheme.Theme"></activity>
     </application>
 
 </manifest>

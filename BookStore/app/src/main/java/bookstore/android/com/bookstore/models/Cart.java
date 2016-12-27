@@ -21,13 +21,14 @@ public class Cart {
     private static final String KEY_BOOKID = "_book_id";
     private static final String KEY_IMAGE = "image";
     private static final String KEY_QUANTITY = "quantity";
+    private static final String KEY_NAME = "name";
 
     private static final String TAG = "Cart";
     private static final String DATABASE_NAME = "MyDB";
     private static final String DATABASE_TABLE = "carts";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_CREATE ="create table carts (_id integer primary key autoincrement, "
-            + "_cart_id integer not null, _book_id integer not null, image text not null, quantity integer not null, unique(_cart_id, _book_id));";
+            + "_cart_id integer not null, _book_id integer not null, image text not null, quantity integer not null, name text not null, unique(_cart_id, _book_id));";
     private final Context context;
     private DatabaseHelper DBHelper;
     private SQLiteDatabase db;
@@ -72,13 +73,14 @@ public class Cart {
         DBHelper.close();
     }
     //---insert a cart into the database---
-    public long insertCart(int _cart_id, int _book_id, String image, int quantity)
+    public long insertCart(int _cart_id, int _book_id, String image, int quantity, String name)
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_CARTID, _cart_id);
         initialValues.put(KEY_BOOKID, _book_id);
         initialValues.put(KEY_IMAGE, image);
         initialValues.put(KEY_QUANTITY, quantity);
+        initialValues.put(KEY_NAME, name);
         return db.insertWithOnConflict(DATABASE_TABLE, null, initialValues, SQLiteDatabase.CONFLICT_IGNORE);
     }
     //---deletes a particular cart---
@@ -90,20 +92,20 @@ public class Cart {
     public Cursor getAllCarts()
     {
         return db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_CARTID,
-                KEY_BOOKID, KEY_IMAGE, KEY_QUANTITY}, null, null, null, null, null);
+                KEY_BOOKID, KEY_IMAGE, KEY_QUANTITY, KEY_NAME}, null, null, null, null, null);
     }
     //---retrieves all the carts follow cart_id ---
     public Cursor getAllCartsFollowCartId(int cartId) throws SQLException{
 
         return db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                                KEY_CARTID, KEY_BOOKID, KEY_IMAGE, KEY_QUANTITY}, KEY_CARTID + "=" + cartId, null,
+                                KEY_CARTID, KEY_BOOKID, KEY_IMAGE, KEY_QUANTITY, KEY_NAME}, KEY_CARTID + "=" + cartId, null,
                         null, null, null, null);
     }
     //---retrieves a particular cart---
     public Cursor getCart(long rowId) throws SQLException
     {Cursor mCursor =
             db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                    KEY_CARTID, KEY_BOOKID, KEY_IMAGE, KEY_QUANTITY}, KEY_ROWID + "=" + rowId, null,
+                    KEY_CARTID, KEY_BOOKID, KEY_IMAGE, KEY_QUANTITY, KEY_NAME}, KEY_ROWID + "=" + rowId, null,
             null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -111,13 +113,14 @@ public class Cart {
         return mCursor;
     }
     //---updates a cart---
-    public boolean updateCart(long rowId, int _cart_id, int _book_id, String image, int quantity)
+    public boolean updateCart(long rowId, int _cart_id, int _book_id, String image, int quantity, String name)
     {
         ContentValues args = new ContentValues();
         args.put(KEY_CARTID, _cart_id);
         args.put(KEY_BOOKID, _book_id);
         args.put(KEY_QUANTITY, quantity);
         args.put(KEY_IMAGE, image);
+        args.put(KEY_NAME, name);
         return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }
     //---updates column quantity in cart---

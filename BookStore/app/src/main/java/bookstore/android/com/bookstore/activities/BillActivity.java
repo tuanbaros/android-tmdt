@@ -2,6 +2,7 @@ package bookstore.android.com.bookstore.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +36,11 @@ public class BillActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill);
-
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Info");
+        }
         mFilterBill = (Spinner)findViewById(R.id.spiner_type_bill);
         mCustomScrollViewBill = (CustomScrollViewBill)findViewById(R.id.scrollview_list_bill);
         setDataBill();
@@ -57,18 +62,11 @@ public class BillActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds mListItems to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.ic_home:
-                onBackPressed();
-                break;
+            case android.R.id.home:
+                finish();
+                return true;
             default:break;
         }
         return super.onOptionsItemSelected(item);

@@ -145,6 +145,10 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
             case android.R.id.home:
                 this.finish();
                 break;
+            case R.id.ic_cart:
+                Intent intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }
@@ -256,7 +260,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                         Cart cart = new Cart(getBaseContext());
                         cart.open();
                         int id_user = DataController.user.getUserId();
-                        if (cart.insertCart(id_user,mBook.getId(),mBook.getImages(),1) > 0)
+                        if (cart.insertCart(id_user,mBook.getId(),mBook.getImages(),1, mBook.getTitle()) > 0)
                             Toast.makeText(getBaseContext(), "Add book successful!",Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(getBaseContext(), "Book already added!",Toast.LENGTH_SHORT).show();
