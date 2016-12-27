@@ -66,6 +66,7 @@
                         android:id="@+id/text_author_book_sell"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
                         style="@style/TextBookAuthor"
                         android:text="book's author"/>
 

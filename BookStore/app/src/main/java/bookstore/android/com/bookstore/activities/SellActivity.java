@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -62,6 +63,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     private CustomScrollviewReview mCustomScrollviewReview;
     private ArrayList<Review> mListReviews = new ArrayList<>();
     private ArrayList<ItemBookSimple> mListSameBook = new ArrayList<>();
+    private ArrayList<ItemBookSimple>itemsBookOfAuthor=new ArrayList<>();
     private TextView mTextAuthor, mTextBookName, mTextOldPrice, mTextPrice, mTextNumRating,mCountRatingSell, mRatingAverageSell, mCategoryTextView;
     private RatingBar mRating,mRatingReviews;
     private Button mSeeAllDescription, mSeeAllReView, mAddCart, mBuyBook;
@@ -84,6 +86,11 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
 
         mRating = (RatingBar) findViewById(R.id.rating_book_sell);
         mTextAuthor = (TextView) findViewById(R.id.text_author_book_sell);
+//        mTextAuthor.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//            }
+//        });
         mTextBookName = (TextView) findViewById(R.id.text_name_book_sell);
         mTextOldPrice = (TextView) findViewById(R.id.text_old_price_book_sell);
         mTextPrice = (TextView) findViewById(R.id.text_price_book_sell);
@@ -113,14 +120,12 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
         mSeeAllDescription.setOnClickListener(this);
         mRating.setOnClickListener(this);
         mSeeAllReView.setOnClickListener(this);
+        mTextAuthor.setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_sell);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
-
 
     }
 
@@ -149,6 +154,40 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.text_author_book_sell:{
+                final Dialog dAuthor = new Dialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
+                dAuthor.setContentView(R.layout.dialog_author);
+                dAuthor.setTitle("Detail Author");
+                dAuthor.show();
+
+                TextView authorName = (TextView) dAuthor.findViewById(R.id.tvAuthorName);
+                TextView authorSold = (TextView) dAuthor.findViewById(R.id.authorSold);
+                TextView authorRate = (TextView) dAuthor.findViewById(R.id.authorRate);
+                TextView authorInfo=(TextView)dAuthor.findViewById(R.id.authorBook);
+                ImageView authorAvatar = (ImageView) dAuthor.findViewById(R.id.authorAvatar);
+                Button authorOK = (Button) dAuthor.findViewById(R.id.authorBt);
+//                ListBookHorizontalScrollView bookLists=
+//                        (ListBookHorizontalScrollView)dAuthor.findViewById(R.id.list_author_book);
+//                itemsBookOfAuthor=mBook.getAuthor().getListBooks();
+//                if(itemsBookOfAuthor.size()>0) {
+//                    bookLists.setDataListBook(itemsBookOfAuthor);
+//                }
+                authorName.setText(mBook.getAuthor().getName());
+                authorSold.setText(String.valueOf(mBook.getAuthor().getTotalSold()));
+                authorRate.setText(String.valueOf(mBook.getAuthor().getRateBookAverage()));
+                authorInfo.setText(mBook.getAuthor().getRecommend());
+                Picasso.with(getApplicationContext()).load(mBook.getAuthor().getAvatar())
+                        .placeholder(R.drawable.loading).error(R.drawable.error).into(authorAvatar);
+                authorOK.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dAuthor.dismiss();
+                    }
+                });
+                break;
+
+
+        }
             case R.id.bt_seeall_description: {
                 final Dialog dialog = new Dialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
                 dialog.setContentView(R.layout.dialog_description);
@@ -257,6 +296,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                 if (response.isSuccess()) {
                     mBook = response.body();
                     mTextAuthor.setText(mBook.getAuthor().getName());
+//                    mTextAuthor.setOnClickListener(showDialogAuthor);
                     mTextBookName.setText(mBook.getTitle());
 
                     tvLang.setText(mBook.getLanguage().toString());
@@ -298,6 +338,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
     public void setDataReview() {
 
         Call<Rate> callRate = DataController.apiBookStore.getRate(mBook.getId());

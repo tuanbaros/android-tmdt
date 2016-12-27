@@ -24,7 +24,7 @@ public class Author {
     @SerializedName("avatar")
     private String avatar;
     @SerializedName("listBooks")
-    private ArrayList<BookOfAuthor> listBooks = new ArrayList<>();
+    private ArrayList<ItemBookSimple> listBooks = new ArrayList<>();
 
     public Author(String name) {
         this.name = name;
@@ -87,11 +87,11 @@ public class Author {
     }
 
 
-    public ArrayList<BookOfAuthor> getListBooks() {
+    public ArrayList<ItemBookSimple> getListBooks() {
         return listBooks;
     }
 
-    public void setListBooks(ArrayList<BookOfAuthor> listBooks) {
+    public void setListBooks(ArrayList<ItemBookSimple> listBooks) {
         this.listBooks = listBooks;
     }
 
