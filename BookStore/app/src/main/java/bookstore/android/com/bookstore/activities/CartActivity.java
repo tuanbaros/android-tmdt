@@ -50,6 +50,7 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mTextCountItem = (TextView)findViewById(R.id.textview_count_item);
         mTextTotalCost = (TextView)findViewById(R.id.textview_total_price);
         mRecycleBookCart = (RecyclerView)findViewById(R.id.recycleview_books);
