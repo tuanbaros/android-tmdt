@@ -255,8 +255,8 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                         // add book for cart
                         Cart cart = new Cart(getBaseContext());
                         cart.open();
-                        int id_fb = 1;
-                        if (cart.insertCart(id_fb,mBook.getId(),mBook.getImages(),1) > 0)
+                        int id_user = DataController.user.getUserId();
+                        if (cart.insertCart(id_user,mBook.getId(),mBook.getImages(),1) > 0)
                             Toast.makeText(getBaseContext(), "Add book successful!",Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(getBaseContext(), "Book already added!",Toast.LENGTH_SHORT).show();
