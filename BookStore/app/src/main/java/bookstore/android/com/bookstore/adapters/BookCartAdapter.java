@@ -1,7 +1,6 @@
 package bookstore.android.com.bookstore.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,7 +22,6 @@ import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.activities.CartActivity;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Cart;
-import bookstore.android.com.bookstore.models.CartBook;
 import bookstore.android.com.bookstore.utils.DataController;
 
 
@@ -35,11 +32,13 @@ import bookstore.android.com.bookstore.utils.DataController;
  public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHolder>  {
     private ArrayList<Book> mListCartBook = new ArrayList<>();
     private Context mContext;
+    private BookCartAdapter bookCartAdapter;
 
 
     public BookCartAdapter(Context context,ArrayList<Book> listCartBook){
         this.mListCartBook = listCartBook;
         this.mContext = context;
+        this.bookCartAdapter = this;
     }
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,7 +48,7 @@ import bookstore.android.com.bookstore.utils.DataController;
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, int position) {
+    public void onBindViewHolder(MyHolder holder, final int position) {
 
         final Book item = mListCartBook.get(position);
         Picasso.with(mContext).load(item.getImages()).placeholder(R.drawable.bg_loading)
@@ -68,11 +67,15 @@ import bookstore.android.com.bookstore.utils.DataController;
                 cart.open();
                 cart.deleteCart(getCartId(item));
                 cart.close();
+                mListCartBook.remove(position);
                 Toast.makeText(mContext,"delete book", Toast.LENGTH_SHORT).show();
                 //
-                Intent intent = new Intent(mContext, CartActivity.class);
+                /*Intent intent = new Intent(mContext, CartActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
+                mContext.startActivity(intent);*/
+                //
+                bookCartAdapter.notifyDataSetChanged();
+                CartActivity.updateTotalCost(mListCartBook.size(), calculateTotalCost());
             }
         });
 
@@ -97,9 +100,12 @@ import bookstore.android.com.bookstore.utils.DataController;
                 cart.updateQuantity(getCartId(item), Integer.parseInt(quantity));
                 cart.close();
                 //
-                Intent intent = new Intent(mContext, CartActivity.class);
+                /*Intent intent = new Intent(mContext, CartActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
+                mContext.startActivity(intent);*/
+                //
+                bookCartAdapter.notifyDataSetChanged();
+                CartActivity.updateTotalCost(mListCartBook.size(), calculateTotalCost());
             }
 
             @Override
@@ -109,7 +115,7 @@ import bookstore.android.com.bookstore.utils.DataController;
         });
     }
 
-    public int getCartId(Book item){
+    private int getCartId(Book item){
         int id_user = DataController.user.getUserId();
         int cart_id = -1;
         Cart cart = new Cart(mContext);
@@ -126,6 +132,28 @@ import bookstore.android.com.bookstore.utils.DataController;
         }
         cart.close();
         return cart_id;
+    }
+
+    private float calculateTotalCost(){
+        // get book in cart
+        int id_user = DataController.user.getUserId();
+        float cost = 0;
+        Cart cart = new Cart(mContext);
+        cart.open();
+        Cursor cursor = cart.getAllCartsFollowCartId(id_user);
+        if (cursor.moveToFirst())
+        {
+            do {
+                for (int i=0; i<mListCartBook.size(); i++){
+                    if (cursor.getInt(2) == mListCartBook.get(i).getId()) {
+                        cost += cursor.getInt(4)*mListCartBook.get(i).getPrice();
+                        break;
+                    }
+                }
+            } while (cursor.moveToNext());
+        }
+        cart.close();
+        return cost;
     }
 
 

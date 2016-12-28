@@ -39,8 +39,8 @@ import retrofit.Retrofit;
 public class CartActivity extends AppCompatActivity {
     private RecyclerView mRecycleBookCart;
     private ListBookHorizontalScrollView mListBookBuyMore;
-    private TextView mTextCountItem;
-    private TextView mTextTotalCost;
+    private static TextView mTextCountItem;
+    private static TextView mTextTotalCost;
     private Button mBtBuyCart;
     private ArrayList<ItemBookSimple> mListBookMore = new ArrayList<>();
     private BookCartAdapter mBookCartAdapter;
@@ -49,16 +49,17 @@ public class CartActivity extends AppCompatActivity {
     private ArrayList<Book> mListCartBook = new ArrayList<>();
     private ProgressDialog mProgressDialog;
     private ArrayList<Integer> quantityBook = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mTextCountItem = (TextView)findViewById(R.id.textview_count_item);
-        mTextTotalCost = (TextView)findViewById(R.id.textview_total_price);
-        mRecycleBookCart = (RecyclerView)findViewById(R.id.recycleview_books);
+        mTextCountItem = (TextView) findViewById(R.id.textview_count_item);
+        mTextTotalCost = (TextView) findViewById(R.id.textview_total_price);
+        mRecycleBookCart = (RecyclerView) findViewById(R.id.recycleview_books);
         mListBookBuyMore = (ListBookHorizontalScrollView) findViewById(R.id.horizontal_buy_more);
-        mBtBuyCart = (Button)findViewById(R.id.bt_buy_cart);
+        mBtBuyCart = (Button) findViewById(R.id.bt_buy_cart);
         mLinearLayoutManager = new LinearLayoutManager(this);
 
         mBtBuyCart.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +77,7 @@ public class CartActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_cart, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -90,7 +92,8 @@ public class CartActivity extends AppCompatActivity {
                 return true;
         }
     }
-    private void setData(){
+
+    private void setData() {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
@@ -99,8 +102,7 @@ public class CartActivity extends AppCompatActivity {
         Cart cart = new Cart(getBaseContext());
         cart.open();
         Cursor cursor = cart.getAllCartsFollowCartId(id_user);
-        if (cursor.moveToFirst())
-        {
+        if (cursor.moveToFirst()) {
             do {
                 DisplayBook(cursor);
             } while (cursor.moveToNext());
@@ -115,7 +117,7 @@ public class CartActivity extends AppCompatActivity {
         bookCall.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Response<Book> response, Retrofit retrofit) {
-                if (response.isSuccess()){
+                if (response.isSuccess()) {
                     mBook = response.body();
                     mListCartBook.add(mBook);
 
@@ -124,10 +126,9 @@ public class CartActivity extends AppCompatActivity {
                     Cart cart = new Cart(getBaseContext());
                     cart.open();
                     Cursor cursor = cart.getAllCartsFollowCartId(id_user);
-                    if (cursor.moveToFirst())
-                    {
+                    if (cursor.moveToFirst()) {
                         do {
-                            if (cursor.getInt(2)==mBook.getId()){
+                            if (cursor.getInt(2) == mBook.getId()) {
                                 quantityBook.add(cursor.getInt(4));
                             }
                         } while (cursor.moveToNext());
@@ -135,16 +136,16 @@ public class CartActivity extends AppCompatActivity {
                     cart.close();
 
                     // get total items in cart
-                    mTextCountItem.setText(mListCartBook.size()+"");
+                    mTextCountItem.setText(mListCartBook.size() + "");
 
                     // set total cost of all item in user's cart
                     float cost = 0;
-                    for(int i = 0;i<mListCartBook.size();i++){
-                        cost+=mListCartBook.get(i).getPrice()*quantityBook.get(i);
+                    for (int i = 0; i < mListCartBook.size(); i++) {
+                        cost += mListCartBook.get(i).getPrice() * quantityBook.get(i);
                     }
-                    mTextTotalCost.setText(cost+"");
+                    mTextTotalCost.setText(cost + "");
 
-                    mBookCartAdapter = new BookCartAdapter(getApplicationContext(),mListCartBook);
+                    mBookCartAdapter = new BookCartAdapter(getApplicationContext(), mListCartBook);
                     mRecycleBookCart.setHasFixedSize(true);
                     mRecycleBookCart.setLayoutManager(mLinearLayoutManager);
                     mRecycleBookCart.setAdapter(mBookCartAdapter);
@@ -162,5 +163,12 @@ public class CartActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         setData();
+    }
+
+    public static void updateTotalCost(int countItem, float totalCost) {
+        // get total items in cart
+        mTextCountItem.setText(countItem + "");
+        // set total cost of all item in user's cart
+        mTextTotalCost.setText(totalCost + "");
     }
 }
