@@ -1,13 +1,10 @@
 package bookstore.android.com.bookstore.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +12,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
-import bookstore.android.com.bookstore.activities.MainActivity;
 import bookstore.android.com.bookstore.activities.SellActivity;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
-import bookstore.android.com.bookstore.views.custom.RatingView;
+
 
 public class CustomSwipeAdapter extends PagerAdapter {
     private Context mContext;

@@ -5,9 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +30,10 @@ import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.adapters.CustomSwipeAdapter;
+import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
 import bookstore.android.com.bookstore.features.auth.Token;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Category;
-import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.models.User;
 import bookstore.android.com.bookstore.utils.DataController;
@@ -203,13 +202,15 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(this,BillActivity.class));
                 break;
             case R.id.nav_cart:
-
                 startActivity(new Intent(this,CartActivity.class));
                 break;
 //            case R.id.nav_rate:
 //
 //                break;
 //            case R.id.nav_not_rate:
+
+//            case R.id.nav_bought:
+//                startActivity(new Intent(this, BoughtActivity.class));
 
 //                break;
             case R.id.nav_setting:

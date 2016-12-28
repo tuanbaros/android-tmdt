@@ -1,7 +1,6 @@
 package bookstore.android.com.bookstore.activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +18,9 @@ import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.adapters.BookCartAdapter;
-import bookstore.android.com.bookstore.models.Author;
-import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
+import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Cart;
-import bookstore.android.com.bookstore.models.CartBook;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.utils.DataController;
 import retrofit.Call;

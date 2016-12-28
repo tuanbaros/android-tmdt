@@ -2,7 +2,6 @@ package bookstore.android.com.bookstore.features.order;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;

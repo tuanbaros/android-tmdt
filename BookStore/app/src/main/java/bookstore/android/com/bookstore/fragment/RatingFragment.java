@@ -23,7 +23,6 @@ import bookstore.android.com.bookstore.activities.RateActivity;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Rate;
 import bookstore.android.com.bookstore.utils.DataController;
-import bookstore.android.com.bookstore.views.custom.RatingView;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;

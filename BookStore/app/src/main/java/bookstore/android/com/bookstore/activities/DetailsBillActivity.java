@@ -2,7 +2,9 @@ package bookstore.android.com.bookstore.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,7 +30,23 @@ public class DetailsBillActivity extends AppCompatActivity {
         mCustomScrollViewBill = (CustomScrollViewBill)findViewById(R.id.scroll_list_book_details_bill);
         mTotalCost = (TextView)findViewById(R.id.text_total_price_details_views);
         mCountItem = (TextView)findViewById(R.id.textview_count_item);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         setData();
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return true;
+        }
 
     }
     public void setData(){

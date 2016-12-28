@@ -9,28 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
-import bookstore.android.com.bookstore.activities.SearchActivity;
 import bookstore.android.com.bookstore.activities.SellActivity;
-import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
-import bookstore.android.com.bookstore.utils.DataController;
-import bookstore.android.com.bookstore.views.custom.BookItem;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
 
 /**
  * Created by toan on 26/12/2016.

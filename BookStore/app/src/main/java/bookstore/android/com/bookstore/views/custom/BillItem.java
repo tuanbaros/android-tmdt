@@ -2,11 +2,9 @@ package bookstore.android.com.bookstore.views.custom;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import bookstore.android.com.bookstore.R;

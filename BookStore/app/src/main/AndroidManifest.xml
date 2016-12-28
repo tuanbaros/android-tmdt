@@ -17,7 +17,7 @@
 
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".activities.CartActivity"
             android:label="@string/cart_name"
@@ -60,8 +60,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.OrderActivity"
-            android:theme="@style/AppTheme.Theme"></activity>
+        <activity
+            android:name=".activities.OrderActivity"
+            android:theme="@style/AppTheme.Theme" />
+        <activity android:name=".activities.BoughtActivity"
+            android:theme="@style/AppTheme.Theme"/>
     </application>
 
 </manifest>

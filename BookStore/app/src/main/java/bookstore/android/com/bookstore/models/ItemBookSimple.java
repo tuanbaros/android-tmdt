@@ -2,8 +2,6 @@ package bookstore.android.com.bookstore.models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
 /**
  * Created by vxhuy176 on 18/12/2016.
  */
