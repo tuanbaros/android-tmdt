@@ -1,8 +1,6 @@
 package bookstore.android.com.bookstore.adapters;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,17 +14,12 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import bookstore.android.com.bookstore.R;
-import bookstore.android.com.bookstore.activities.MainActivity;
-import bookstore.android.com.bookstore.activities.SellActivity;
-import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Category;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.views.custom.BookItem;
 import bookstore.android.com.bookstore.views.custom.CategoryItem;
-import bookstore.android.com.bookstore.views.custom.RatingView;
 
 public class ListBookHorizontalScrollView extends HorizontalScrollView {
 

@@ -2,16 +2,11 @@ package bookstore.android.com.bookstore.activities;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
-import com.facebook.appevents.AppEventsLogger;
 import com.squareup.picasso.Picasso;
 
 import bookstore.android.com.bookstore.R;
@@ -19,7 +14,6 @@ import bookstore.android.com.bookstore.databinding.ActivitySplashBinding;
 import bookstore.android.com.bookstore.features.auth.AuthPresenter;
 import bookstore.android.com.bookstore.features.auth.AuthView;
 import bookstore.android.com.bookstore.features.auth.Token;
-import bookstore.android.com.bookstore.models.User;
 import bookstore.android.com.bookstore.utils.DataController;
 
 public class SplashActivity extends AppCompatActivity implements AuthView, View.OnClickListener {

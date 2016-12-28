@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_bill"
-            android:icon="@android:drawable/ic_menu_agenda"
+            android:icon="@drawable/ic_info"
             android:title="Bill" />
         <item
             android:id="@+id/nav_cart"
@@ -14,6 +14,11 @@
             <!--android:id="@+id/nav_rate"-->
             <!--android:icon="@drawable/featured_on"-->
             <!--android:title="Rated" />-->
+
+            <!--android:id="@+id/nav_bought"-->
+            <!--android:icon="@drawable/ic_bought"-->
+            <!--android:title="Bought" />-->
+
         <!--<item-->
             <!--android:id="@+id/nav_not_rate"-->
             <!--android:icon="@drawable/featured"-->

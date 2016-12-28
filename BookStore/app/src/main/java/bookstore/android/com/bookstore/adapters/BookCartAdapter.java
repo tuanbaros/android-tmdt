@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,7 +23,6 @@ import bookstore.android.com.bookstore.R;
 import bookstore.android.com.bookstore.activities.CartActivity;
 import bookstore.android.com.bookstore.models.Book;
 import bookstore.android.com.bookstore.models.Cart;
-import bookstore.android.com.bookstore.models.CartBook;
 import bookstore.android.com.bookstore.utils.DataController;
 
 
