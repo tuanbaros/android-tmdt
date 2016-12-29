@@ -2,7 +2,9 @@ package bookstore.android.com.bookstore.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,33 +32,32 @@ import bookstore.android.com.bookstore.utils.DataController;
  */
 
  public class BookCartAdapter extends RecyclerView.Adapter<BookCartAdapter.MyHolder>  {
-    private ArrayList<Book> mListCartBook = new ArrayList<>();
+
+    private ArrayList<Book> mListCartBook;
+
     private Context mContext;
-    private BookCartAdapter bookCartAdapter;
 
-
-    public BookCartAdapter(Context context,ArrayList<Book> listCartBook){
+    public BookCartAdapter(Context context, ArrayList<Book> listCartBook){
         this.mListCartBook = listCartBook;
         this.mContext = context;
-        this.bookCartAdapter = this;
     }
+
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book_cart,parent,false);
-        MyHolder myHolder = new MyHolder(view);
-        return myHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book_cart, parent, false);
+        return new MyHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, final int position) {
-
-        final Book item = mListCartBook.get(position);
+    public void onBindViewHolder(MyHolder holder, int position) {
+        final int pos = holder.getAdapterPosition();
+        final Book item = mListCartBook.get(pos);
         Picasso.with(mContext).load(item.getImages()).placeholder(R.drawable.bg_loading)
                 .error(R.drawable.bg_error).into(holder.mImageButton);
-        holder.mBooksOldPrice.setText(""+item.getOldPrice());
-        holder.mBooksPrice.setText(""+item.getPrice());
+        holder.mBooksOldPrice.setText(String.valueOf(item.getOldPrice()));
+        holder.mBooksPrice.setText(String.valueOf(item.getPrice()));
         holder.mBooksName.setText(item.getTitle());
-        holder.mBooksAuthor.setText(""+item.getAuthor().getName());
+        holder.mBooksAuthor.setText(item.getAuthor().getName());
 
         // delete book
         holder.mDeleteBookCart.setOnClickListener(new View.OnClickListener() {
@@ -67,33 +68,33 @@ import bookstore.android.com.bookstore.utils.DataController;
                 cart.open();
                 cart.deleteCart(getCartId(item));
                 cart.close();
-                mListCartBook.remove(position);
-                Toast.makeText(mContext,"delete book", Toast.LENGTH_SHORT).show();
+                mListCartBook.remove(pos);
+                Toast.makeText(mContext, "Book is deleted!", Toast.LENGTH_SHORT).show();
                 //
                 /*Intent intent = new Intent(mContext, CartActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);*/
                 //
-                bookCartAdapter.notifyDataSetChanged();
+                notifyChange();
                 CartActivity.updateTotalCost(mListCartBook.size(), calculateTotalCost());
+                if (mListCartBook.size() < 1) {
+                    CartActivity.mBtBuyCart.setEnabled(false);
+                }
             }
         });
 
         // get quantity for each book in cart
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext,
-                R.array.spinner_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        holder.mQuantityBook.setAdapter(adapter);
         Cart cart = new Cart(mContext);
         cart.open();
         Cursor cursor = cart.getCart(getCartId(item));
         cart.close();
-        holder.mQuantityBook.setSelection(cursor.getInt(4)-1,false);
+        holder.mQuantityBook.setSelection(cursor.getInt(4) - 1, true);
 
         // set quantity for each book
         holder.mQuantityBook.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.i("onclick", "ajaja");
                 String quantity = adapterView.getItemAtPosition(i).toString();
                 Cart cart = new Cart(mContext);
                 cart.open();
@@ -104,7 +105,7 @@ import bookstore.android.com.bookstore.utils.DataController;
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);*/
                 //
-                bookCartAdapter.notifyDataSetChanged();
+                notifyChange();
                 CartActivity.updateTotalCost(mListCartBook.size(), calculateTotalCost());
             }
 
@@ -156,19 +157,19 @@ import bookstore.android.com.bookstore.utils.DataController;
         return cost;
     }
 
-
     @Override
     public int getItemCount() {
         return mListCartBook.size();
     }
 
-
-    public class MyHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener {
+    class MyHolder extends RecyclerView.ViewHolder {
         private TextView mBooksName, mBooksAuthor, mBooksPrice, mBooksOldPrice;
         private Spinner mQuantityBook;
         private ImageView mImageButton;
         private Button mDeleteBookCart;
-        public MyHolder(View itemView) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext,
+                R.array.spinner_array, android.R.layout.simple_spinner_item);
+        MyHolder(View itemView) {
             super(itemView);
             mBooksAuthor = (TextView)itemView.findViewById(R.id.text_author_book);
             mBooksName = (TextView)itemView.findViewById(R.id.text_book_name);
@@ -177,17 +178,14 @@ import bookstore.android.com.bookstore.utils.DataController;
             mImageButton = (ImageView)itemView.findViewById(R.id.imagebt_book_cart);
             mDeleteBookCart = (Button)itemView.findViewById(R.id.bt_delete_book_cart);
             mQuantityBook = (Spinner)itemView.findViewById(R.id.spiner_quantity_book);
-
+            mQuantityBook.setBackgroundColor(Color.GRAY);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mQuantityBook.setAdapter(adapter);
         }
 
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    }
 
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-
-        }
+    private void notifyChange() {
+        this.notifyDataSetChanged();
     }
 }

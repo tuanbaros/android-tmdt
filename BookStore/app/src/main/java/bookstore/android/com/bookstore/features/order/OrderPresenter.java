@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.models.Cart;
+import bookstore.android.com.bookstore.network.RestClient;
 import bookstore.android.com.bookstore.utils.DataController;
 
 /**
@@ -61,7 +62,7 @@ public class OrderPresenter {
         String user = gson.toJson(receiver);
         String cart = gson.toJson(this.items);
 
-        AndroidNetworking.post("http://android-samsung.herokuapp.com/api/user/bill/store")
+        AndroidNetworking.post(RestClient.url + "user/bill/store")
                 .addBodyParameter("user", user)
                 .addBodyParameter("carts", cart)
                 .build()

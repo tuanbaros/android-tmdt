@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import bookstore.android.com.bookstore.R;
@@ -137,8 +138,15 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                 this.finish();
                 break;
             case R.id.ic_cart:
-                Intent intent = new Intent(this, CartActivity.class);
-                startActivity(intent);
+                Cart cart = new Cart(this);
+                cart.open();
+                if (cart.getAllCartsFollowCartId(DataController.user.getUserId()).getCount() > 0) {
+                    Intent intent = new Intent(this, CartActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "Cart is empty", Toast.LENGTH_LONG).show();
+                }
+                cart.close();
                 break;
             default:
                 break;
@@ -322,7 +330,7 @@ public class SellActivity extends AppCompatActivity implements View.OnClickListe
                         mTextOldPrice.setText(mBook.getOldPrice() + "$");
                     }
                     mTextNumRating.setText("("+mBook.getQuantityRating()+")");
-                    mRatingAverageSell.setText(mBook.getRateAverage()+"");
+                    mRatingAverageSell.setText(String.valueOf(new DecimalFormat("##.##").format(mBook.getRateAverage())));
                     mCountRatingSell.setText(mBook.getQuantityRating()+"");
                     mCategoryTextView.setText((String) Variables.categoryHashMap.get(mBook.getCategoryId()));
                     float tmp2 = mBook.getRateAverage()*10;

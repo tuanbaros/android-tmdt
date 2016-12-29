@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 import bookstore.android.com.bookstore.models.User;
+import bookstore.android.com.bookstore.network.RestClient;
 import bookstore.android.com.bookstore.utils.DataController;
 
 /**
@@ -42,8 +43,10 @@ public class AuthPresenter implements FacebookCallback<LoginResult> {
         mProfileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                if (currentProfile != null)
+                if (currentProfile != null) {
                     Profile.setCurrentProfile(currentProfile);
+                    getToken();
+                }
             }
         };
     }
@@ -87,7 +90,7 @@ public class AuthPresenter implements FacebookCallback<LoginResult> {
     private void getToken() {
         Profile profile = Profile.getCurrentProfile();
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        AndroidNetworking.post("http://android-samsung.herokuapp.com/api/login")
+        AndroidNetworking.post(RestClient.url + "login")
                 .addBodyParameter("facebookId", profile.getId())
                 .addBodyParameter("name", profile.getName())
                 .addBodyParameter("avatar", profile.getProfilePictureUri(500, 500).toString())
@@ -116,7 +119,7 @@ public class AuthPresenter implements FacebookCallback<LoginResult> {
 
     @Override
     public void onSuccess(LoginResult loginResult) {
-        getToken();
+//        getToken();
     }
 
     @Override

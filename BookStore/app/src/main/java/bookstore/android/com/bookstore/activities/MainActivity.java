@@ -33,6 +33,7 @@ import bookstore.android.com.bookstore.adapters.CustomSwipeAdapter;
 import bookstore.android.com.bookstore.adapters.ListBookHorizontalScrollView;
 import bookstore.android.com.bookstore.features.auth.Token;
 import bookstore.android.com.bookstore.models.Book;
+import bookstore.android.com.bookstore.models.Cart;
 import bookstore.android.com.bookstore.models.Category;
 import bookstore.android.com.bookstore.models.ItemBookSimple;
 import bookstore.android.com.bookstore.models.User;
@@ -184,8 +185,15 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.ic_cart) {
-            Intent intent = new Intent(this, CartActivity.class);
-            startActivity(intent);
+            Cart cart = new Cart(this);
+            cart.open();
+            if (cart.getAllCartsFollowCartId(DataController.user.getUserId()).getCount() > 0) {
+                Intent intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Cart is empty", Toast.LENGTH_LONG).show();
+            }
+            cart.close();
             return true;
         }
 
@@ -202,7 +210,15 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(this,BillActivity.class));
                 break;
             case R.id.nav_cart:
-                startActivity(new Intent(this,CartActivity.class));
+                Cart cart = new Cart(this);
+                cart.open();
+                if (cart.getAllCartsFollowCartId(DataController.user.getUserId()).getCount() > 0) {
+                    Intent intent = new Intent(this, CartActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "Cart is empty", Toast.LENGTH_LONG).show();
+                }
+                cart.close();
                 break;
 //            case R.id.nav_rate:
 //
